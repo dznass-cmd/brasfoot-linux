@@ -24,7 +24,14 @@ def main():
     archive = args.runtime or DIST / f'nwjs-v{VERSION}-win-ia32.zip'
     if not archive.exists():
         print('Downloading official XP-compatible NW.js runtime...', flush=True)
-        urllib.request.urlretrieve(RUNTIME_URL, archive)
+        request = urllib.request.Request(RUNTIME_URL, headers={'User-Agent': 'Mozilla/5.0 BrasfootBuild/1.0'})
+        temporary = archive.with_suffix('.download')
+        try:
+            with urllib.request.urlopen(request, timeout=90) as response, temporary.open('wb') as output:
+                shutil.copyfileobj(response, output)
+            temporary.replace(archive)
+        finally:
+            temporary.unlink(missing_ok=True)
     if hashlib.sha256(archive.read_bytes()).hexdigest() != RUNTIME_SHA256:
         raise ValueError('Runtime checksum mismatch; refusing to package it.')
     subprocess.run(['node', str(ROOT / 'scripts/legacy/build.cjs')], check=True)

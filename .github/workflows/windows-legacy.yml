@@ -20,8 +20,14 @@ jobs:
           node-version: '22'
       - name: Install pinned build tools
         run: npm ci --prefix scripts/legacy
+      - name: Download official legacy runtime
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist/windows-legacy | Out-Null
+          curl.exe --fail --location --retry 2 'https://dl.nwjs.io/v0.14.7/nwjs-v0.14.7-win-ia32.zip' --output dist/windows-legacy/nwjs-v0.14.7-win-ia32.zip
+          if ($LASTEXITCODE -ne 0) { throw 'Could not download official legacy runtime' }
       - name: Build portable XP-targeted x86 package
-        run: python scripts/build-windows-legacy.py
+        run: python scripts/build-windows-legacy.py --runtime dist/windows-legacy/nwjs-v0.14.7-win-ia32.zip
       - name: Test legacy runtime, screens, match and save
         shell: pwsh
         run: |
