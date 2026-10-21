@@ -1,15 +1,57 @@
-# ⚽ Brasfoot Revenge (100% Nativo, Sem Servidor, Sem Internet, Sem Java)
+# ⚽ Brasfoot Revenge
 
-Reimplementação completa do clássico **Brasfoot** (Edição **Revenge**) compilada diretamente para Linux.
+Simulador de gestão de futebol para **Windows e Linux**, com partidas minuto a minuto, carreira, táticas, transferências e finanças. O jogo funciona offline e abre em janela própria, sem servidor local ou Java.
 
-[Histórico de todas as modificações](docs/HISTORICO-ALTERACOES.md) · [Contexto salvo para retomar o projeto](CONTEXTO-PROJETO.md)
+[![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011-0078D6)](https://github.com/dznass-cmd/brasfoot-revenge/releases/tag/v1.0.1)
+[![Linux](https://img.shields.io/badge/Linux-GTK4%20%2B%20WebKit-2d6a4f)](docs/OFFLINE.md)
+[![Edição legada](https://img.shields.io/badge/XP%20SP3-alvo%20experimental-d9a521)](docs/WINDOWS-XP.md)
+[![Código](https://img.shields.io/badge/C%C3%B3digo-JavaScript%20%2B%20HTML%20%2B%20CSS-f0db4f)](docs/WINDOWS-XP.md#onde-editar)
 
-[Otimizações implementadas e medições locais](docs/OTIMIZACOES.md).
+**[⬇ Downloads](https://github.com/dznass-cmd/brasfoot-revenge/releases)** · **[📷 Capturas do jogo](#capturas-do-jogo)** · **[🛠 Editar e compilar](docs/WINDOWS-XP.md#onde-editar)** · [Histórico](docs/HISTORICO-ALTERACOES.md)
 
-- ❌ **Sem Java**: Não precisa de Java / JRE / JVM.
-- ❌ **Sem Servidor**: Não abre portas e não precisa de `node server.js` nem localhost. O inicializador abre o aplicativo em um processo separado do terminal.
-- ❌ **Sem Internet**: 100% dos 703 clubes reais, escudos, camisas, sons e dados estão salvos localmente no seu computador.
-- ✅ **Executável Binário Nativo ELF**: Compilado em C com interface gráfica GTK4 de alto desempenho.
+## O que você pode fazer
+
+- Dirigir um clube entre **703 times disponíveis**, com escudos, uniformes e elencos locais.
+- Jogar as Séries A–D, disputar temporadas consecutivas e acompanhar acesso, rebaixamento e histórico do técnico.
+- Alterar escalação, formação, instruções e substituições durante as partidas.
+- Negociar jogadores, renovar contratos e administrar caixa, salários, patrocínios e estádio.
+- Salvar a carreira no computador e exportar/importar arquivos JSON.
+
+## Escolha sua edição
+
+| Edição | Como funciona | Download e informações |
+| --- | --- | --- |
+| **Windows 10/11 · 64 bits** | Windows Forms com WebView2 incluído na instalação offline; janela própria. | [Instalador e ZIP](https://github.com/dznass-cmd/brasfoot-revenge/releases/tag/v1.0.1) · [Guia](docs/WINDOWS.md) |
+| **Linux** | Aplicativo em C com GTK4 e WebKitGTK; recursos locais. | [Pacotes Linux](https://github.com/dznass-cmd/brasfoot-revenge/releases/tag/v1.0.0) · [Modo offline](docs/OFFLINE.md) |
+| **Legada · 32 bits · experimental** | Runtime próprio, sem WebView2 ou .NET; destinada ao XP SP3 e posteriores. | [ZIP legado](https://github.com/dznass-cmd/brasfoot-revenge/releases/tag/v1.1.0-legacy) · [Requisitos e testes](docs/WINDOWS-XP.md) |
+
+**Windows XP real ainda não foi testado.** A edição legada passou no Wine e nos testes automatizados em Windows; isso não garante funcionamento em qualquer PC ou versão do Windows.
+
+## Capturas do jogo
+
+Capturas reais da edição legada executada no Wine, em uma carreira de demonstração. As imagens mostram a interface atual; não são capturas de Windows XP.
+
+### Menu inicial
+
+![Menu inicial do Brasfoot Revenge com Novo jogo, Jogo salvo e Editor](docs/prints/01-menu.png)
+
+### Elenco e escalação
+
+| Gestão do elenco | Campo tático e escalação |
+| --- | --- |
+| [![Elenco do clube, dados do jogador e situação da carreira](docs/prints/02-elenco.png)](docs/prints/02-elenco.png) | [![Campo com titulares, banco de reservas e opções táticas](docs/prints/03-escalacao.png)](docs/prints/03-escalacao.png) |
+
+### Mercado e finanças
+
+| Mercado de jogadores | Finanças do clube |
+| --- | --- |
+| [![Busca de jogadores e valores de negociação](docs/prints/04-mercado.png)](docs/prints/04-mercado.png) | [![Caixa, receitas, TV e patrocínios do clube](docs/prints/05-financas.png)](docs/prints/05-financas.png) |
+
+### Partida ao vivo
+
+![Partida com placar, narração, estatísticas, táticas e substituições](docs/prints/06-partida.png)
+
+[Clique nas imagens para ampliar](docs/prints/README.md) · [Referências e histórico da interface](docs/interface/README.md)
 
 ---
 
