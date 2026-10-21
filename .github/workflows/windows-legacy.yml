@@ -1,0 +1,72 @@
+name: Windows legacy desktop
+on:
+  push:
+    branches: [main]
+    paths: ['src-windows/legacy/**', 'scripts/legacy/**', 'scripts/build-windows-legacy.py', '.github/workflows/windows-legacy.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned build tools
+        run: npm ci --prefix scripts/legacy
+      - name: Build portable XP-targeted x86 package
+        run: python scripts/build-windows-legacy.py
+      - name: Test legacy runtime, screens, match and save
+        shell: pwsh
+        run: |
+          $app = "$PWD/dist/windows-legacy/Brasfoot-Revenge-Legacy"
+          $env:BRASFOOT_LEGACY_TEST = '1'
+          $profile = "$env:RUNNER_TEMP/brasfoot-legacy-profile"
+          foreach ($mode in @('--legacy-smoke-test', '--legacy-resume-test')) {
+            $env:BRASFOOT_LEGACY_RESUME = if ($mode -eq '--legacy-resume-test') { '1' } else { '0' }
+            $report = "$app/legacy-test-result.txt"
+            Remove-Item $report -ErrorAction SilentlyContinue
+            $process = Start-Process "$app/BrasfootRevenge.exe" -WorkingDirectory $app -ArgumentList "--user-data-dir=$profile", $mode -PassThru
+            $deadline = (Get-Date).AddSeconds(120)
+            $passed = $false
+            do {
+              Start-Sleep -Seconds 1
+              if (Test-Path $report) {
+                $text = Get-Content $report -Raw
+                if ($text -match '(?m)^FAIL') { throw $text }
+                if ($text -match '(?m)^PASS\s*$') { Write-Host $text; $passed = $true; break }
+              }
+            } while ((Get-Date) -lt $deadline)
+            if (!$passed) {
+              if (!$process.HasExited) { $process.Kill() }
+              if (Test-Path $report) { Get-Content $report }
+              throw "Legacy application test timed out: $mode"
+            }
+            if (!$process.WaitForExit(15000)) { $process.Kill(); throw 'Test did not close the application' }
+          }
+      - name: Existing match regressions
+        shell: pwsh
+        run: |
+          node scripts/test-live-match.cjs
+          if ($LASTEXITCODE -ne 0) { throw 'Live match regression failed' }
+          node scripts/test-concurrent-matches.cjs
+          if ($LASTEXITCODE -ne 0) { throw 'Concurrent match regression failed' }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Brasfoot-Revenge-Windows-Legacy-x86
+          path: |
+            dist/windows-legacy/Brasfoot-Revenge-Windows-Legacy-x86.zip
+            dist/windows-legacy/SHA256SUMS-LEGACY.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Windows-legacy-diagnostics
+          path: |
+            dist/windows-legacy/Brasfoot-Revenge-Legacy/legacy-test-result.txt
+            dist/windows-legacy/Brasfoot-Revenge-Legacy/legacy-test-screen.png

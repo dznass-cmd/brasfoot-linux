@@ -31,6 +31,13 @@ Reimplementação completa do clássico **Brasfoot** (Edição **Revenge**) comp
 
 [Compilação, dependências e verificação no Windows](docs/WINDOWS.md).
 
+### Windows XP: edição legada separada
+
+[Baixar a edição legada experimental](https://github.com/dznass-cmd/brasfoot-revenge/releases/tag/v1.1.0-legacy).
+
+Há uma edição portátil de 32 bits destinada ao **Windows XP SP3 e posteriores**, com runtime próprio e sem WebView2 ou .NET. Ela mantém o código do jogo legível em JavaScript, HTML e CSS. O funcionamento em XP real ainda depende de validação nesse sistema; consulte os [requisitos, testes e instruções para editar e compilar](docs/WINDOWS-XP.md).
+
+
 Para compilar ou gerar novos pacotes a partir do código-fonte:
 ```bash
 # Gerar pacotes Linux:

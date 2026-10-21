@@ -5,6 +5,11 @@ on:
       run_id:
         description: Successful Windows desktop run ID
         required: true
+      edition:
+        description: Package edition
+        type: choice
+        options: [modern, legacy]
+        default: modern
       release_tag:
         description: Existing draft release tag
         required: true
@@ -20,26 +25,33 @@ jobs:
       GH_REPO: ${{ github.repository }}
       RUN_ID: ${{ inputs.run_id }}
       RELEASE_TAG: ${{ inputs.release_tag }}
+      EDITION: ${{ inputs.edition }}
     steps:
       - name: Verify successful source run and release target
         run: |
           gh api "repos/$GH_REPO/actions/runs/$RUN_ID" > run.json
           gh release view "$RELEASE_TAG" --json isDraft,targetCommitish > release.json
           python3 - <<'PYTHON'
-          import json
+          import json, os
           run = json.load(open('run.json'))
           release = json.load(open('release.json'))
-          assert run['conclusion'] == 'success' and run['name'] == 'Windows desktop'
+          expected = 'Windows legacy desktop' if os.environ['EDITION'] == 'legacy' else 'Windows desktop'
+          assert run['conclusion'] == 'success' and run['name'] == expected
           assert release['isDraft'] and release['targetCommitish'] == run['head_sha']
           PYTHON
       - uses: actions/download-artifact@v4
         with:
-          name: Brasfoot-Revenge-Windows-x64
+          name: ${{ inputs.edition == 'legacy' && 'Brasfoot-Revenge-Windows-Legacy-x86' || 'Brasfoot-Revenge-Windows-x64' }}
           run-id: ${{ inputs.run_id }}
           github-token: ${{ github.token }}
           path: packages
       - name: Hash and upload verified packages
         working-directory: packages
         run: |
-          sha256sum Instalador-Brasfoot-Revenge.exe Brasfoot-Revenge-Windows-Portable.zip > SHA256SUMS.txt
-          gh release upload "$RELEASE_TAG" Instalador-Brasfoot-Revenge.exe Brasfoot-Revenge-Windows-Portable.zip SHA256SUMS.txt
+          if [ "$EDITION" = legacy ]; then
+            sha256sum -c SHA256SUMS-LEGACY.txt
+            gh release upload "$RELEASE_TAG" Brasfoot-Revenge-Windows-Legacy-x86.zip SHA256SUMS-LEGACY.txt
+          else
+            sha256sum Instalador-Brasfoot-Revenge.exe Brasfoot-Revenge-Windows-Portable.zip > SHA256SUMS.txt
+            gh release upload "$RELEASE_TAG" Instalador-Brasfoot-Revenge.exe Brasfoot-Revenge-Windows-Portable.zip SHA256SUMS.txt
+          fi
