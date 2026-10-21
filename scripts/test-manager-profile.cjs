@@ -205,5 +205,5 @@ test('the app plays, saves, resumes and finishes the first fixture after a divis
   const before = clone(state); app.finalizeRound(match); assert.deepEqual(state, before);
 });
 
-fs.writeFileSync('/tmp/brasfoot-profile-preseason.json', JSON.stringify(preseason()));
+fs.writeFileSync(path.join(require('node:os').tmpdir(), 'brasfoot-profile-preseason.json'), JSON.stringify(preseason()));
 console.log(`PASS: ${cases} manager regression groups. Native fixture: /tmp/brasfoot-profile-preseason.json`);

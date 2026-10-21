@@ -285,7 +285,7 @@ try {
     totals.goalsPerMatch = Number((totals.goals / totals.matches).toFixed(3));
     totals.xGPerMatch = Number((totals.xG / totals.matches).toFixed(3));
     report.seasons.push(totals);
-    if (division.id === 'BRA_A') fs.writeFileSync('/tmp/brasfoot-engine-season-BRA_A.json', saved);
+    if (division.id === 'BRA_A') fs.writeFileSync(path.join(require('node:os').tmpdir(), 'brasfoot-engine-season-BRA_A.json'), saved);
     console.log(`PASS: ${division.id}, 38 rounds, ${totals.matches} matches, ${totals.goalsPerMatch} goals/game, ${totals.xGPerMatch} xG/game, save ${totals.saveBytes} bytes (${totals.saveUtf16Bytes} UTF-16 bytes)`);
   }
 

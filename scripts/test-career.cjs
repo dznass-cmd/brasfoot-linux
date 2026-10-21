@@ -202,7 +202,7 @@ try {
     if (season===0) {
       const legacy = clone(state);
       for(const key of ['careerVersion','careerDivisions','reserveTeams','backgroundSeasons','seasonHistory'])delete legacy[key];
-      fs.writeFileSync('/tmp/brasfoot-career-legacy-complete.json',JSON.stringify(legacy));
+      fs.writeFileSync(path.join(require('node:os').tmpdir(), 'brasfoot-career-legacy-complete.json'),JSON.stringify(legacy));
       console.log('FIXTURE: legacy completed season generated for the offline native transition test.');
     }
     let simulated = 0;
