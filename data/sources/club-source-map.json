@@ -1,0 +1,8191 @@
+{
+  "schemaVersion": 1,
+  "catalogueLeagues": [
+    "eng.1",
+    "eng.2",
+    "esp.1",
+    "esp.2",
+    "ita.1",
+    "ger.1",
+    "fra.1",
+    "ned.1",
+    "bel.1",
+    "sco.1",
+    "aus.1",
+    "ksa.1",
+    "por.1",
+    "tur.1",
+    "rus.1",
+    "aut.1",
+    "gre.1",
+    "chn.1",
+    "swe.1",
+    "den.1",
+    "nor.1",
+    "arg.1",
+    "arg.2",
+    "bra.1",
+    "bra.2",
+    "bra.copa_do_brazil",
+    "bra.camp.carioca",
+    "bra.camp.paulista",
+    "bra.camp.gaucho",
+    "bra.camp.mineiro",
+    "chi.1",
+    "uru.1",
+    "col.1",
+    "per.1",
+    "par.1",
+    "ecu.1",
+    "ven.1",
+    "bol.1",
+    "jpn.1",
+    "mex.1",
+    "usa.1",
+    "hon.1",
+    "crc.1",
+    "gua.1",
+    "slv.1",
+    "ind.1",
+    "rsa.1",
+    "uefa.champions",
+    "uefa.europa",
+    "uefa.europa.conf",
+    "uefa.champions_qual",
+    "uefa.europa_qual",
+    "uefa.europa.conf_qual",
+    "conmebol.libertadores",
+    "conmebol.sudamericana",
+    "concacaf.champions",
+    "concacaf.central.american.cup",
+    "afc.champions",
+    "afc.cup",
+    "caf.champions",
+    "caf.confed"
+  ],
+  "clubs": {
+    "1": {
+      "name": "1º de Agosto",
+      "countryId": 5,
+      "espn": {
+        "id": "19159",
+        "name": "CD Primeiro de Agosto",
+        "leagues": [
+          "caf.confed"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "2": {
+      "name": "25 Abril",
+      "countryId": 48
+    },
+    "3": {
+      "name": "Aarhus",
+      "countryId": 54,
+      "espn": {
+        "id": "7853",
+        "name": "AGF",
+        "leagues": [
+          "den.1",
+          "uefa.europa.conf",
+          "uefa.champions_qual",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "4": {
+      "name": "ABC",
+      "countryId": 29,
+      "espn": {
+        "id": "9965",
+        "name": "ABC",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "5": {
+      "name": "Aberdeen",
+      "countryId": 62,
+      "espn": {
+        "id": "263",
+        "name": "Aberdeen",
+        "leagues": [
+          "sco.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "6": {
+      "name": "Ação - MT",
+      "countryId": 29
+    },
+    "7": {
+      "name": "AEK Atenas",
+      "countryId": 78,
+      "espn": {
+        "id": "887",
+        "name": "AEK Athens",
+        "leagues": [
+          "gre.1",
+          "uefa.champions",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "8": {
+      "name": "Afogados",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/afogados-da-ingazeira/92007?epoca_id=155",
+        "name": "Afogados da Ingazeira"
+      }
+    },
+    "9": {
+      "name": "FC AGMK",
+      "countryId": 196,
+      "espn": {
+        "id": "20913",
+        "name": "AGMK",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "10": {
+      "name": "Água Santa",
+      "countryId": 29,
+      "espn": {
+        "id": "18128",
+        "name": "Água Santa",
+        "leagues": [
+          "bra.camp.paulista"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "11": {
+      "name": "Águia",
+      "countryId": 29,
+      "espn": {
+        "id": "15562",
+        "name": "Aguia de Maraba",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "12": {
+      "name": "Shabab Al-Ahli",
+      "countryId": 59,
+      "espn": {
+        "id": "790",
+        "name": "Shabab Al Ahli",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "13": {
+      "name": "Aimoré",
+      "countryId": 29,
+      "espn": {
+        "id": "17130",
+        "name": "Aimoré",
+        "leagues": [
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/aimore/24900?epoca_id=155",
+        "name": "Aimoré"
+      }
+    },
+    "14": {
+      "name": "Ajax",
+      "countryId": 85,
+      "espn": {
+        "id": "139",
+        "name": "Ajax Amsterdam",
+        "leagues": [
+          "ned.1",
+          "uefa.europa.conf",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "15": {
+      "name": "Al-Ahly Tripoli",
+      "countryId": 116,
+      "espn": {
+        "id": "18827",
+        "name": "Al Ahli Tripoli",
+        "leagues": [
+          "caf.confed"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "16": {
+      "name": "Al Ahly",
+      "countryId": 57,
+      "espn": {
+        "id": "10207",
+        "name": "Al Ahly",
+        "leagues": [
+          "caf.confed"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "17": {
+      "name": "Alajuelense",
+      "countryId": 51,
+      "espn": {
+        "id": "2057",
+        "name": "Alajuelense",
+        "leagues": [
+          "crc.1",
+          "concacaf.champions",
+          "concacaf.central.american.cup"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "18": {
+      "name": "Al-Ansar",
+      "countryId": 115,
+      "espn": {
+        "id": "21023",
+        "name": "Al Ansar",
+        "leagues": [
+          "afc.cup"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "19": {
+      "name": "Alanyaspor",
+      "countryId": 192,
+      "espn": {
+        "id": "9078",
+        "name": "Alanyaspor",
+        "leagues": [
+          "tur.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "20": {
+      "name": "Alashkert Yerevan",
+      "countryId": 12,
+      "espn": {
+        "id": "17858",
+        "name": "Alashkert FC",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "21": {
+      "name": "Alavés",
+      "countryId": 65,
+      "espn": {
+        "id": "96",
+        "name": "Alavés",
+        "leagues": [
+          "esp.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "22": {
+      "name": "Albacete",
+      "countryId": 65,
+      "espn": {
+        "id": "2737",
+        "name": "Albacete",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "23": {
+      "name": "Alcorcón",
+      "countryId": 65,
+      "espn": {
+        "id": "11121",
+        "name": "AD Alcorcón",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "24": {
+      "name": "Al-Duhail",
+      "countryId": 39,
+      "espn": {
+        "id": "12008",
+        "name": "Al Duhail",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "25": {
+      "name": "Alianza Lima",
+      "countryId": 151,
+      "espn": {
+        "id": "2680",
+        "name": "Alianza Lima",
+        "leagues": [
+          "per.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "26": {
+      "name": "Alianza",
+      "countryId": 58,
+      "espn": {
+        "id": "7225",
+        "name": "Alianza FC",
+        "leagues": [
+          "slv.1",
+          "concacaf.central.american.cup"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "27": {
+      "name": "Almería",
+      "countryId": 65,
+      "espn": {
+        "id": "6832",
+        "name": "Almería",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "28": {
+      "name": "Al-Merrikh",
+      "countryId": 178,
+      "espn": {
+        "id": "18831",
+        "name": "Al-Merrikh",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "29": {
+      "name": "Al Mokawloon",
+      "countryId": 57
+    },
+    "30": {
+      "name": "Al-Nasr",
+      "countryId": 116
+    },
+    "31": {
+      "name": "Al Nassr",
+      "countryId": 9,
+      "espn": {
+        "id": "817",
+        "name": "Al Nassr",
+        "leagues": [
+          "ksa.1",
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "32": {
+      "name": "Al-Rayyan",
+      "countryId": 39,
+      "espn": {
+        "id": "7527",
+        "name": "Al-Rayyan SC",
+        "leagues": [
+          "afc.cup"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "33": {
+      "name": "Al-Sadd",
+      "countryId": 39,
+      "espn": {
+        "id": "7135",
+        "name": "Al Sadd",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "34": {
+      "name": "Al Shorta",
+      "countryId": 99,
+      "espn": {
+        "id": "9655",
+        "name": "Al-Shorta",
+        "leagues": [
+          "afc.cup"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "35": {
+      "name": "Altos",
+      "countryId": 29,
+      "espn": {
+        "id": "18433",
+        "name": "Altos",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "36": {
+      "name": "Al Wahda",
+      "countryId": 59,
+      "espn": {
+        "id": "7134",
+        "name": "Al Wahda FC",
+        "leagues": [
+          "afc.cup"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "37": {
+      "name": "Al-Wahda Damasco",
+      "countryId": 174
+    },
+    "38": {
+      "name": "Always Ready",
+      "countryId": 26,
+      "espn": {
+        "id": "19425",
+        "name": "Always Ready",
+        "leagues": [
+          "bol.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "39": {
+      "name": "Al-Wehdat",
+      "countryId": 108,
+      "espn": {
+        "id": "20860",
+        "name": "Al Wehdat",
+        "leagues": [
+          "ksa.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "40": {
+      "name": "Al-Ahli",
+      "countryId": 9,
+      "espn": {
+        "id": "8346",
+        "name": "Al Ahli",
+        "leagues": [
+          "ksa.1",
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "41": {
+      "name": "Al Ain",
+      "countryId": 59,
+      "espn": {
+        "id": "7128",
+        "name": "Al Ain",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "42": {
+      "name": "Al-Hilal",
+      "countryId": 9,
+      "espn": {
+        "id": "929",
+        "name": "Al Hilal",
+        "leagues": [
+          "ksa.1",
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "43": {
+      "name": "Al-Wehda",
+      "countryId": 9,
+      "espn": {
+        "id": "21835",
+        "name": "Al Wehda",
+        "leagues": [
+          "ksa.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "44": {
+      "name": "Amazonas FC",
+      "countryId": 29,
+      "espn": {
+        "id": "21888",
+        "name": "Amazonas",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "45": {
+      "name": "América de Cali",
+      "countryId": 46,
+      "espn": {
+        "id": "8109",
+        "name": "América de Cali",
+        "leagues": [
+          "col.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "46": {
+      "name": "América-MG",
+      "countryId": 29,
+      "espn": {
+        "id": "6154",
+        "name": "América Mineiro",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil",
+          "bra.camp.mineiro"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "47": {
+      "name": "América RN",
+      "countryId": 29,
+      "espn": {
+        "id": "7634",
+        "name": "América-RN",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "48": {
+      "name": "América",
+      "countryId": 131,
+      "espn": {
+        "id": "227",
+        "name": "América",
+        "leagues": [
+          "mex.1",
+          "concacaf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "49": {
+      "name": "Anápolis",
+      "countryId": 29,
+      "espn": {
+        "id": "18424",
+        "name": "Anápolis",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "50": {
+      "name": "Anderlecht",
+      "countryId": 21,
+      "espn": {
+        "id": "441",
+        "name": "Anderlecht",
+        "leagues": [
+          "bel.1",
+          "uefa.europa",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "51": {
+      "name": "Anorthosis Famagusta",
+      "countryId": 44,
+      "espn": {
+        "id": "2550",
+        "name": "Anorthosis",
+        "leagues": [
+          "cyp.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "52": {
+      "name": "Antigua GFC",
+      "countryId": 79,
+      "espn": {
+        "id": "7253",
+        "name": "Antigua GFC",
+        "leagues": [
+          "gua.1",
+          "concacaf.central.american.cup"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "53": {
+      "name": "Antofagasta",
+      "countryId": 42,
+      "espn": {
+        "id": "6071",
+        "name": "Antofagasta",
+        "leagues": [
+          "chi.1"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/antofagasta/2277?epoca_id=155",
+        "name": "Antofagasta"
+      }
+    },
+    "54": {
+      "name": "Aparecidense",
+      "countryId": 29,
+      "espn": {
+        "id": "18188",
+        "name": "Aparecidense",
+        "leagues": [
+          "bra.3"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/aparecidense/3111?epoca_id=155",
+        "name": "Aparecidense"
+      }
+    },
+    "55": {
+      "name": "APOEL",
+      "countryId": 44,
+      "espn": {
+        "id": "2497",
+        "name": "Apoel Nicosia",
+        "leagues": [
+          "cyp.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "56": {
+      "name": "Apollon Limassol",
+      "countryId": 44,
+      "espn": {
+        "id": "525",
+        "name": "Apollon Limassol",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "57": {
+      "name": "Ararat-Armenia",
+      "countryId": 12,
+      "espn": {
+        "id": "20024",
+        "name": "Ararat-Armenia",
+        "leagues": [
+          "uefa.europa",
+          "uefa.champions_qual",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "58": {
+      "name": "Arcahaie",
+      "countryId": 84
+    },
+    "59": {
+      "name": "Argentinos Juniors",
+      "countryId": 11,
+      "espn": {
+        "id": "3",
+        "name": "Argentinos Juniors",
+        "leagues": [
+          "arg.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "60": {
+      "name": "Aris Limassol",
+      "countryId": 44,
+      "espn": {
+        "id": "21530",
+        "name": "Aris Limassol",
+        "leagues": [
+          "cyp.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "61": {
+      "name": "Aris ",
+      "countryId": 78,
+      "espn": {
+        "id": "11553",
+        "name": "Aris",
+        "leagues": [
+          "gre.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "62": {
+      "name": "Arsenal",
+      "countryId": 97,
+      "espn": {
+        "id": "359",
+        "name": "Arsenal",
+        "leagues": [
+          "eng.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "63": {
+      "name": "Arsenal Sarandi",
+      "countryId": 11,
+      "espn": {
+        "id": "2635",
+        "name": "Arsenal Sarandi",
+        "leagues": [
+          "arg.3"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "64": {
+      "name": "ASA",
+      "countryId": 29,
+      "espn": {
+        "id": "6196",
+        "name": "ASA",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "65": {
+      "name": "Asante Kotoko",
+      "countryId": 75,
+      "espn": {
+        "id": "18606",
+        "name": "Asante Kotoko",
+        "leagues": [
+          "gha.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "66": {
+      "name": "As Otohô",
+      "countryId": 47,
+      "espn": {
+        "id": "19437",
+        "name": "Otôho d'Oyo",
+        "leagues": [
+          "caf.confed"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "67": {
+      "name": "ASSU",
+      "countryId": 29
+    },
+    "68": {
+      "name": "Astana",
+      "countryId": 40,
+      "espn": {
+        "id": "12124",
+        "name": "FC Astana",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "69": {
+      "name": "Atalanta",
+      "countryId": 104,
+      "espn": {
+        "id": "105",
+        "name": "Atalanta",
+        "leagues": [
+          "ita.1",
+          "uefa.europa.conf",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "70": {
+      "name": "Athletic Club",
+      "countryId": 29,
+      "espn": {
+        "id": "20851",
+        "name": "Athletic",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil",
+          "bra.camp.mineiro"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "71": {
+      "name": "Atlanta United",
+      "countryId": 68,
+      "espn": {
+        "id": "18418",
+        "name": "Atlanta United FC",
+        "leagues": [
+          "usa.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "72": {
+      "name": "Atlético Alagoinhas",
+      "countryId": 29,
+      "espn": {
+        "id": "21550",
+        "name": "Atletico Alagoinhas",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "73": {
+      "name": "Athletic Bilbao",
+      "countryId": 65,
+      "espn": {
+        "id": "93",
+        "name": "Athletic Club",
+        "leagues": [
+          "esp.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "74": {
+      "name": "Atlético-CE",
+      "countryId": 29,
+      "espn": {
+        "id": "18427",
+        "name": "Atlético Cearense",
+        "leagues": [
+          "bra.3"
+        ],
+        "matchMethod": "reviewed"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/atletico-cearense/3519?epoca_id=155",
+        "name": "Atlético Cearense"
+      }
+    },
+    "75": {
+      "name": "Atlético-GO",
+      "countryId": 29,
+      "espn": {
+        "id": "10357",
+        "name": "Atlético Goianiense",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "76": {
+      "name": "Atlético Madri ",
+      "countryId": 65,
+      "espn": {
+        "id": "1068",
+        "name": "Atlético Madrid",
+        "leagues": [
+          "esp.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "77": {
+      "name": "Atlético-MG",
+      "countryId": 29,
+      "espn": {
+        "id": "7632",
+        "name": "Atlético-MG",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.mineiro",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "78": {
+      "name": "Atlético-PB",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/atletico-pb/3130?epoca_id=155",
+        "name": "Atlético-PB"
+      }
+    },
+    "79": {
+      "name": "Athletico-PR",
+      "countryId": 29,
+      "espn": {
+        "id": "3458",
+        "name": "Athletico-PR",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "80": {
+      "name": "Auckland City",
+      "countryId": 143,
+      "espn": {
+        "id": "7279",
+        "name": "Auckland City",
+        "leagues": [
+          "fifa.intercontinental_cup"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/auckland-city/8435?epoca_id=155",
+        "name": "Auckland City"
+      }
+    },
+    "81": {
+      "name": "Audax RJ",
+      "countryId": 29
+    },
+    "82": {
+      "name": "Audax Italiano",
+      "countryId": 42,
+      "espn": {
+        "id": "4138",
+        "name": "Audax Italiano",
+        "leagues": [
+          "chi.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "83": {
+      "name": "Avaí",
+      "countryId": 29,
+      "espn": {
+        "id": "9966",
+        "name": "Avaí",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "84": {
+      "name": "Ayacucho",
+      "countryId": 151,
+      "espn": {
+        "id": "10116",
+        "name": "Ayacucho FC",
+        "leagues": [
+          "per.1"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/ayacucho-fc/23222?epoca_id=155",
+        "name": "Ayacucho FC"
+      }
+    },
+    "85": {
+      "name": "AZ Alkmaar",
+      "countryId": 85,
+      "espn": {
+        "id": "140",
+        "name": "AZ Alkmaar",
+        "leagues": [
+          "ned.1",
+          "uefa.europa"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "86": {
+      "name": "Azuriz",
+      "countryId": 29,
+      "espn": {
+        "id": "21384",
+        "name": "Azuriz",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "87": {
+      "name": "B36 Tórshavn",
+      "countryId": 92,
+      "espn": {
+        "id": "2510",
+        "name": "B36 Torshavn",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "88": {
+      "name": "Bacabal",
+      "countryId": 29
+    },
+    "89": {
+      "name": "Backa Topola",
+      "countryId": 171
+    },
+    "90": {
+      "name": "Bahia",
+      "countryId": 29,
+      "espn": {
+        "id": "9967",
+        "name": "Bahia",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "91": {
+      "name": "Bahia de Feira",
+      "countryId": 29,
+      "espn": {
+        "id": "17312",
+        "name": "Bahia de Feira",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "92": {
+      "name": "Bala Town",
+      "countryId": 145,
+      "espn": {
+        "id": "10496",
+        "name": "Bala Town",
+        "leagues": [
+          "wal.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "93": {
+      "name": "Bali United",
+      "countryId": 96,
+      "espn": {
+        "id": "17733",
+        "name": "Bali United",
+        "leagues": [
+          "idn.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "94": {
+      "name": "Bangu",
+      "countryId": 29,
+      "espn": {
+        "id": "10265",
+        "name": "Bangu",
+        "leagues": [
+          "bra.camp.carioca"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "95": {
+      "name": "Barcelona-BA",
+      "countryId": 29,
+      "espn": {
+        "id": "22562",
+        "name": "Barcelona BA",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "96": {
+      "name": "Barcelona Guayaquil",
+      "countryId": 60,
+      "espn": {
+        "id": "2686",
+        "name": "Barcelona SC",
+        "leagues": [
+          "ecu.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "97": {
+      "name": "Barcelona",
+      "countryId": 65,
+      "espn": {
+        "id": "83",
+        "name": "Barcelona",
+        "leagues": [
+          "esp.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "98": {
+      "name": "Barra-SC",
+      "countryId": 29,
+      "espn": {
+        "id": "131708",
+        "name": "Barra FC",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "99": {
+      "name": "Barry Town",
+      "countryId": 145,
+      "espn": {
+        "id": "621",
+        "name": "Barry Town",
+        "leagues": [
+          "wal.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "100": {
+      "name": "Istanbul Basaksehir",
+      "countryId": 192,
+      "espn": {
+        "id": "7914",
+        "name": "Istanbul Basaksehir",
+        "leagues": [
+          "tur.1",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "101": {
+      "name": "Basel",
+      "countryId": 180,
+      "espn": {
+        "id": "989",
+        "name": "FC Basel",
+        "leagues": [
+          "sui.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "102": {
+      "name": "BATE Borisov",
+      "countryId": 25,
+      "espn": {
+        "id": "497",
+        "name": "BATE Borisov",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "103": {
+      "name": "Bayer Leverkusen",
+      "countryId": 3,
+      "espn": {
+        "id": "131",
+        "name": "Bayer Leverkusen",
+        "leagues": [
+          "ger.1",
+          "uefa.europa"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "104": {
+      "name": "Bayern Munique",
+      "countryId": 3,
+      "espn": {
+        "id": "132",
+        "name": "Bayern Munich",
+        "leagues": [
+          "ger.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "105": {
+      "name": "Beijing Guoan",
+      "countryId": 43,
+      "espn": {
+        "id": "2052",
+        "name": "Beijing Guoan",
+        "leagues": [
+          "chn.1",
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "106": {
+      "name": "Beitar Jerusalem",
+      "countryId": 103,
+      "espn": {
+        "id": "5218",
+        "name": "Beitar Jerusalem",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "107": {
+      "name": "Benfica",
+      "countryId": 154,
+      "espn": {
+        "id": "1929",
+        "name": "Benfica",
+        "leagues": [
+          "por.1",
+          "uefa.europa",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "108": {
+      "name": "Bengaluru",
+      "countryId": 95,
+      "espn": {
+        "id": "18851",
+        "name": "Bengaluru FC",
+        "leagues": [
+          "ind.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "109": {
+      "name": "RS Berkane",
+      "countryId": 129,
+      "espn": {
+        "id": "19221",
+        "name": "RSB Berkane",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "110": {
+      "name": "Besiktas",
+      "countryId": 192,
+      "espn": {
+        "id": "1895",
+        "name": "Besiktas",
+        "leagues": [
+          "tur.1",
+          "uefa.europa",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "111": {
+      "name": "Real Bétis",
+      "countryId": 65,
+      "espn": {
+        "id": "244",
+        "name": "Real Betis",
+        "leagues": [
+          "esp.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "112": {
+      "name": "Boavista",
+      "countryId": 29,
+      "espn": {
+        "id": "900",
+        "name": "Boavista",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.carioca"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "113": {
+      "name": "Boca Juniors",
+      "countryId": 11,
+      "espn": {
+        "id": "5",
+        "name": "Boca Juniors",
+        "leagues": [
+          "arg.1",
+          "conmebol.libertadores",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "114": {
+      "name": "Boca Junior",
+      "countryId": 29
+    },
+    "115": {
+      "name": "Bodo Glimt",
+      "countryId": 142,
+      "espn": {
+        "id": "2980",
+        "name": "Bodo/Glimt",
+        "leagues": [
+          "nor.1",
+          "uefa.champions",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "116": {
+      "name": "Bohemians",
+      "countryId": 100,
+      "espn": {
+        "id": "615",
+        "name": "Bohemians",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "117": {
+      "name": "Bolívar",
+      "countryId": 26,
+      "espn": {
+        "id": "2681",
+        "name": "Bolívar",
+        "leagues": [
+          "bol.1",
+          "conmebol.libertadores",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "118": {
+      "name": "Borac Banja Luka",
+      "countryId": 27,
+      "espn": {
+        "id": "20710",
+        "name": "Borac Banja Luka",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.champions_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "119": {
+      "name": "Borussia Dortmund",
+      "countryId": 3,
+      "espn": {
+        "id": "124",
+        "name": "Borussia Dortmund",
+        "leagues": [
+          "ger.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "120": {
+      "name": "Botafogo PB",
+      "countryId": 29,
+      "espn": {
+        "id": "17317",
+        "name": "Botafogo PB",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "121": {
+      "name": "Botafogo",
+      "countryId": 29,
+      "espn": {
+        "id": "6086",
+        "name": "Botafogo",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.carioca",
+          "conmebol.libertadores",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "122": {
+      "name": "Botafogo SP",
+      "countryId": 29,
+      "espn": {
+        "id": "10281",
+        "name": "Botafogo-SP",
+        "leagues": [
+          "bra.2",
+          "bra.camp.paulista"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "123": {
+      "name": "Botev Plovdiv",
+      "countryId": 31,
+      "espn": {
+        "id": "7293",
+        "name": "Botev Plovdiv",
+        "leagues": [
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "124": {
+      "name": "FC Botosani ",
+      "countryId": 160,
+      "espn": {
+        "id": "9682",
+        "name": "FC Botosani",
+        "leagues": [
+          "rou.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "125": {
+      "name": "RB Bragantino",
+      "countryId": 29,
+      "espn": {
+        "id": "6079",
+        "name": "Red Bull Bragantino",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.paulista",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "126": {
+      "name": "Bragantino-PA",
+      "countryId": 29,
+      "espn": {
+        "id": "19398",
+        "name": "Bragantino PA",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/bragantino-pa/3155",
+        "name": "Bragantino-PA"
+      }
+    },
+    "127": {
+      "name": "Brasil de Pelotas",
+      "countryId": 29,
+      "espn": {
+        "id": "17134",
+        "name": "Brasil de Pelotas",
+        "leagues": [
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "128": {
+      "name": "Breidablik",
+      "countryId": 102,
+      "espn": {
+        "id": "8250",
+        "name": "Breidablik",
+        "leagues": [
+          "uefa.europa.conf"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/breidablik/7693?epoca_id=155",
+        "name": "Breidablik"
+      }
+    },
+    "129": {
+      "name": "Brisbane Roar",
+      "countryId": 14,
+      "espn": {
+        "id": "5326",
+        "name": "Brisbane Roar",
+        "leagues": [
+          "aus.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "130": {
+      "name": "Bröndby",
+      "countryId": 54,
+      "espn": {
+        "id": "575",
+        "name": "Brøndby IF",
+        "leagues": [
+          "den.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "131": {
+      "name": "Club Brugge",
+      "countryId": 21,
+      "espn": {
+        "id": "570",
+        "name": "Club Brugge",
+        "leagues": [
+          "bel.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "132": {
+      "name": "Brusque",
+      "countryId": 29,
+      "espn": {
+        "id": "18428",
+        "name": "Brusque",
+        "leagues": [
+          "bra.3"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/brusque/15724?epoca_id=155",
+        "name": "Brusque"
+      }
+    },
+    "133": {
+      "name": "Budapest Honvéd",
+      "countryId": 88
+    },
+    "134": {
+      "name": "Buducnost",
+      "countryId": 105,
+      "espn": {
+        "id": "7822",
+        "name": "Buducnost Podgorica",
+        "leagues": [
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "135": {
+      "name": "Burgos",
+      "countryId": 65,
+      "espn": {
+        "id": "12597",
+        "name": "Burgos",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "136": {
+      "name": "Buriram United",
+      "countryId": 183,
+      "espn": {
+        "id": "7138",
+        "name": "Buriram United",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "137": {
+      "name": "Cádiz",
+      "countryId": 65,
+      "espn": {
+        "id": "3842",
+        "name": "Cádiz",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "138": {
+      "name": "Caldense",
+      "countryId": 29,
+      "espn": {
+        "id": "17318",
+        "name": "Caldense",
+        "leagues": [
+          "bra.camp.mineiro"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/caldense/3166?epoca_id=155",
+        "name": "Caldense"
+      }
+    },
+    "139": {
+      "name": "Camboriú",
+      "countryId": 29,
+      "espn": {
+        "id": "21866",
+        "name": "Camboriu",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "140": {
+      "name": "Campinense",
+      "countryId": 29,
+      "espn": {
+        "id": "7509",
+        "name": "Campinense PB",
+        "leagues": [
+          "bra.3"
+        ],
+        "matchMethod": "reviewed"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/campinense/3171?epoca_id=155",
+        "name": "Campinense"
+      }
+    },
+    "141": {
+      "name": "Caracas",
+      "countryId": 198,
+      "espn": {
+        "id": "4811",
+        "name": "Caracas FC",
+        "leagues": [
+          "ven.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "142": {
+      "name": "Cartagena",
+      "countryId": 65,
+      "espn": {
+        "id": "5419",
+        "name": "FC Cartagena",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "143": {
+      "name": "Caruaru City",
+      "countryId": 29
+    },
+    "144": {
+      "name": "Cascavel",
+      "countryId": 29,
+      "espn": {
+        "id": "20898",
+        "name": "Cascavel",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/fc-cascavel/43195",
+        "name": "FC Cascavel"
+      }
+    },
+    "145": {
+      "name": "Castanhal",
+      "countryId": 29
+    },
+    "146": {
+      "name": "Caucaia",
+      "countryId": 29,
+      "espn": {
+        "id": "20291",
+        "name": "Caucaia",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/caucaia/43319?epoca_id=155",
+        "name": "Caucaia"
+      }
+    },
+    "147": {
+      "name": "Cavalry",
+      "countryId": 38,
+      "espn": {
+        "id": "22161",
+        "name": "Cavalry FC",
+        "leagues": [
+          "concacaf.champions"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/cavalry-fc/227839?epoca_id=155",
+        "name": "Cavalry FC"
+      }
+    },
+    "148": {
+      "name": "Caxias",
+      "countryId": 29,
+      "espn": {
+        "id": "17131",
+        "name": "Caxias do Sul",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "149": {
+      "name": "Ceará",
+      "countryId": 29,
+      "espn": {
+        "id": "9969",
+        "name": "Ceará",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "150": {
+      "name": "NK Celje",
+      "countryId": 64,
+      "espn": {
+        "id": "3362",
+        "name": "NK Celje",
+        "leagues": [
+          "uefa.europa",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "151": {
+      "name": "Celta de Vigo",
+      "countryId": 65,
+      "espn": {
+        "id": "85",
+        "name": "Celta Vigo",
+        "leagues": [
+          "esp.1",
+          "uefa.europa"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "152": {
+      "name": "Central",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/central/3187?epoca_id=155",
+        "name": "Central"
+      }
+    },
+    "153": {
+      "name": "CEO",
+      "countryId": 29
+    },
+    "154": {
+      "name": "Cerezo Osaka",
+      "countryId": 107,
+      "espn": {
+        "id": "7109",
+        "name": "Cerezo Osaka",
+        "leagues": [
+          "jpn.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "155": {
+      "name": "Cerro Largo",
+      "countryId": 195,
+      "espn": {
+        "id": "9902",
+        "name": "Cerro Largo",
+        "leagues": [
+          "uru.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "156": {
+      "name": "Cerro Porteño",
+      "countryId": 150,
+      "espn": {
+        "id": "2671",
+        "name": "Cerro Porteño",
+        "leagues": [
+          "par.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "157": {
+      "name": "Univ. César Vallejo",
+      "countryId": 151,
+      "espn": {
+        "id": "5567",
+        "name": "César Vallejo",
+        "leagues": [
+          "per.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "158": {
+      "name": "CFR Cluj",
+      "countryId": 160,
+      "espn": {
+        "id": "5260",
+        "name": "CFR Cluj-Napoca",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "159": {
+      "name": "Chapecoense",
+      "countryId": 29,
+      "espn": {
+        "id": "9318",
+        "name": "Chapecoense",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "160": {
+      "name": "Charleroi",
+      "countryId": 21,
+      "espn": {
+        "id": "3616",
+        "name": "Royal Charleroi SC",
+        "leagues": [
+          "bel.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "161": {
+      "name": "Chelsea",
+      "countryId": 97,
+      "espn": {
+        "id": "363",
+        "name": "Chelsea",
+        "leagues": [
+          "eng.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "162": {
+      "name": "Cianorte",
+      "countryId": 29,
+      "espn": {
+        "id": "4909",
+        "name": "Cianorte",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "163": {
+      "name": "Cibao",
+      "countryId": 158,
+      "espn": {
+        "id": "18967",
+        "name": "Cibao FC",
+        "leagues": [
+          "concacaf.league"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "164": {
+      "name": "Cienciano",
+      "countryId": 151,
+      "espn": {
+        "id": "3372",
+        "name": "Cienciano del Cusco",
+        "leagues": [
+          "per.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "165": {
+      "name": "Guabirá",
+      "countryId": 26,
+      "espn": {
+        "id": "9497",
+        "name": "Guabirá",
+        "leagues": [
+          "bol.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "166": {
+      "name": "Coleraine",
+      "countryId": 101,
+      "espn": {
+        "id": "2723",
+        "name": "Coleraine",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "167": {
+      "name": "Colo-Colo",
+      "countryId": 42,
+      "espn": {
+        "id": "2688",
+        "name": "Colo Colo",
+        "leagues": [
+          "chi.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "168": {
+      "name": "Colón",
+      "countryId": 11,
+      "espn": {
+        "id": "7",
+        "name": "Colón (Santa Fe)",
+        "leagues": [
+          "arg.2"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "169": {
+      "name": "Columbus Crew",
+      "countryId": 68,
+      "espn": {
+        "id": "183",
+        "name": "Columbus Crew",
+        "leagues": [
+          "usa.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "170": {
+      "name": "Comunicaciones",
+      "countryId": 79,
+      "espn": {
+        "id": "7257",
+        "name": "Comunicaciones",
+        "leagues": [
+          "gua.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "171": {
+      "name": "Concórdia",
+      "countryId": 29,
+      "espn": {
+        "id": "130868",
+        "name": "Concordia",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "172": {
+      "name": "Confiança",
+      "countryId": 29,
+      "espn": {
+        "id": "4875",
+        "name": "Confiança",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "173": {
+      "name": "Connah's Quay",
+      "countryId": 145,
+      "espn": {
+        "id": "7591",
+        "name": "Connah's Quay",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "174": {
+      "name": "Copenhague",
+      "countryId": 54,
+      "espn": {
+        "id": "909",
+        "name": "F.C. København",
+        "leagues": [
+          "den.1",
+          "uefa.europa.conf",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "175": {
+      "name": "Cordino",
+      "countryId": 29,
+      "espn": {
+        "id": "18961",
+        "name": "Cordino",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/cordino/50293?epoca_id=155",
+        "name": "Cordino"
+      }
+    },
+    "176": {
+      "name": "Corinthians",
+      "countryId": 29,
+      "espn": {
+        "id": "874",
+        "name": "Corinthians",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.paulista",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "177": {
+      "name": "Coritiba",
+      "countryId": 29,
+      "espn": {
+        "id": "3456",
+        "name": "Coritiba",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "178": {
+      "name": "Coruripe",
+      "countryId": 29
+    },
+    "179": {
+      "name": "Costa do Sol",
+      "countryId": 133,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/costa-do-sol?epoca_id=155",
+        "name": "Costa do Sol"
+      }
+    },
+    "180": {
+      "name": "Coton Sport",
+      "countryId": 36,
+      "espn": {
+        "id": "7986",
+        "name": "Coton Sport Garoua",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "181": {
+      "name": "CRAC",
+      "countryId": 29
+    },
+    "182": {
+      "name": "Cracovia",
+      "countryId": 152,
+      "espn": {
+        "id": "4093",
+        "name": "Cracovia",
+        "leagues": [
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "183": {
+      "name": "Universitatea Craiova",
+      "countryId": 160,
+      "espn": {
+        "id": "8089",
+        "name": "CSU Craiova",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.champions_qual",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "184": {
+      "name": "Crato",
+      "countryId": 29
+    },
+    "185": {
+      "name": "CR Belouizdad",
+      "countryId": 10,
+      "espn": {
+        "id": "20853",
+        "name": "CR Belouizdad",
+        "leagues": [
+          "caf.confed"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "186": {
+      "name": "CRB",
+      "countryId": 29,
+      "espn": {
+        "id": "9970",
+        "name": "CRB",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "187": {
+      "name": "Criciúma",
+      "countryId": 29,
+      "espn": {
+        "id": "9971",
+        "name": "Criciúma",
+        "leagues": [
+          "bra.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "188": {
+      "name": "Cruz Azul",
+      "countryId": 131,
+      "espn": {
+        "id": "218",
+        "name": "Cruz Azul",
+        "leagues": [
+          "mex.1",
+          "concacaf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "189": {
+      "name": "Cruzeiro-AL",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/cruzeiro-al/24523?epoca_id=155",
+        "name": "Cruzeiro-AL"
+      }
+    },
+    "190": {
+      "name": "Cruzeiro",
+      "countryId": 29,
+      "espn": {
+        "id": "2022",
+        "name": "Cruzeiro",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.mineiro",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "191": {
+      "name": "CSA",
+      "countryId": 29,
+      "espn": {
+        "id": "7531",
+        "name": "CSA",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "192": {
+      "name": "CSE",
+      "countryId": 29,
+      "espn": {
+        "id": "130864",
+        "name": "CSE",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/cse/3218?epoca_id=155",
+        "name": "CSE"
+      }
+    },
+    "193": {
+      "name": "CSKA Moscow",
+      "countryId": 162,
+      "espn": {
+        "id": "1963",
+        "name": "CSKA Moscow",
+        "leagues": [
+          "rus.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "194": {
+      "name": "CSKA Sofia",
+      "countryId": 31,
+      "espn": {
+        "id": "10834",
+        "name": "CSKA Sofia",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "195": {
+      "name": "Cuiabá",
+      "countryId": 29,
+      "espn": {
+        "id": "17313",
+        "name": "Cuiabá",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "196": {
+      "name": "Dunajská Streda",
+      "countryId": 63,
+      "espn": {
+        "id": "19247",
+        "name": "Dunajska Streda",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "197": {
+      "name": "Daegu",
+      "countryId": 49,
+      "espn": {
+        "id": "6974",
+        "name": "Daegu FC",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/daegu?epoca_id=155",
+        "name": "Daegu"
+      }
+    },
+    "198": {
+      "name": "Dinamo Batumi",
+      "countryId": 76,
+      "espn": {
+        "id": "12344",
+        "name": "Dinamo Batumi",
+        "leagues": [
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "199": {
+      "name": "Debrecen",
+      "countryId": 88,
+      "espn": {
+        "id": "532",
+        "name": "Debrecen",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "200": {
+      "name": "Defensa y Justicia",
+      "countryId": 11,
+      "espn": {
+        "id": "8950",
+        "name": "Defensa y Justicia",
+        "leagues": [
+          "arg.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "201": {
+      "name": "Delfín",
+      "countryId": 60,
+      "espn": {
+        "id": "1011",
+        "name": "Delfín",
+        "leagues": [
+          "ecu.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "202": {
+      "name": "Desportivo Aliança",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/desportivo-alianca/94398?epoca_id=155",
+        "name": "Desportivo Aliança"
+      }
+    },
+    "203": {
+      "name": "La Guaira",
+      "countryId": 198,
+      "espn": {
+        "id": "17090",
+        "name": "Deportivo La Guaira",
+        "leagues": [
+          "ven.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "204": {
+      "name": "Deportes Tolima",
+      "countryId": 46,
+      "espn": {
+        "id": "5489",
+        "name": "Deportes Tolima",
+        "leagues": [
+          "col.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "205": {
+      "name": "Deportivo Cali",
+      "countryId": 46,
+      "espn": {
+        "id": "2672",
+        "name": "Deportivo Cali",
+        "leagues": [
+          "col.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "206": {
+      "name": "La Coruña",
+      "countryId": 65
+    },
+    "207": {
+      "name": "Deportivo Lara",
+      "countryId": 198,
+      "espn": {
+        "id": "17092",
+        "name": "Deportivo Lara",
+        "leagues": [
+          "ven.1"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/deportivo-lara/31259?epoca_id=155",
+        "name": "Deportivo Lara"
+      }
+    },
+    "208": {
+      "name": "Deportivo Saprissa",
+      "countryId": 51,
+      "espn": {
+        "id": "858",
+        "name": "Saprissa",
+        "leagues": [
+          "crc.1",
+          "concacaf.central.american.cup"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "209": {
+      "name": "Deportivo Táchira",
+      "countryId": 198,
+      "espn": {
+        "id": "4818",
+        "name": "Deportivo Táchira",
+        "leagues": [
+          "ven.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "210": {
+      "name": "Derry City",
+      "countryId": 100,
+      "espn": {
+        "id": "2712",
+        "name": "Derry City",
+        "leagues": [
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "211": {
+      "name": "Differdange 03",
+      "countryId": 120,
+      "espn": {
+        "id": "7759",
+        "name": "FC Differdange 03",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "212": {
+      "name": "Dinamo-Auto",
+      "countryId": 134
+    },
+    "213": {
+      "name": "Dinamo Kiev",
+      "countryId": 193,
+      "espn": {
+        "id": "440",
+        "name": "Dynamo Kyiv",
+        "leagues": [
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "214": {
+      "name": "Dinamo Minsk",
+      "countryId": 25,
+      "espn": {
+        "id": "2539",
+        "name": "Dinamo Minsk",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "215": {
+      "name": "Dinamo Tbilisi",
+      "countryId": 76,
+      "espn": {
+        "id": "498",
+        "name": "Dinamo Tbilisi",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "216": {
+      "name": "Dinamo Zagreb ",
+      "countryId": 52,
+      "espn": {
+        "id": "597",
+        "name": "Dinamo Zagreb",
+        "leagues": [
+          "uefa.europa",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "217": {
+      "name": "Djurgardens IF",
+      "countryId": 179,
+      "espn": {
+        "id": "2339",
+        "name": "Djurgården",
+        "leagues": [
+          "swe.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "218": {
+      "name": "Dnipro-1",
+      "countryId": 193,
+      "espn": {
+        "id": "21633",
+        "name": "SC Dnipro-1",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "219": {
+      "name": "Doce Mel",
+      "countryId": 29
+    },
+    "220": {
+      "name": "Dom Bosco",
+      "countryId": 29
+    },
+    "221": {
+      "name": "Drita Gjilan",
+      "countryId": 110,
+      "espn": {
+        "id": "19243",
+        "name": "Drita Gjilan",
+        "leagues": [
+          "uefa.champions_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "222": {
+      "name": "Dundalk",
+      "countryId": 100,
+      "espn": {
+        "id": "2559",
+        "name": "Dundalk",
+        "leagues": [
+          "irl.1"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/dundalk/3877?epoca_id=155",
+        "name": "Dundalk"
+      }
+    },
+    "223": {
+      "name": "Dynamo Brest",
+      "countryId": 25,
+      "espn": {
+        "id": "7833",
+        "name": "Dinamo Brest",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "224": {
+      "name": "Dynamos",
+      "countryId": 201,
+      "espn": {
+        "id": "19140",
+        "name": "Dynamos",
+        "leagues": [
+          "zim.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "225": {
+      "name": "Dynamo Moscow",
+      "countryId": 162,
+      "espn": {
+        "id": "596",
+        "name": "Dinamo Moscow",
+        "leagues": [
+          "rus.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "226": {
+      "name": "Eastern SC",
+      "countryId": 87,
+      "espn": {
+        "id": "18460",
+        "name": "Eastern SC",
+        "leagues": [
+          "afc.cup"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "227": {
+      "name": "Democrata GV",
+      "countryId": 29,
+      "espn": {
+        "id": "18396",
+        "name": "Democrata GV",
+        "leagues": [
+          "bra.camp.mineiro"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "228": {
+      "name": "Eibar",
+      "countryId": 65,
+      "espn": {
+        "id": "3752",
+        "name": "Eibar",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "229": {
+      "name": "Elche",
+      "countryId": 65,
+      "espn": {
+        "id": "3751",
+        "name": "Elche",
+        "leagues": [
+          "esp.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "230": {
+      "name": "Emelec",
+      "countryId": 60,
+      "espn": {
+        "id": "2668",
+        "name": "Emelec",
+        "leagues": [
+          "ecu.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "231": {
+      "name": "Engordany",
+      "countryId": 4
+    },
+    "232": {
+      "name": "Enyimba",
+      "countryId": 141,
+      "espn": {
+        "id": "2227",
+        "name": "Enyimba",
+        "leagues": [
+          "nga.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "233": {
+      "name": "Espanyol",
+      "countryId": 65,
+      "espn": {
+        "id": "88",
+        "name": "Espanyol",
+        "leagues": [
+          "esp.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "234": {
+      "name": "Esportivo",
+      "countryId": 29,
+      "espn": {
+        "id": "4904",
+        "name": "Esportivo-RS",
+        "leagues": [
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "reviewed"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/esportivo/3233?epoca_id=155",
+        "name": "Esportivo"
+      }
+    },
+    "235": {
+      "name": "ES Sétif",
+      "countryId": 10,
+      "espn": {
+        "id": "8525",
+        "name": "ES Setif",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "236": {
+      "name": "Esteghlal",
+      "countryId": 98,
+      "espn": {
+        "id": "7525",
+        "name": "Esteghlal",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "237": {
+      "name": "Estrela Vermelha",
+      "countryId": 171,
+      "espn": {
+        "id": "2290",
+        "name": "Red Star Belgrade",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.champions_qual",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "238": {
+      "name": "Mérida",
+      "countryId": 198,
+      "espn": {
+        "id": "6038",
+        "name": "Estudiantes de Mérida",
+        "leagues": [
+          "ven.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "239": {
+      "name": "Estudiantes",
+      "countryId": 11,
+      "espn": {
+        "id": "8",
+        "name": "Estudiantes de La Plata",
+        "leagues": [
+          "arg.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "240": {
+      "name": "Espérance Tunis",
+      "countryId": 190,
+      "espn": {
+        "id": "8377",
+        "name": "Esperance Sportive de Tunis",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "241": {
+      "name": "Étoile Sahel",
+      "countryId": 190,
+      "espn": {
+        "id": "2346",
+        "name": "Etoile Sahel",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "242": {
+      "name": "Europa FC",
+      "countryId": 216,
+      "espn": {
+        "id": "17503",
+        "name": "Europa FC",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "243": {
+      "name": "Everton",
+      "countryId": 42,
+      "espn": {
+        "id": "4129",
+        "name": "Everton CD",
+        "leagues": [
+          "chi.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "244": {
+      "name": "FAR Rabat",
+      "countryId": 129,
+      "espn": {
+        "id": "21801",
+        "name": "AS FAR",
+        "leagues": [
+          "caf.confed"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "245": {
+      "name": "FC Andorra",
+      "countryId": 65,
+      "espn": {
+        "id": "20179",
+        "name": "FC Andorra",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "246": {
+      "name": "FC Goa",
+      "countryId": 95,
+      "espn": {
+        "id": "18003",
+        "name": "FC GOA",
+        "leagues": [
+          "ind.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "247": {
+      "name": "FC Platinum",
+      "countryId": 201,
+      "espn": {
+        "id": "19136",
+        "name": "Platinum",
+        "leagues": [
+          "zim.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "248": {
+      "name": "Fenerbahce",
+      "countryId": 192,
+      "espn": {
+        "id": "436",
+        "name": "Fenerbahce",
+        "leagues": [
+          "tur.1",
+          "uefa.champions",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "249": {
+      "name": "Ferencváros",
+      "countryId": 88,
+      "espn": {
+        "id": "622",
+        "name": "Ferencvaros",
+        "leagues": [
+          "uefa.europa",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "250": {
+      "name": "Ferroviária",
+      "countryId": 29,
+      "espn": {
+        "id": "17326",
+        "name": "Ferroviaria",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/ferroviaria/15766?epoca_id=155",
+        "name": "Ferroviária"
+      }
+    },
+    "251": {
+      "name": "Ferroviário",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/ferroviario/3241?epoca_id=155",
+        "name": "Ferroviário"
+      }
+    },
+    "252": {
+      "name": "Feyenoord",
+      "countryId": 85,
+      "espn": {
+        "id": "142",
+        "name": "Feyenoord Rotterdam",
+        "leagues": [
+          "ned.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "253": {
+      "name": "Figueirense",
+      "countryId": 29,
+      "espn": {
+        "id": "3461",
+        "name": "Figueirense",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "254": {
+      "name": "FK Kukësi",
+      "countryId": 2,
+      "espn": {
+        "id": "15713",
+        "name": "FK Kukesi",
+        "leagues": [
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "255": {
+      "name": "Flamengo",
+      "countryId": 29,
+      "espn": {
+        "id": "819",
+        "name": "Flamengo",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.carioca",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "256": {
+      "name": "Flora Tallinn",
+      "countryId": 66,
+      "espn": {
+        "id": "12146",
+        "name": "Flora",
+        "leagues": [
+          "uefa.champions_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "257": {
+      "name": "Floresta",
+      "countryId": 29,
+      "espn": {
+        "id": "18958",
+        "name": "Floresta",
+        "leagues": [
+          "bra.3"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/floresta-ce/86295?epoca_id=155",
+        "name": "Floresta-CE"
+      }
+    },
+    "258": {
+      "name": "Floriana",
+      "countryId": 128,
+      "espn": {
+        "id": "7857",
+        "name": "Floriana FC",
+        "leagues": [
+          "uefa.champions_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "259": {
+      "name": "Fluminense Feira",
+      "countryId": 29
+    },
+    "260": {
+      "name": "Fluminense",
+      "countryId": 29,
+      "espn": {
+        "id": "3445",
+        "name": "Fluminense",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.carioca",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "261": {
+      "name": "Fola Esch",
+      "countryId": 120,
+      "espn": {
+        "id": "11439",
+        "name": "CS Fola Esch",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "262": {
+      "name": "Foolad ",
+      "countryId": 98,
+      "espn": {
+        "id": "7121",
+        "name": "Foolad",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "263": {
+      "name": "Força e Luz",
+      "countryId": 29
+    },
+    "264": {
+      "name": "Forest Rangers",
+      "countryId": 200,
+      "espn": {
+        "id": "8051",
+        "name": "Forest Rangers",
+        "leagues": [
+          "zam.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "265": {
+      "name": "Fortaleza",
+      "countryId": 29,
+      "espn": {
+        "id": "6272",
+        "name": "Fortaleza",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "266": {
+      "name": "Frei Paulistano",
+      "countryId": 29
+    },
+    "267": {
+      "name": "Eintracht Frankfurt",
+      "countryId": 3,
+      "espn": {
+        "id": "125",
+        "name": "Eintracht Frankfurt",
+        "leagues": [
+          "ger.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "268": {
+      "name": "Galatasaray ",
+      "countryId": 192,
+      "espn": {
+        "id": "432",
+        "name": "Galatasaray",
+        "leagues": [
+          "tur.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "269": {
+      "name": "Galaxy",
+      "countryId": 197
+    },
+    "270": {
+      "name": "Gamba Osaka",
+      "countryId": 107,
+      "espn": {
+        "id": "7102",
+        "name": "Gamba Osaka",
+        "leagues": [
+          "jpn.1",
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "271": {
+      "name": "Gavião Kyikatêjê",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/gaviao-kyikateje/59725?epoca_id=155",
+        "name": "Gavião Kyikatejê"
+      }
+    },
+    "272": {
+      "name": "General Caballero",
+      "countryId": 150,
+      "espn": {
+        "id": "21316",
+        "name": "General Caballero JLM",
+        "leagues": [
+          "par.1"
+        ],
+        "matchMethod": "reviewed"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/general-caballero-jlm/260457?epoca_id=155",
+        "name": "General Caballero JLM"
+      }
+    },
+    "273": {
+      "name": "Genk",
+      "countryId": 21,
+      "espn": {
+        "id": "938",
+        "name": "Racing Genk",
+        "leagues": [
+          "bel.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "274": {
+      "name": "Getafe",
+      "countryId": 65,
+      "espn": {
+        "id": "2922",
+        "name": "Getafe",
+        "leagues": [
+          "esp.1",
+          "uefa.europa.conf",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "275": {
+      "name": "Gil Vicente",
+      "countryId": 154,
+      "espn": {
+        "id": "3699",
+        "name": "Gil Vicente",
+        "leagues": [
+          "por.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "276": {
+      "name": "Gimnástic",
+      "countryId": 65,
+      "espn": {
+        "id": "4492",
+        "name": "Gimnàstic de Tarragona",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "277": {
+      "name": "Girona",
+      "countryId": 65,
+      "espn": {
+        "id": "9812",
+        "name": "Girona",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "278": {
+      "name": "Gjilani",
+      "countryId": 110,
+      "espn": {
+        "id": "20709",
+        "name": "Gjilani",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "279": {
+      "name": "Celtic",
+      "countryId": 62,
+      "espn": {
+        "id": "256",
+        "name": "Celtic",
+        "leagues": [
+          "sco.1",
+          "uefa.europa",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "280": {
+      "name": "Glentoran",
+      "countryId": 101,
+      "espn": {
+        "id": "571",
+        "name": "Glentoran",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "281": {
+      "name": "Globo FC",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/globo-fc/85176?epoca_id=155",
+        "name": "Globo FC"
+      }
+    },
+    "282": {
+      "name": "Goianésia",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/goianesia/3258?epoca_id=155",
+        "name": "Goianésia"
+      }
+    },
+    "283": {
+      "name": "Goiás",
+      "countryId": 29,
+      "espn": {
+        "id": "3395",
+        "name": "Goiás",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "284": {
+      "name": "Goiatuba",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/goiatuba-ec/3260?epoca_id=155",
+        "name": "Goiatuba EC"
+      }
+    },
+    "285": {
+      "name": "IFK Göteborg",
+      "countryId": 179,
+      "espn": {
+        "id": "2556",
+        "name": "IFK Göteborg",
+        "leagues": [
+          "swe.1",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "286": {
+      "name": "Granada",
+      "countryId": 65,
+      "espn": {
+        "id": "3747",
+        "name": "Granada",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "287": {
+      "name": "Grêmio",
+      "countryId": 29,
+      "espn": {
+        "id": "6273",
+        "name": "Grêmio",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.gaucho",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "288": {
+      "name": "Grêmio Anápolis",
+      "countryId": 29,
+      "espn": {
+        "id": "21388",
+        "name": "Gremio Anapolis",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/gremio-anapolis/9091?epoca_id=155",
+        "name": "Grêmio Anápolis"
+      }
+    },
+    "289": {
+      "name": "Grêmio Sorriso",
+      "countryId": 29
+    },
+    "290": {
+      "name": "Guaireña",
+      "countryId": 150,
+      "espn": {
+        "id": "20292",
+        "name": "Guaireña",
+        "leagues": [
+          "par.1"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/guairena-fc?epoca_id=155",
+        "name": "Guaireña FC"
+      }
+    },
+    "291": {
+      "name": "Gualaceo",
+      "countryId": 60,
+      "espn": {
+        "id": "21393",
+        "name": "Gualaceo",
+        "leagues": [
+          "ecu.1"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/gualaceo-sc/78591?epoca_id=155",
+        "name": "Gualaceo SC"
+      }
+    },
+    "292": {
+      "name": "Guangzhou",
+      "countryId": 43,
+      "espn": {
+        "id": "12009",
+        "name": "Guangzhou",
+        "leagues": [
+          "chn.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "293": {
+      "name": "Guarani",
+      "countryId": 29,
+      "espn": {
+        "id": "3448",
+        "name": "Guarani",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.paulista"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "294": {
+      "name": "Guarani",
+      "countryId": 150,
+      "espn": {
+        "id": "7385",
+        "name": "Guaraní",
+        "leagues": [
+          "par.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "295": {
+      "name": "Guarany-RS",
+      "countryId": 29,
+      "espn": {
+        "id": "21369",
+        "name": "Guarany de Bagé",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "296": {
+      "name": "Hafnarfjördur",
+      "countryId": 102
+    },
+    "297": {
+      "name": "Hajduk Split",
+      "countryId": 52,
+      "espn": {
+        "id": "489",
+        "name": "Hajduk Split",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "298": {
+      "name": "Hamilton Wanderers",
+      "countryId": 143
+    },
+    "299": {
+      "name": "Hammarby IF",
+      "countryId": 179,
+      "espn": {
+        "id": "2495",
+        "name": "Hammarby IF",
+        "leagues": [
+          "swe.1",
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "300": {
+      "name": "Hanoi FC",
+      "countryId": 199,
+      "espn": {
+        "id": "21011",
+        "name": "Hanoi",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "301": {
+      "name": "Hapoel Be'er Sheva",
+      "countryId": 103,
+      "espn": {
+        "id": "13083",
+        "name": "Hapoel Be'er",
+        "leagues": [
+          "uefa.europa",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "302": {
+      "name": "HB Tórshavn",
+      "countryId": 92,
+      "espn": {
+        "id": "566",
+        "name": "HB Torshavn",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "303": {
+      "name": "Hekari United",
+      "countryId": 148
+    },
+    "304": {
+      "name": "HJK Helsinki",
+      "countryId": 70,
+      "espn": {
+        "id": "502",
+        "name": "HJK Helsinki",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "305": {
+      "name": "Hercílio Luz",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/hercilio-luz/39359?epoca_id=155",
+        "name": "Hercílio Luz"
+      }
+    },
+    "306": {
+      "name": "Hermanos Colmenarez",
+      "countryId": 198
+    },
+    "307": {
+      "name": "Hibernians",
+      "countryId": 128,
+      "espn": {
+        "id": "2499",
+        "name": "Hibernians",
+        "leagues": [
+          "mlt.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "308": {
+      "name": "Hibernian",
+      "countryId": 62,
+      "espn": {
+        "id": "258",
+        "name": "Hibernian",
+        "leagues": [
+          "sco.1",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "309": {
+      "name": "Hienghene Sport",
+      "countryId": 215
+    },
+    "310": {
+      "name": "Hoffenheim",
+      "countryId": 3,
+      "espn": {
+        "id": "7911",
+        "name": "TSG Hoffenheim",
+        "leagues": [
+          "ger.1",
+          "uefa.europa"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "311": {
+      "name": "Honka",
+      "countryId": 70,
+      "espn": {
+        "id": "4495",
+        "name": "FC Honka",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "312": {
+      "name": "Horoya",
+      "countryId": 81,
+      "espn": {
+        "id": "18822",
+        "name": "Horoya",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "313": {
+      "name": "Huesca",
+      "countryId": 65,
+      "espn": {
+        "id": "5413",
+        "name": "Huesca",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "314": {
+      "name": "IAPE",
+      "countryId": 29,
+      "espn": {
+        "id": "131684",
+        "name": "IAPE",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "315": {
+      "name": "Íbis",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/ibis/3283?epoca_id=155",
+        "name": "Íbis"
+      }
+    },
+    "316": {
+      "name": "Ibiza",
+      "countryId": 65,
+      "espn": {
+        "id": "20229",
+        "name": "UD Ibiza",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "317": {
+      "name": "Icasa",
+      "countryId": 29,
+      "espn": {
+        "id": "10983",
+        "name": "Icasa",
+        "leagues": [
+          "bra.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "318": {
+      "name": "Iguatu",
+      "countryId": 29,
+      "espn": {
+        "id": "21865",
+        "name": "Iguatu",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/iguatu/44198?epoca_id=155",
+        "name": "Iguatu"
+      }
+    },
+    "319": {
+      "name": "Ilves Tampere",
+      "countryId": 70,
+      "espn": {
+        "id": "19248",
+        "name": "FC Ilves",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "320": {
+      "name": "Imperatriz",
+      "countryId": 29,
+      "espn": {
+        "id": "6195",
+        "name": "Sociedade Imperatriz de Desportos",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "321": {
+      "name": "Independente-PA",
+      "countryId": 29
+    },
+    "322": {
+      "name": "São Joseense",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/sao-joseense/109373?epoca_id=155",
+        "name": "São Joseense"
+      }
+    },
+    "323": {
+      "name": "Independiente",
+      "countryId": 11,
+      "espn": {
+        "id": "11",
+        "name": "Independiente",
+        "leagues": [
+          "arg.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "324": {
+      "name": "Indep. del Valle",
+      "countryId": 60,
+      "espn": {
+        "id": "17086",
+        "name": "Independiente del Valle",
+        "leagues": [
+          "ecu.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "325": {
+      "name": "Indep. Medellín",
+      "countryId": 46,
+      "espn": {
+        "id": "2690",
+        "name": "Independiente Medellín",
+        "leagues": [
+          "col.1",
+          "conmebol.libertadores",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "326": {
+      "name": "Indep. Petrolero ",
+      "countryId": 26,
+      "espn": {
+        "id": "20889",
+        "name": "Independiente Petrolero",
+        "leagues": [
+          "bol.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "327": {
+      "name": "Inter de Limeira",
+      "countryId": 29,
+      "espn": {
+        "id": "18963",
+        "name": "Inter de Limeira",
+        "leagues": [
+          "bra.camp.paulista"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/inter-de-limeira/3291?epoca_id=155",
+        "name": "Inter de Limeira"
+      }
+    },
+    "328": {
+      "name": "Internacional",
+      "countryId": 29,
+      "espn": {
+        "id": "1936",
+        "name": "Internacional",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "329": {
+      "name": "Inter Turku",
+      "countryId": 70,
+      "espn": {
+        "id": "3726",
+        "name": "FC Inter Turku",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "330": {
+      "name": "Inter d'Escaldes",
+      "countryId": 4,
+      "espn": {
+        "id": "20703",
+        "name": "Inter D'Escaldes",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.champions_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "331": {
+      "name": "Internazionale ",
+      "countryId": 104,
+      "espn": {
+        "id": "110",
+        "name": "Internazionale",
+        "leagues": [
+          "ita.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "332": {
+      "name": "Iporá",
+      "countryId": 29
+    },
+    "333": {
+      "name": "Iranduba",
+      "countryId": 29
+    },
+    "334": {
+      "name": "Iskra Danilovgrad",
+      "countryId": 105
+    },
+    "335": {
+      "name": "Istiklol",
+      "countryId": 182,
+      "espn": {
+        "id": "20861",
+        "name": "Istiklol",
+        "leagues": [
+          "afc.cup"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "336": {
+      "name": "Itabaiana",
+      "countryId": 29,
+      "espn": {
+        "id": "6214",
+        "name": "Itabaiana",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "337": {
+      "name": "Ituano",
+      "countryId": 29,
+      "espn": {
+        "id": "4774",
+        "name": "Ituano",
+        "leagues": [
+          "bra.2"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/ituano/2543?epoca_id=155",
+        "name": "Ituano"
+      }
+    },
+    "338": {
+      "name": "FK Jablonec",
+      "countryId": 159,
+      "espn": {
+        "id": "7922",
+        "name": "Jablonec",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "339": {
+      "name": "Jacuipense",
+      "countryId": 29,
+      "espn": {
+        "id": "17713",
+        "name": "Jacuipense",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "340": {
+      "name": "Jaciobá",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/jacioba/76884?epoca_id=155",
+        "name": "Jaciobá"
+      }
+    },
+    "341": {
+      "name": "Jataiense",
+      "countryId": 29
+    },
+    "342": {
+      "name": "Jeonbuk",
+      "countryId": 49,
+      "espn": {
+        "id": "7119",
+        "name": "Jeonbuk Hyundai Motors",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "343": {
+      "name": "Johor Darul",
+      "countryId": 124,
+      "espn": {
+        "id": "17689",
+        "name": "Johor Darul Ta'zim",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "344": {
+      "name": "Joinville",
+      "countryId": 29,
+      "espn": {
+        "id": "13143",
+        "name": "Joinville",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "345": {
+      "name": "Jorge Wilstermann",
+      "countryId": 26,
+      "espn": {
+        "id": "6054",
+        "name": "Wilstermann",
+        "leagues": [
+          "bol.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "346": {
+      "name": "JS Kabylie",
+      "countryId": 10,
+      "espn": {
+        "id": "7314",
+        "name": "JS Kabylie",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "347": {
+      "name": "Juazeirense",
+      "countryId": 29,
+      "espn": {
+        "id": "18191",
+        "name": "Juazeirense",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "348": {
+      "name": "Junior Barranquilla",
+      "countryId": 46,
+      "espn": {
+        "id": "4815",
+        "name": "Atlético Junior",
+        "leagues": [
+          "col.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "349": {
+      "name": "Juventude",
+      "countryId": 29,
+      "espn": {
+        "id": "6270",
+        "name": "Juventude",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil",
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "350": {
+      "name": "Juventude-MA",
+      "countryId": 29
+    },
+    "351": {
+      "name": "Juventus-SC",
+      "countryId": 29
+    },
+    "352": {
+      "name": "Juventus",
+      "countryId": 104,
+      "espn": {
+        "id": "111",
+        "name": "Juventus",
+        "leagues": [
+          "ita.1",
+          "uefa.europa"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "353": {
+      "name": "Kairat Almaty",
+      "countryId": 40,
+      "espn": {
+        "id": "2528",
+        "name": "Kairat Almaty",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.champions_qual",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "354": {
+      "name": "Kaysar Kyzylorda",
+      "countryId": 40
+    },
+    "355": {
+      "name": "Kaizer Chiefs",
+      "countryId": 1,
+      "espn": {
+        "id": "7081",
+        "name": "Kaizer Chiefs",
+        "leagues": [
+          "rsa.1",
+          "caf.confed"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "356": {
+      "name": "Kalju",
+      "countryId": 66,
+      "espn": {
+        "id": "10376",
+        "name": "Nomme Kalju",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "357": {
+      "name": "Kauno Zalgiris",
+      "countryId": 119,
+      "espn": {
+        "id": "20028",
+        "name": "Kauno Zalgiris",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.champions_qual",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "358": {
+      "name": "Kawasaki Frontale",
+      "countryId": 107,
+      "espn": {
+        "id": "7112",
+        "name": "Kawasaki Frontale",
+        "leagues": [
+          "jpn.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "359": {
+      "name": "Keshla",
+      "countryId": 16
+    },
+    "360": {
+      "name": "KF Laçi",
+      "countryId": 2,
+      "espn": {
+        "id": "11022",
+        "name": "KF Laci",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "361": {
+      "name": "KF Teuta",
+      "countryId": 2,
+      "espn": {
+        "id": "5244",
+        "name": "KS Teuta",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "362": {
+      "name": "Tirana",
+      "countryId": 2,
+      "espn": {
+        "id": "526",
+        "name": "SK Tirana",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "363": {
+      "name": "Kitchee",
+      "countryId": 87,
+      "espn": {
+        "id": "17686",
+        "name": "Kitchee",
+        "leagues": [
+          "afc.cup"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "364": {
+      "name": "Klaksvík",
+      "countryId": 92,
+      "espn": {
+        "id": "2547",
+        "name": "KI Klaksvik",
+        "leagues": [
+          "uefa.champions_qual",
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "365": {
+      "name": "Kolos Kovalivka",
+      "countryId": 193,
+      "espn": {
+        "id": "20742",
+        "name": "FC Kolos Kovalivka",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "366": {
+      "name": "KR Reykjavík",
+      "countryId": 102,
+      "espn": {
+        "id": "2694",
+        "name": "KR Reykjavik",
+        "leagues": [
+          "club.friendly"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "367": {
+      "name": "Kuopion Palloseura",
+      "countryId": 70,
+      "espn": {
+        "id": "8169",
+        "name": "KuPS Kuopio",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.champions_qual",
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "368": {
+      "name": "Lae City",
+      "countryId": 148
+    },
+    "369": {
+      "name": "La Equidad",
+      "countryId": 46,
+      "espn": {
+        "id": "7445",
+        "name": "Internacional de Bogotá",
+        "leagues": [
+          "col.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "370": {
+      "name": "La Fiorita 1967",
+      "countryId": 164,
+      "espn": {
+        "id": "8594",
+        "name": "Fiorita",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "371": {
+      "name": "Lagarto",
+      "countryId": 29,
+      "espn": {
+        "id": "17332",
+        "name": "Lagarto",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "372": {
+      "name": "La Habana",
+      "countryId": 53
+    },
+    "373": {
+      "name": "Lanús",
+      "countryId": 11,
+      "espn": {
+        "id": "12",
+        "name": "Lanús",
+        "leagues": [
+          "arg.1",
+          "conmebol.libertadores",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "374": {
+      "name": "Larne",
+      "countryId": 101,
+      "espn": {
+        "id": "20039",
+        "name": "Larne",
+        "leagues": [
+          "uefa.champions_qual",
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "375": {
+      "name": "LASK Linz",
+      "countryId": 15,
+      "espn": {
+        "id": "4411",
+        "name": "LASK Linz",
+        "leagues": [
+          "aut.1",
+          "uefa.champions",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "376": {
+      "name": "Las Palmas",
+      "countryId": 65,
+      "espn": {
+        "id": "98",
+        "name": "Las Palmas",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "377": {
+      "name": "Lazio",
+      "countryId": 104,
+      "espn": {
+        "id": "112",
+        "name": "Lazio",
+        "leagues": [
+          "ita.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "378": {
+      "name": "LDU",
+      "countryId": 60,
+      "espn": {
+        "id": "4816",
+        "name": "Liga de Quito",
+        "leagues": [
+          "ecu.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "379": {
+      "name": "Lech Poznań",
+      "countryId": 152,
+      "espn": {
+        "id": "2990",
+        "name": "Lech Poznan",
+        "leagues": [
+          "uefa.europa",
+          "uefa.champions_qual",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "380": {
+      "name": "Leganés",
+      "countryId": 65,
+      "espn": {
+        "id": "17534",
+        "name": "Leganés",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "381": {
+      "name": "Legia Warsaw",
+      "countryId": 152,
+      "espn": {
+        "id": "555",
+        "name": "Legia Warsaw",
+        "leagues": [
+          "uefa.europa.conf"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "382": {
+      "name": "Leicester City",
+      "countryId": 97,
+      "espn": {
+        "id": "375",
+        "name": "Leicester City",
+        "leagues": [
+          "eng.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "383": {
+      "name": "Leipzig",
+      "countryId": 3,
+      "espn": {
+        "id": "11420",
+        "name": "RB Leipzig",
+        "leagues": [
+          "ger.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "384": {
+      "name": "León",
+      "countryId": 131,
+      "espn": {
+        "id": "228",
+        "name": "León",
+        "leagues": [
+          "mex.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "385": {
+      "name": "FCI Levadia",
+      "countryId": 66,
+      "espn": {
+        "id": "2540",
+        "name": "FC Levadia Tallinn",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "386": {
+      "name": "Levante",
+      "countryId": 65,
+      "espn": {
+        "id": "1538",
+        "name": "Levante",
+        "leagues": [
+          "esp.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "387": {
+      "name": "Llapi",
+      "countryId": 110,
+      "espn": {
+        "id": "21000",
+        "name": "Llapi",
+        "leagues": [
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "388": {
+      "name": "Libertad",
+      "countryId": 150,
+      "espn": {
+        "id": "2670",
+        "name": "Libertad",
+        "leagues": [
+          "par.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "389": {
+      "name": "Liepāja",
+      "countryId": 114,
+      "espn": {
+        "id": "18283",
+        "name": "FK Liepaja",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "390": {
+      "name": "Lille",
+      "countryId": 72,
+      "espn": {
+        "id": "166",
+        "name": "Lille",
+        "leagues": [
+          "fra.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "391": {
+      "name": "Linares",
+      "countryId": 65,
+      "espn": {
+        "id": "20223",
+        "name": "Linares Deportivo",
+        "leagues": [
+          "esp.copa_del_rey"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "392": {
+      "name": "Lincoln Red Imps",
+      "countryId": 216,
+      "espn": {
+        "id": "17856",
+        "name": "Lincoln Red Imps",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.champions_qual",
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "393": {
+      "name": "Linfield",
+      "countryId": 101,
+      "espn": {
+        "id": "2555",
+        "name": "Linfield",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "394": {
+      "name": "Liverpool",
+      "countryId": 97,
+      "espn": {
+        "id": "364",
+        "name": "Liverpool",
+        "leagues": [
+          "eng.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "395": {
+      "name": "Liverpool-URU",
+      "countryId": 195,
+      "espn": {
+        "id": "5492",
+        "name": "Liverpool",
+        "leagues": [
+          "uru.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "396": {
+      "name": "Locomotive Tbilisi",
+      "countryId": 76
+    },
+    "397": {
+      "name": "Logroñés",
+      "countryId": 65,
+      "espn": {
+        "id": "7206",
+        "name": "UD Logroñés",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "398": {
+      "name": "Lokomotiv Moscow",
+      "countryId": 162,
+      "espn": {
+        "id": "442",
+        "name": "Lokomotiv Moscow",
+        "leagues": [
+          "rus.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "399": {
+      "name": "Lokomotiv Plovdiv",
+      "countryId": 31,
+      "espn": {
+        "id": "2952",
+        "name": "Lokomotiv Plovdiv",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "400": {
+      "name": "Londrina",
+      "countryId": 29,
+      "espn": {
+        "id": "17333",
+        "name": "Londrina",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "401": {
+      "name": "Ludogorets",
+      "countryId": 31,
+      "espn": {
+        "id": "13018",
+        "name": "Ludogorets Razgrad",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "402": {
+      "name": "Lugo",
+      "countryId": 65,
+      "espn": {
+        "id": "7266",
+        "name": "Lugo",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "403": {
+      "name": "Luverdense",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/luverdense/13679?epoca_id=155",
+        "name": "Luverdense"
+      }
+    },
+    "404": {
+      "name": "Luzern",
+      "countryId": 180,
+      "espn": {
+        "id": "7640",
+        "name": "FC Luzern",
+        "leagues": [
+          "sui.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "405": {
+      "name": "Lyon",
+      "countryId": 72,
+      "espn": {
+        "id": "167",
+        "name": "Lyon",
+        "leagues": [
+          "fra.1",
+          "uefa.europa",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "406": {
+      "name": "Macaé",
+      "countryId": 29,
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/macae/3331?epoca_id=155",
+        "name": "Macaé"
+      }
+    },
+    "407": {
+      "name": "Macará",
+      "countryId": 60,
+      "espn": {
+        "id": "18439",
+        "name": "Macará",
+        "leagues": [
+          "ecu.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "408": {
+      "name": "Maccabi Haifa",
+      "countryId": 103,
+      "espn": {
+        "id": "611",
+        "name": "Maccabi Haifa",
+        "leagues": [
+          "isr.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "409": {
+      "name": "Maccabi Tel Aviv",
+      "countryId": 103,
+      "espn": {
+        "id": "524",
+        "name": "Maccabi Tel-Aviv",
+        "leagues": [
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "410": {
+      "name": "Manchester City",
+      "countryId": 97,
+      "espn": {
+        "id": "382",
+        "name": "Manchester City",
+        "leagues": [
+          "eng.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "411": {
+      "name": "Manchester United",
+      "countryId": 97,
+      "espn": {
+        "id": "360",
+        "name": "Manchester United",
+        "leagues": [
+          "eng.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "412": {
+      "name": "Madureira",
+      "countryId": 29,
+      "espn": {
+        "id": "4786",
+        "name": "Madureira",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.carioca"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "413": {
+      "name": "Málaga",
+      "countryId": 65,
+      "espn": {
+        "id": "99",
+        "name": "Málaga",
+        "leagues": [
+          "esp.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "414": {
+      "name": "Mallorca",
+      "countryId": 65,
+      "espn": {
+        "id": "84",
+        "name": "Mallorca",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "415": {
+      "name": "Malmo",
+      "countryId": 179,
+      "espn": {
+        "id": "2720",
+        "name": "Malmö FF",
+        "leagues": [
+          "swe.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "416": {
+      "name": "Mamelodi Sundowns",
+      "countryId": 1,
+      "espn": {
+        "id": "7084",
+        "name": "Mamelodi Sundowns",
+        "leagues": [
+          "rsa.1",
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "417": {
+      "name": "Managua FC",
+      "countryId": 139,
+      "espn": {
+        "id": "20016",
+        "name": "Managua",
+        "leagues": [
+          "concacaf.league"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "418": {
+      "name": "Manaus",
+      "countryId": 29,
+      "espn": {
+        "id": "18959",
+        "name": "Manaus",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "419": {
+      "name": "Maracanã",
+      "countryId": 29,
+      "espn": {
+        "id": "22561",
+        "name": "Maracanã",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "420": {
+      "name": "Marcílio Dias",
+      "countryId": 29,
+      "espn": {
+        "id": "21864",
+        "name": "Marcílio Dias",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/marcilio-dias/3338?epoca_id=155",
+        "name": "Marcílio Dias"
+      }
+    },
+    "421": {
+      "name": "Maribor",
+      "countryId": 64,
+      "espn": {
+        "id": "619",
+        "name": "NK Maribor",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "422": {
+      "name": "Maringá",
+      "countryId": 29,
+      "espn": {
+        "id": "17715",
+        "name": "Maringá",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "423": {
+      "name": "TP Mazembe",
+      "countryId": 157,
+      "espn": {
+        "id": "10674",
+        "name": "TP Mazembe",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "424": {
+      "name": "MC Algiers",
+      "countryId": 10,
+      "espn": {
+        "id": "7501",
+        "name": "MC Alger",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "425": {
+      "name": "Mekelle 70",
+      "countryId": 67
+    },
+    "426": {
+      "name": "Melbourne City",
+      "countryId": 14,
+      "espn": {
+        "id": "11143",
+        "name": "Melbourne City FC",
+        "leagues": [
+          "aus.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "427": {
+      "name": "Melgar",
+      "countryId": 151,
+      "espn": {
+        "id": "7312",
+        "name": "Melgar",
+        "leagues": [
+          "per.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "428": {
+      "name": "Metropolitano",
+      "countryId": 29
+    },
+    "429": {
+      "name": "Metropolitanos",
+      "countryId": 198,
+      "espn": {
+        "id": "13481",
+        "name": "Metropolitanos",
+        "leagues": [
+          "ven.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "430": {
+      "name": "Midtjylland",
+      "countryId": 54,
+      "espn": {
+        "id": "572",
+        "name": "FC Midtjylland",
+        "leagues": [
+          "den.1",
+          "uefa.europa.conf",
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "431": {
+      "name": "Mirassol",
+      "countryId": 29,
+      "espn": {
+        "id": "9169",
+        "name": "Mirassol",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.paulista",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "432": {
+      "name": "Milan",
+      "countryId": 104,
+      "espn": {
+        "id": "103",
+        "name": "AC Milan",
+        "leagues": [
+          "ita.1",
+          "uefa.europa"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "433": {
+      "name": "Millonarios",
+      "countryId": 46,
+      "espn": {
+        "id": "5484",
+        "name": "Millonarios",
+        "leagues": [
+          "col.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "434": {
+      "name": "Mirandés",
+      "countryId": 65,
+      "espn": {
+        "id": "4515",
+        "name": "Mirandés",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "435": {
+      "name": "Molde FK",
+      "countryId": 142,
+      "espn": {
+        "id": "2715",
+        "name": "Molde",
+        "leagues": [
+          "nor.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "436": {
+      "name": "Fehérvár",
+      "countryId": 88,
+      "espn": {
+        "id": "6740",
+        "name": "Fehérvár",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "437": {
+      "name": "Monaco ",
+      "countryId": 72,
+      "espn": {
+        "id": "174",
+        "name": "AS Monaco",
+        "leagues": [
+          "fra.1",
+          "uefa.europa.conf",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "438": {
+      "name": "Monagas",
+      "countryId": 198,
+      "espn": {
+        "id": "6041",
+        "name": "Monagas SC",
+        "leagues": [
+          "ven.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "439": {
+      "name": "B. Mönchengladbach",
+      "countryId": 3,
+      "espn": {
+        "id": "268",
+        "name": "Borussia Mönchengladbach",
+        "leagues": [
+          "ger.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "440": {
+      "name": "Mons Calpe",
+      "countryId": 216
+    },
+    "441": {
+      "name": "Monterrey",
+      "countryId": 131,
+      "espn": {
+        "id": "220",
+        "name": "Monterrey",
+        "leagues": [
+          "mex.1",
+          "concacaf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "442": {
+      "name": "Montevideo Torque",
+      "countryId": 195,
+      "espn": {
+        "id": "19002",
+        "name": "Montevideo City Torque",
+        "leagues": [
+          "uru.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "443": {
+      "name": "Morrinhos",
+      "countryId": 29
+    },
+    "444": {
+      "name": "Motherwell",
+      "countryId": 62,
+      "espn": {
+        "id": "266",
+        "name": "Motherwell",
+        "leagues": [
+          "sco.1",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "445": {
+      "name": "Moto Club",
+      "countryId": 29,
+      "espn": {
+        "id": "4908",
+        "name": "Moto Club",
+        "leagues": [
+          "bra.3"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/moto-club/3353",
+        "name": "Moto Club"
+      }
+    },
+    "446": {
+      "name": "Murici",
+      "countryId": 29,
+      "espn": {
+        "id": "17722",
+        "name": "Murici",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "447": {
+      "name": "Nacional Potosí",
+      "countryId": 26,
+      "espn": {
+        "id": "10311",
+        "name": "Nacional Potosí",
+        "leagues": [
+          "bol.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "448": {
+      "name": "Nacional - AM",
+      "countryId": 29,
+      "espn": {
+        "id": "17325",
+        "name": "Nacional de Manaus",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "449": {
+      "name": "Atlético Nacional",
+      "countryId": 46,
+      "espn": {
+        "id": "5264",
+        "name": "Atlético Nacional",
+        "leagues": [
+          "col.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "450": {
+      "name": "Nacional-PAR",
+      "countryId": 150,
+      "espn": {
+        "id": "5584",
+        "name": "Nacional Asunción",
+        "leagues": [
+          "par.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "451": {
+      "name": "Nacional-PB",
+      "countryId": 29
+    },
+    "452": {
+      "name": "Nacional",
+      "countryId": 195,
+      "espn": {
+        "id": "2684",
+        "name": "Nacional",
+        "leagues": [
+          "uru.1",
+          "conmebol.libertadores",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "453": {
+      "name": "Nagoya Grampus",
+      "countryId": 107,
+      "espn": {
+        "id": "7108",
+        "name": "Nagoya Grampus",
+        "leagues": [
+          "jpn.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "454": {
+      "name": "Napoli",
+      "countryId": 104,
+      "espn": {
+        "id": "114",
+        "name": "Napoli",
+        "leagues": [
+          "ita.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "455": {
+      "name": "Náutico",
+      "countryId": 29,
+      "espn": {
+        "id": "7633",
+        "name": "Náutico",
+        "leagues": [
+          "bra.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "456": {
+      "name": "Neftçi Baku",
+      "countryId": 16,
+      "espn": {
+        "id": "504",
+        "name": "Neftchi",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "457": {
+      "name": "Newell's Old Boys",
+      "countryId": 11,
+      "espn": {
+        "id": "14",
+        "name": "Newell's Old Boys",
+        "leagues": [
+          "arg.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "458": {
+      "name": "Nice",
+      "countryId": 72,
+      "espn": {
+        "id": "2502",
+        "name": "Nice",
+        "leagues": [
+          "fra.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "459": {
+      "name": "Nkana",
+      "countryId": 200,
+      "espn": {
+        "id": "18669",
+        "name": "Nkana",
+        "leagues": [
+          "zam.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "460": {
+      "name": "Lokomotiva Zagreb ",
+      "countryId": 52,
+      "espn": {
+        "id": "4413",
+        "name": "NK Lokomotiva",
+        "leagues": [
+          "club.friendly"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "461": {
+      "name": "Noah Yerevan",
+      "countryId": 12,
+      "espn": {
+        "id": "20712",
+        "name": "FC Noah",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "462": {
+      "name": "Nova Iguaçu",
+      "countryId": 29,
+      "espn": {
+        "id": "6087",
+        "name": "Nova Iguaçu",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.carioca"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "463": {
+      "name": "Nova Mutum",
+      "countryId": 29,
+      "espn": {
+        "id": "20902",
+        "name": "Nova Mutum",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "464": {
+      "name": "Novo Hamburgo",
+      "countryId": 29,
+      "espn": {
+        "id": "7388",
+        "name": "Novo Hamburgo",
+        "leagues": [
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "465": {
+      "name": "Novorizontino",
+      "countryId": 29,
+      "espn": {
+        "id": "18127",
+        "name": "Novorizontino",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil",
+          "bra.camp.paulista"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "466": {
+      "name": "NSÍ Runavík",
+      "countryId": 92,
+      "espn": {
+        "id": "2710",
+        "name": "NSI Runavik",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "467": {
+      "name": "Mura",
+      "countryId": 64,
+      "espn": {
+        "id": "20029",
+        "name": "NS Mura",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "468": {
+      "name": "Ñublense ",
+      "countryId": 42,
+      "espn": {
+        "id": "7427",
+        "name": "Ñublense",
+        "leagues": [
+          "chi.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "469": {
+      "name": "Oeste",
+      "countryId": 29,
+      "espn": {
+        "id": "10263",
+        "name": "Oeste",
+        "leagues": [
+          "bra.3"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "470": {
+      "name": "OFI Crete",
+      "countryId": 78,
+      "espn": {
+        "id": "1010",
+        "name": "OFI Crete",
+        "leagues": [
+          "gre.1",
+          "uefa.europa",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "471": {
+      "name": "Olimpija Ljubljana",
+      "countryId": 64,
+      "espn": {
+        "id": "500",
+        "name": "Olimpija Ljubljana",
+        "leagues": [
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "472": {
+      "name": "Olimpia Tegucigalpa",
+      "countryId": 86,
+      "espn": {
+        "id": "884",
+        "name": "Club Deportivo Olimpia",
+        "leagues": [
+          "hon.1",
+          "concacaf.champions",
+          "concacaf.central.american.cup"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "473": {
+      "name": "Olimpia",
+      "countryId": 150,
+      "espn": {
+        "id": "2675",
+        "name": "Club Olimpia",
+        "leagues": [
+          "par.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "474": {
+      "name": "Olympiakos",
+      "countryId": 78,
+      "espn": {
+        "id": "435",
+        "name": "Olympiacos",
+        "leagues": [
+          "gre.1",
+          "uefa.europa",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "475": {
+      "name": "Olympique Marseille",
+      "countryId": 72,
+      "espn": {
+        "id": "176",
+        "name": "Marseille",
+        "leagues": [
+          "fra.1",
+          "uefa.europa"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "476": {
+      "name": "Al-Hilal",
+      "countryId": 178,
+      "espn": {
+        "id": "18832",
+        "name": "Al Hilal Omdurman",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "477": {
+      "name": "Omonia Nicosia",
+      "countryId": 44,
+      "espn": {
+        "id": "617",
+        "name": "Omonia Nicosia",
+        "leagues": [
+          "uefa.europa",
+          "uefa.champions_qual",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "478": {
+      "name": "Operário - MT",
+      "countryId": 29,
+      "espn": {
+        "id": "20699",
+        "name": "CEOV Operário",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "479": {
+      "name": "Operário PR",
+      "countryId": 29,
+      "espn": {
+        "id": "18187",
+        "name": "Operário PR",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "480": {
+      "name": "Ordabasy",
+      "countryId": 40,
+      "espn": {
+        "id": "7962",
+        "name": "Ordabasy Shymkent",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "481": {
+      "name": "Orlando Pirates",
+      "countryId": 1,
+      "espn": {
+        "id": "7085",
+        "name": "Orlando Pirates",
+        "leagues": [
+          "rsa.1",
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "482": {
+      "name": "Osasuna",
+      "countryId": 65,
+      "espn": {
+        "id": "97",
+        "name": "Osasuna",
+        "leagues": [
+          "esp.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "483": {
+      "name": "Osijek",
+      "countryId": 52,
+      "espn": {
+        "id": "567",
+        "name": "Osijek",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "484": {
+      "name": "Pacajus",
+      "countryId": 29
+    },
+    "485": {
+      "name": "Paide Linnameeskond",
+      "countryId": 66,
+      "espn": {
+        "id": "20718",
+        "name": "Paide Linnameeskond",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "486": {
+      "name": "Pakhtakor",
+      "countryId": 196,
+      "espn": {
+        "id": "7123",
+        "name": "Pakhtakor",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "487": {
+      "name": "Palmeiras",
+      "countryId": 29,
+      "espn": {
+        "id": "2029",
+        "name": "Palmeiras",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.paulista",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "488": {
+      "name": "Palmeira",
+      "countryId": 29
+    },
+    "489": {
+      "name": "PAOK Thessaloniki",
+      "countryId": 78,
+      "espn": {
+        "id": "605",
+        "name": "PAOK",
+        "leagues": [
+          "gre.1",
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "490": {
+      "name": "Paraná",
+      "countryId": 29,
+      "espn": {
+        "id": "3453",
+        "name": "Paraná",
+        "leagues": [
+          "bra.3"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/parana/2249",
+        "name": "Paraná"
+      }
+    },
+    "491": {
+      "name": "Paris Saint Germain",
+      "countryId": 72,
+      "espn": {
+        "id": "160",
+        "name": "Paris Saint-Germain",
+        "leagues": [
+          "fra.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "492": {
+      "name": "Partizan",
+      "countryId": 171,
+      "espn": {
+        "id": "541",
+        "name": "Partizan Belgrade",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "493": {
+      "name": "Pathum United",
+      "countryId": 183,
+      "espn": {
+        "id": "8519",
+        "name": "BG Pathum United",
+        "leagues": [
+          "afc.cup"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "494": {
+      "name": "Patrocinense",
+      "countryId": 29,
+      "espn": {
+        "id": "18900",
+        "name": "Patrocinense",
+        "leagues": [
+          "bra.camp.mineiro"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "495": {
+      "name": "Paysandu",
+      "countryId": 29,
+      "espn": {
+        "id": "15424",
+        "name": "Paysandu",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "496": {
+      "name": "Pelotas",
+      "countryId": 29,
+      "espn": {
+        "id": "17129",
+        "name": "EC Pelotas",
+        "leagues": [
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "497": {
+      "name": "Penarol - AM",
+      "countryId": 29
+    },
+    "498": {
+      "name": "Peñarol",
+      "countryId": 195,
+      "espn": {
+        "id": "2683",
+        "name": "Peñarol",
+        "leagues": [
+          "uru.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "499": {
+      "name": "Persepolis",
+      "countryId": 98,
+      "espn": {
+        "id": "18461",
+        "name": "Persepolis",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "500": {
+      "name": "Petrocub",
+      "countryId": 134,
+      "espn": {
+        "id": "19250",
+        "name": "Petrocub",
+        "leagues": [
+          "uefa.champions_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "501": {
+      "name": "Petro Luanda",
+      "countryId": 5,
+      "espn": {
+        "id": "19436",
+        "name": "Petro de Luanda",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "502": {
+      "name": "Philadelphia Union",
+      "countryId": 68,
+      "espn": {
+        "id": "10739",
+        "name": "Philadelphia Union",
+        "leagues": [
+          "usa.1",
+          "concacaf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "503": {
+      "name": "Piast Gliwice",
+      "countryId": 152,
+      "espn": {
+        "id": "9657",
+        "name": "Piast Gliwice",
+        "leagues": [
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "504": {
+      "name": "Pinheiro",
+      "countryId": 29
+    },
+    "505": {
+      "name": "Plateau United",
+      "countryId": 141,
+      "espn": {
+        "id": "18181",
+        "name": "Plateau United",
+        "leagues": [
+          "nga.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "506": {
+      "name": "Plaza Colonia",
+      "countryId": 195,
+      "espn": {
+        "id": "5495",
+        "name": "Plaza Colonia",
+        "leagues": [
+          "uru.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "507": {
+      "name": "Poconé",
+      "countryId": 29
+    },
+    "508": {
+      "name": "Pohang Steelers",
+      "countryId": 49,
+      "espn": {
+        "id": "9693",
+        "name": "Pohang Steelers",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "509": {
+      "name": "Ponferradina",
+      "countryId": 65,
+      "espn": {
+        "id": "5463",
+        "name": "Ponferradina",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "510": {
+      "name": "Ponte Preta",
+      "countryId": 29,
+      "espn": {
+        "id": "3459",
+        "name": "Ponte Preta",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil",
+          "bra.camp.paulista"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "511": {
+      "name": "Portland Timbers",
+      "countryId": 68,
+      "espn": {
+        "id": "9723",
+        "name": "Portland Timbers",
+        "leagues": [
+          "usa.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "512": {
+      "name": "Porto",
+      "countryId": 154,
+      "espn": {
+        "id": "437",
+        "name": "FC Porto",
+        "leagues": [
+          "por.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "513": {
+      "name": "Portuguesa RJ",
+      "countryId": 29,
+      "espn": {
+        "id": "18134",
+        "name": "Portuguesa-RJ",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.carioca"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "514": {
+      "name": "Potiguar",
+      "countryId": 29
+    },
+    "515": {
+      "name": "Potyguar",
+      "countryId": 29
+    },
+    "516": {
+      "name": "Pouso Alegre",
+      "countryId": 29,
+      "espn": {
+        "id": "20852",
+        "name": "Pouso Alegre",
+        "leagues": [
+          "bra.camp.mineiro"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "517": {
+      "name": "Princesa Solimões",
+      "countryId": 29,
+      "espn": {
+        "id": "17336",
+        "name": "Princesa do Solimoes",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "518": {
+      "name": "Pristina",
+      "countryId": 110,
+      "espn": {
+        "id": "18752",
+        "name": "Prishtina",
+        "leagues": [
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "519": {
+      "name": "Progrès Niedercorn",
+      "countryId": 120,
+      "espn": {
+        "id": "17861",
+        "name": "Progres Niederkorn",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "520": {
+      "name": "Próspera",
+      "countryId": 29
+    },
+    "521": {
+      "name": "PSV",
+      "countryId": 85,
+      "espn": {
+        "id": "148",
+        "name": "PSV Eindhoven",
+        "leagues": [
+          "ned.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "522": {
+      "name": "Puskás Akadémia",
+      "countryId": 88,
+      "espn": {
+        "id": "20711",
+        "name": "Puskas Akademia",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "523": {
+      "name": "PWD Bamenda",
+      "countryId": 36
+    },
+    "524": {
+      "name": "Pyramids FC",
+      "countryId": 57,
+      "espn": {
+        "id": "20220",
+        "name": "Pyramids FC",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "525": {
+      "name": "Qarabağ Ağdam",
+      "countryId": 16,
+      "espn": {
+        "id": "10414",
+        "name": "FK Qarabag",
+        "leagues": [
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "526": {
+      "name": "Racing",
+      "countryId": 11,
+      "espn": {
+        "id": "15",
+        "name": "Racing Club",
+        "leagues": [
+          "arg.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "527": {
+      "name": "Racing Santander",
+      "countryId": 65,
+      "espn": {
+        "id": "87",
+        "name": "Racing Santander",
+        "leagues": [
+          "esp.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "528": {
+      "name": "Raja Casablanca",
+      "countryId": 129,
+      "espn": {
+        "id": "8618",
+        "name": "Raja Casablanca",
+        "leagues": [
+          "caf.confed"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "529": {
+      "name": "Randers",
+      "countryId": 54,
+      "espn": {
+        "id": "3132",
+        "name": "Randers FC",
+        "leagues": [
+          "den.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "530": {
+      "name": "Rangers",
+      "countryId": 62,
+      "espn": {
+        "id": "257",
+        "name": "Rangers",
+        "leagues": [
+          "sco.1",
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "531": {
+      "name": "Rapid Viena",
+      "countryId": 15,
+      "espn": {
+        "id": "519",
+        "name": "Rapid Vienna",
+        "leagues": [
+          "aut.1",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "532": {
+      "name": "Rayo Vallecano",
+      "countryId": 65,
+      "espn": {
+        "id": "101",
+        "name": "Rayo Vallecano",
+        "leagues": [
+          "esp.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "533": {
+      "name": "RC Abidjan",
+      "countryId": 50
+    },
+    "534": {
+      "name": "Real Estelí",
+      "countryId": 139,
+      "espn": {
+        "id": "9945",
+        "name": "Real Estelí",
+        "leagues": [
+          "concacaf.central.american.cup"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "535": {
+      "name": "Real Madrid",
+      "countryId": 65,
+      "espn": {
+        "id": "86",
+        "name": "Real Madrid",
+        "leagues": [
+          "esp.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "536": {
+      "name": "Real Oviedo",
+      "countryId": 65,
+      "espn": {
+        "id": "92",
+        "name": "Real Oviedo",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "537": {
+      "name": "Real Sociedad",
+      "countryId": 65,
+      "espn": {
+        "id": "89",
+        "name": "Real Sociedad",
+        "leagues": [
+          "esp.1",
+          "uefa.europa"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "538": {
+      "name": "Real Zaragoza",
+      "countryId": 65,
+      "espn": {
+        "id": "91",
+        "name": "Real Zaragoza",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "539": {
+      "name": "Remo",
+      "countryId": 29,
+      "espn": {
+        "id": "4936",
+        "name": "Remo",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "540": {
+      "name": "Rennes",
+      "countryId": 72,
+      "espn": {
+        "id": "169",
+        "name": "Stade Rennais",
+        "leagues": [
+          "fra.1",
+          "uefa.europa"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "541": {
+      "name": "Renova Dzepciste",
+      "countryId": 122
+    },
+    "542": {
+      "name": "Resende",
+      "countryId": 29,
+      "espn": {
+        "id": "9177",
+        "name": "Resende",
+        "leagues": [
+          "bra.camp.carioca"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "543": {
+      "name": "Retrô",
+      "countryId": 29,
+      "espn": {
+        "id": "20896",
+        "name": "Retró",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "544": {
+      "name": "FK RFS",
+      "countryId": 114,
+      "espn": {
+        "id": "12030",
+        "name": "Rigas Futbola Skola",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "545": {
+      "name": "Riga",
+      "countryId": 114,
+      "espn": {
+        "id": "19246",
+        "name": "Riga FC",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.champions_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "546": {
+      "name": "Rijeka",
+      "countryId": 52,
+      "espn": {
+        "id": "2988",
+        "name": "Rijeka",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "547": {
+      "name": "Rio Ave",
+      "countryId": 154,
+      "espn": {
+        "id": "3822",
+        "name": "Rio Ave",
+        "leagues": [
+          "por.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "548": {
+      "name": "Rio Branco PR",
+      "countryId": 29
+    },
+    "549": {
+      "name": "Riteriai",
+      "countryId": 119
+    },
+    "550": {
+      "name": "River Plate",
+      "countryId": 11,
+      "espn": {
+        "id": "16",
+        "name": "River Plate",
+        "leagues": [
+          "arg.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "551": {
+      "name": "River Plate-URU",
+      "countryId": 195,
+      "espn": {
+        "id": "5498",
+        "name": "River Plate",
+        "leagues": [
+          "uru.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "552": {
+      "name": "Rivers United",
+      "countryId": 141,
+      "espn": {
+        "id": "17795",
+        "name": "Rivers United FC",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "553": {
+      "name": "Roma",
+      "countryId": 104,
+      "espn": {
+        "id": "104",
+        "name": "AS Roma",
+        "leagues": [
+          "ita.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "554": {
+      "name": "Rosario Central",
+      "countryId": 11,
+      "espn": {
+        "id": "17",
+        "name": "Rosario Central",
+        "leagues": [
+          "arg.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "555": {
+      "name": "Rosenborg",
+      "countryId": 142,
+      "espn": {
+        "id": "438",
+        "name": "Rosenborg",
+        "leagues": [
+          "nor.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "556": {
+      "name": "Royal Antwerp",
+      "countryId": 21,
+      "espn": {
+        "id": "17544",
+        "name": "Antwerp",
+        "leagues": [
+          "bel.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "557": {
+      "name": "Royal Pari",
+      "countryId": 26,
+      "espn": {
+        "id": "18984",
+        "name": "Royal Pari",
+        "leagues": [
+          "bol.ply.rel"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "558": {
+      "name": "Ruzomberok",
+      "countryId": 63,
+      "espn": {
+        "id": "12207",
+        "name": "MFK Ruzomberok",
+        "leagues": [
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "559": {
+      "name": "Saburtalo",
+      "countryId": 76,
+      "espn": {
+        "id": "20025",
+        "name": "Iberia 1999",
+        "leagues": [
+          "uefa.europa.conf",
+          "uefa.champions_qual",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "560": {
+      "name": "Salgueiro",
+      "countryId": 29,
+      "espn": {
+        "id": "1361",
+        "name": "Salgueiro",
+        "leagues": [
+          "bra.3"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "561": {
+      "name": "RB Salzburg",
+      "countryId": 15,
+      "espn": {
+        "id": "2790",
+        "name": "RB Salzburg",
+        "leagues": [
+          "aut.1",
+          "uefa.europa",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "562": {
+      "name": "Sampaio Corrêa",
+      "countryId": 29,
+      "espn": {
+        "id": "4873",
+        "name": "Sampaio Corrêa",
+        "leagues": [
+          "bra.2"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/sampaio-correa/3444",
+        "name": "Sampaio Corrêa"
+      }
+    },
+    "563": {
+      "name": "San Francisco",
+      "countryId": 147,
+      "espn": {
+        "id": "9941",
+        "name": "San Francisco",
+        "leagues": [
+          "concacaf.league"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "564": {
+      "name": "Santa Cruz",
+      "countryId": 29,
+      "espn": {
+        "id": "4929",
+        "name": "Santa Cruz",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "565": {
+      "name": "Santa Coloma",
+      "countryId": 4,
+      "espn": {
+        "id": "542",
+        "name": "Santa Coloma",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "566": {
+      "name": "Santa Cruz RN",
+      "countryId": 29
+    },
+    "567": {
+      "name": "Santo André",
+      "countryId": 29,
+      "espn": {
+        "id": "17720",
+        "name": "Santo André",
+        "leagues": [
+          "bra.camp.paulista"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "568": {
+      "name": "Santos",
+      "countryId": 29,
+      "espn": {
+        "id": "2674",
+        "name": "Santos",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.paulista",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "569": {
+      "name": "São Bento",
+      "countryId": 29,
+      "espn": {
+        "id": "6083",
+        "name": "São Bento",
+        "leagues": [
+          "bra.camp.paulista"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "570": {
+      "name": "São Bernardo",
+      "countryId": 29,
+      "espn": {
+        "id": "11268",
+        "name": "São Bernardo",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil",
+          "bra.camp.paulista"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "571": {
+      "name": "São Caetano",
+      "countryId": 29
+    },
+    "572": {
+      "name": "São José",
+      "countryId": 29,
+      "espn": {
+        "id": "7389",
+        "name": "São José-RS",
+        "leagues": [
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "573": {
+      "name": "São José-MA",
+      "countryId": 29
+    },
+    "574": {
+      "name": "São Luiz",
+      "countryId": 29,
+      "espn": {
+        "id": "7391",
+        "name": "São Luiz-RS",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "575": {
+      "name": "São Paulo",
+      "countryId": 29,
+      "espn": {
+        "id": "2026",
+        "name": "São Paulo",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.paulista",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "576": {
+      "name": "Sarajevo",
+      "countryId": 27,
+      "espn": {
+        "id": "551",
+        "name": "FK Sarajevo",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "577": {
+      "name": "Sergipe",
+      "countryId": 29,
+      "espn": {
+        "id": "4874",
+        "name": "Sergipe SE",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "578": {
+      "name": "Servette",
+      "countryId": 180,
+      "espn": {
+        "id": "20032",
+        "name": "Servette",
+        "leagues": [
+          "sui.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "579": {
+      "name": "Sete de Setembro",
+      "countryId": 29
+    },
+    "580": {
+      "name": "Sevilla",
+      "countryId": 65,
+      "espn": {
+        "id": "243",
+        "name": "Sevilla",
+        "leagues": [
+          "esp.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "581": {
+      "name": "CS Sfaxien",
+      "countryId": 190,
+      "espn": {
+        "id": "8380",
+        "name": "Club Sportif Sfaxien",
+        "leagues": [
+          "caf.confed"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "582": {
+      "name": "Sfântul Gheorghe",
+      "countryId": 134
+    },
+    "583": {
+      "name": "Shakhtar Donetsk",
+      "countryId": 193,
+      "espn": {
+        "id": "493",
+        "name": "Shakhtar Donetsk",
+        "leagues": [
+          "uefa.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "584": {
+      "name": "Shamrock Rovers",
+      "countryId": 100,
+      "espn": {
+        "id": "2564",
+        "name": "Shamrock Rovers",
+        "leagues": [
+          "uefa.champions_qual",
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "585": {
+      "name": "Shandong Taishan",
+      "countryId": 43,
+      "espn": {
+        "id": "7521",
+        "name": "Shandong Taishan",
+        "leagues": [
+          "chn.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "586": {
+      "name": "Shanghai Port",
+      "countryId": 43,
+      "espn": {
+        "id": "15515",
+        "name": "Shanghai Port",
+        "leagues": [
+          "chn.1",
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "587": {
+      "name": "Shan United",
+      "countryId": 132,
+      "espn": {
+        "id": "22003",
+        "name": "Shan United",
+        "leagues": [
+          "afc.cup"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "588": {
+      "name": "Al Sharjah",
+      "countryId": 59,
+      "espn": {
+        "id": "8371",
+        "name": "Sharjah",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "589": {
+      "name": "Sheriff Tiraspol",
+      "countryId": 134,
+      "espn": {
+        "id": "614",
+        "name": "Sheriff Tiraspol",
+        "leagues": [
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "590": {
+      "name": "Shirak Giumri",
+      "countryId": 12
+    },
+    "591": {
+      "name": "Shkendija Tetovo",
+      "countryId": 122,
+      "espn": {
+        "id": "8151",
+        "name": "KF Shkëndija",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "592": {
+      "name": "Shkupi",
+      "countryId": 122,
+      "espn": {
+        "id": "19252",
+        "name": "Shkupi",
+        "leagues": [
+          "club.friendly"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "593": {
+      "name": "Sileks Kratovo",
+      "countryId": 122,
+      "espn": {
+        "id": "2940",
+        "name": "FK Sileks ",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "594": {
+      "name": "Simba SC",
+      "countryId": 186,
+      "espn": {
+        "id": "19414",
+        "name": "Simba SC",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "595": {
+      "name": "Sinop",
+      "countryId": 29
+    },
+    "596": {
+      "name": "Sirens",
+      "countryId": 128,
+      "espn": {
+        "id": "20083",
+        "name": "Sirens FC",
+        "leagues": [
+          "mlt.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "597": {
+      "name": "Sivasspor",
+      "countryId": 192,
+      "espn": {
+        "id": "3691",
+        "name": "Sivasspor",
+        "leagues": [
+          "tur.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "598": {
+      "name": "Slavia Sofia",
+      "countryId": 31,
+      "espn": {
+        "id": "6216",
+        "name": "Slavia Sofia",
+        "leagues": [
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "599": {
+      "name": "Slavia Praga",
+      "countryId": 159,
+      "espn": {
+        "id": "494",
+        "name": "Slavia Prague",
+        "leagues": [
+          "uefa.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "600": {
+      "name": "Slovan Liberec",
+      "countryId": 159,
+      "espn": {
+        "id": "594",
+        "name": "Liberec",
+        "leagues": [
+          "uefa.europa"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "601": {
+      "name": "Slovan Bratislava",
+      "countryId": 63,
+      "espn": {
+        "id": "521",
+        "name": "Slovan Bratislava",
+        "leagues": [
+          "uefa.champions",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "602": {
+      "name": "Sol de América",
+      "countryId": 150,
+      "espn": {
+        "id": "7465",
+        "name": "Sol de América",
+        "leagues": [
+          "par.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "603": {
+      "name": "Shakhter Soligorsk",
+      "countryId": 25,
+      "espn": {
+        "id": "528",
+        "name": "Shakhter Soligorsk",
+        "leagues": [
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "604": {
+      "name": "Solomon Warriors",
+      "countryId": 93
+    },
+    "605": {
+      "name": "SönderjyskE",
+      "countryId": 54,
+      "espn": {
+        "id": "8118",
+        "name": "Sønderjyske Fodbold",
+        "leagues": [
+          "den.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "606": {
+      "name": "Sousa",
+      "countryId": 29,
+      "espn": {
+        "id": "15561",
+        "name": "Sousa EC",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "607": {
+      "name": "Spartak Moscow",
+      "countryId": 162,
+      "espn": {
+        "id": "1941",
+        "name": "Spartak Moscow",
+        "leagues": [
+          "rus.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "608": {
+      "name": "Sparta Praga",
+      "countryId": 159,
+      "espn": {
+        "id": "433",
+        "name": "Sparta Prague",
+        "leagues": [
+          "uefa.europa",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "609": {
+      "name": "Sport",
+      "countryId": 29,
+      "espn": {
+        "id": "7635",
+        "name": "Sport",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "610": {
+      "name": "Sport Huancayo",
+      "countryId": 151,
+      "espn": {
+        "id": "10318",
+        "name": "Sport Huancayo",
+        "leagues": [
+          "per.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "611": {
+      "name": "Sporting Braga",
+      "countryId": 154,
+      "espn": {
+        "id": "2994",
+        "name": "Braga",
+        "leagues": [
+          "por.1",
+          "uefa.europa.conf",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "612": {
+      "name": "Sporting Cristal",
+      "countryId": 151,
+      "espn": {
+        "id": "2673",
+        "name": "Sporting Cristal",
+        "leagues": [
+          "per.1",
+          "conmebol.libertadores",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "613": {
+      "name": "Sporting Gijón",
+      "countryId": 65,
+      "espn": {
+        "id": "3788",
+        "name": "Sporting Gijón",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "614": {
+      "name": "Sporting",
+      "countryId": 154,
+      "espn": {
+        "id": "2250",
+        "name": "Sporting CP",
+        "leagues": [
+          "por.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "615": {
+      "name": "Stade Malien",
+      "countryId": 127,
+      "espn": {
+        "id": "22077",
+        "name": "Stade Malien",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "616": {
+      "name": "Standard Liège",
+      "countryId": 21,
+      "espn": {
+        "id": "559",
+        "name": "Standard Liege",
+        "leagues": [
+          "bel.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "617": {
+      "name": "Steaua Bucuresti",
+      "countryId": 160,
+      "espn": {
+        "id": "484",
+        "name": "FCSB",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "618": {
+      "name": "St. Gallen",
+      "countryId": 180,
+      "espn": {
+        "id": "557",
+        "name": "St. Gallen",
+        "leagues": [
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "619": {
+      "name": "St Joseph's",
+      "countryId": 216,
+      "espn": {
+        "id": "18751",
+        "name": "St. Joseph's",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "620": {
+      "name": "Strasbourg",
+      "countryId": 72,
+      "espn": {
+        "id": "180",
+        "name": "Strasbourg",
+        "leagues": [
+          "fra.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "621": {
+      "name": "Sturm Graz",
+      "countryId": 15,
+      "espn": {
+        "id": "3746",
+        "name": "SK Sturm Graz",
+        "leagues": [
+          "aut.1",
+          "uefa.europa",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "622": {
+      "name": "Suduva",
+      "countryId": 119,
+      "espn": {
+        "id": "2552",
+        "name": "FK Suduva",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "623": {
+      "name": "Sumgayit",
+      "countryId": 16,
+      "espn": {
+        "id": "20715",
+        "name": "Sumgayit",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "624": {
+      "name": "Sutjeska",
+      "countryId": 105,
+      "espn": {
+        "id": "8281",
+        "name": "FK Sutjeska",
+        "leagues": [
+          "uefa.champions_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "625": {
+      "name": "Suva",
+      "countryId": 69
+    },
+    "626": {
+      "name": "Sydney FC",
+      "countryId": 14,
+      "espn": {
+        "id": "5327",
+        "name": "Sydney FC",
+        "leagues": [
+          "aus.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "627": {
+      "name": "Talleres",
+      "countryId": 11,
+      "espn": {
+        "id": "19",
+        "name": "Talleres (Córdoba)",
+        "leagues": [
+          "arg.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "628": {
+      "name": "Tampines Rovers",
+      "countryId": 173,
+      "espn": {
+        "id": "7998",
+        "name": "BG Tampines Rovers FC",
+        "leagues": [
+          "afc.cup"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "629": {
+      "name": "Tapajós",
+      "countryId": 29
+    },
+    "630": {
+      "name": "Tauro",
+      "countryId": 147,
+      "espn": {
+        "id": "8254",
+        "name": "Tauro FC",
+        "leagues": [
+          "concacaf.league"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "631": {
+      "name": "Tenerife",
+      "countryId": 65,
+      "espn": {
+        "id": "245",
+        "name": "Tenerife",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "632": {
+      "name": "Teungueth",
+      "countryId": 169,
+      "espn": {
+        "id": "20854",
+        "name": "Teungueth",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "633": {
+      "name": "The New Saints",
+      "countryId": 145,
+      "espn": {
+        "id": "576",
+        "name": "The New Saints",
+        "leagues": [
+          "uefa.champions_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "634": {
+      "name": "The Strongest",
+      "countryId": 26,
+      "espn": {
+        "id": "2687",
+        "name": "The Strongest",
+        "leagues": [
+          "bol.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "635": {
+      "name": "Tigres UANL",
+      "countryId": 131,
+      "espn": {
+        "id": "232",
+        "name": "Tigres UANL",
+        "leagues": [
+          "mex.1",
+          "concacaf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "636": {
+      "name": "Tishreen SC",
+      "countryId": 174
+    },
+    "637": {
+      "name": "Tombense",
+      "countryId": 29,
+      "espn": {
+        "id": "17339",
+        "name": "Tombense",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.mineiro"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "638": {
+      "name": "Tottenham",
+      "countryId": 97,
+      "espn": {
+        "id": "367",
+        "name": "Tottenham Hotspur",
+        "leagues": [
+          "eng.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "639": {
+      "name": "Tractor Sazi",
+      "countryId": 98,
+      "espn": {
+        "id": "15107",
+        "name": "Tractor",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "640": {
+      "name": "Tre Fiori",
+      "countryId": 164,
+      "espn": {
+        "id": "8591",
+        "name": "Tre Fiori",
+        "leagues": [
+          "uefa.champions_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "641": {
+      "name": "Tre Penne",
+      "countryId": 164,
+      "espn": {
+        "id": "8592",
+        "name": "Tre Penne",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "642": {
+      "name": "Treze",
+      "countryId": 29,
+      "espn": {
+        "id": "4902",
+        "name": "Treze",
+        "leagues": [
+          "bra.3"
+        ],
+        "matchMethod": "exact"
+      },
+      "ogol": {
+        "url": "https://www.ogol.com.br/equipe/treze/3499",
+        "name": "Treze"
+      }
+    },
+    "643": {
+      "name": "Hartberg",
+      "countryId": 15,
+      "espn": {
+        "id": "6907",
+        "name": "TSV Hartberg",
+        "leagues": [
+          "aut.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "644": {
+      "name": "Tuna Luso",
+      "countryId": 29,
+      "espn": {
+        "id": "21389",
+        "name": "Tuna Luso",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "645": {
+      "name": "Tuntum",
+      "countryId": 29,
+      "espn": {
+        "id": "21390",
+        "name": "Tuntum",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "646": {
+      "name": "Twente",
+      "countryId": 85,
+      "espn": {
+        "id": "152",
+        "name": "FC Twente",
+        "leagues": [
+          "ned.1",
+          "uefa.europa.conf",
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "647": {
+      "name": "Uberlândia",
+      "countryId": 29,
+      "espn": {
+        "id": "9460",
+        "name": "Uberlândia",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.mineiro"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "648": {
+      "name": "Ulsan Hyundai",
+      "countryId": 49,
+      "espn": {
+        "id": "7120",
+        "name": "Ulsan HD",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "649": {
+      "name": "União",
+      "countryId": 29
+    },
+    "650": {
+      "name": "União Rondonópolis",
+      "countryId": 29,
+      "espn": {
+        "id": "4881",
+        "name": "União Rondonópolis-MT",
+        "leagues": [
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "651": {
+      "name": "União-RS",
+      "countryId": 29
+    },
+    "652": {
+      "name": "Unión Española",
+      "countryId": 42,
+      "espn": {
+        "id": "4132",
+        "name": "Unión Española",
+        "leagues": [
+          "chi.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "653": {
+      "name": "Unión La Calera",
+      "countryId": 42,
+      "espn": {
+        "id": "10144",
+        "name": "Unión La Calera",
+        "leagues": [
+          "chi.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "654": {
+      "name": "UNIRB",
+      "countryId": 29
+    },
+    "655": {
+      "name": "United City",
+      "countryId": 71,
+      "espn": {
+        "id": "20862",
+        "name": "United City",
+        "leagues": [
+          "afc.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "656": {
+      "name": "Univ. Católica-EQU",
+      "countryId": 60,
+      "espn": {
+        "id": "9283",
+        "name": "Universidad Católica (Quito)",
+        "leagues": [
+          "ecu.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "657": {
+      "name": "Universidad Católica",
+      "countryId": 42,
+      "espn": {
+        "id": "885",
+        "name": "Universidad Católica",
+        "leagues": [
+          "chi.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "658": {
+      "name": "Universidad Chile",
+      "countryId": 42,
+      "espn": {
+        "id": "4139",
+        "name": "Universidad de Chile",
+        "leagues": [
+          "chi.1",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "659": {
+      "name": "Universitario",
+      "countryId": 151,
+      "espn": {
+        "id": "2685",
+        "name": "Universitario",
+        "leagues": [
+          "per.1",
+          "conmebol.libertadores"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "660": {
+      "name": "Union Pétange",
+      "countryId": 120
+    },
+    "661": {
+      "name": "URT",
+      "countryId": 29,
+      "espn": {
+        "id": "18399",
+        "name": "URT",
+        "leagues": [
+          "bra.camp.mineiro"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "662": {
+      "name": "Vaduz",
+      "countryId": 118,
+      "espn": {
+        "id": "562",
+        "name": "FC Vaduz",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "663": {
+      "name": "Valencia",
+      "countryId": 65,
+      "espn": {
+        "id": "94",
+        "name": "Valencia",
+        "leagues": [
+          "esp.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "664": {
+      "name": "Real Valladolid",
+      "countryId": 65,
+      "espn": {
+        "id": "95",
+        "name": "Real Valladolid",
+        "leagues": [
+          "esp.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "665": {
+      "name": "Valletta",
+      "countryId": 128,
+      "espn": {
+        "id": "2698",
+        "name": "Valletta",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "666": {
+      "name": "Valmiera Glass",
+      "countryId": 114
+    },
+    "667": {
+      "name": "Vasco",
+      "countryId": 29,
+      "espn": {
+        "id": "3454",
+        "name": "Vasco da Gama",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil",
+          "bra.camp.carioca",
+          "conmebol.sudamericana"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "668": {
+      "name": "Vélez Sársfield",
+      "countryId": 11,
+      "espn": {
+        "id": "21",
+        "name": "Vélez Sarsfield",
+        "leagues": [
+          "arg.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "669": {
+      "name": "AS Vénus",
+      "countryId": 184
+    },
+    "670": {
+      "name": "Vera Cruz",
+      "countryId": 29
+    },
+    "671": {
+      "name": "Verdes",
+      "countryId": 22,
+      "espn": {
+        "id": "9943",
+        "name": "Verdes FC",
+        "leagues": [
+          "concacaf.central.american.cup"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "672": {
+      "name": "Viettel",
+      "countryId": 199,
+      "espn": {
+        "id": "20863",
+        "name": "Viettel",
+        "leagues": [
+          "afc.cup"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "673": {
+      "name": "Víkingur Ólafsvík",
+      "countryId": 102
+    },
+    "674": {
+      "name": "Viking Stavanger",
+      "countryId": 142,
+      "espn": {
+        "id": "510",
+        "name": "Viking FK",
+        "leagues": [
+          "nor.1",
+          "uefa.champions",
+          "uefa.champions_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "675": {
+      "name": "Viktoria Plzeň",
+      "countryId": 159,
+      "espn": {
+        "id": "11706",
+        "name": "Viktoria Plzen",
+        "leagues": [
+          "uefa.europa",
+          "uefa.europa_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "676": {
+      "name": "Vila Nova",
+      "countryId": 29,
+      "espn": {
+        "id": "9973",
+        "name": "Vila Nova",
+        "leagues": [
+          "bra.2",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "677": {
+      "name": "Villa Nova - MG",
+      "countryId": 29,
+      "espn": {
+        "id": "4910",
+        "name": "Villa Nova-MG",
+        "leagues": [
+          "bra.camp.mineiro"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "678": {
+      "name": "Villareal",
+      "countryId": 65,
+      "espn": {
+        "id": "102",
+        "name": "Villarreal",
+        "leagues": [
+          "esp.1",
+          "uefa.champions"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "679": {
+      "name": "Vipers SC",
+      "countryId": 194,
+      "espn": {
+        "id": "18628",
+        "name": "Vipers SC",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "680": {
+      "name": "Vita Club Kinshasa",
+      "countryId": 157
+    },
+    "681": {
+      "name": "Vitória",
+      "countryId": 29,
+      "espn": {
+        "id": "3457",
+        "name": "Vitória",
+        "leagues": [
+          "bra.1",
+          "bra.copa_do_brazil"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "682": {
+      "name": "Vitória da Conquista",
+      "countryId": 29
+    },
+    "683": {
+      "name": "Vitória Guimarães",
+      "countryId": 154,
+      "espn": {
+        "id": "5309",
+        "name": "Vitória de Guimaraes",
+        "leagues": [
+          "por.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "684": {
+      "name": "Vojvodina",
+      "countryId": 171,
+      "espn": {
+        "id": "7825",
+        "name": "Vojvodina",
+        "leagues": [
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "685": {
+      "name": "Volta Redonda",
+      "countryId": 29,
+      "espn": {
+        "id": "4806",
+        "name": "Volta Redonda",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.carioca"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "686": {
+      "name": "Wydad Casablanca",
+      "countryId": 129,
+      "espn": {
+        "id": "8625",
+        "name": "Wydad AC",
+        "leagues": [
+          "caf.confed"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "687": {
+      "name": "Wanderers",
+      "countryId": 195,
+      "espn": {
+        "id": "5501",
+        "name": "Montevideo Wanderers",
+        "leagues": [
+          "uru.1"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "688": {
+      "name": "Waterhouse",
+      "countryId": 106,
+      "espn": {
+        "id": "8670",
+        "name": "Waterhouse",
+        "leagues": [
+          "jam.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "689": {
+      "name": "W Connection",
+      "countryId": 189
+    },
+    "690": {
+      "name": "West Ham",
+      "countryId": 97,
+      "espn": {
+        "id": "371",
+        "name": "West Ham United",
+        "leagues": [
+          "eng.2"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "691": {
+      "name": "Vitesse",
+      "countryId": 85,
+      "espn": {
+        "id": "133121",
+        "name": "Vitesse",
+        "leagues": [
+          "caf.confed"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "692": {
+      "name": "Wolfsberger",
+      "countryId": 15,
+      "espn": {
+        "id": "13294",
+        "name": "Wolfsberger",
+        "leagues": [
+          "aut.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "693": {
+      "name": "VfL Wolfsburg",
+      "countryId": 3,
+      "espn": {
+        "id": "138",
+        "name": "VfL Wolfsburg",
+        "leagues": [
+          "ger.2"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "694": {
+      "name": "Young Boys",
+      "countryId": 180,
+      "espn": {
+        "id": "2722",
+        "name": "Young Boys",
+        "leagues": [
+          "sui.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "695": {
+      "name": "Ypiranga",
+      "countryId": 29,
+      "espn": {
+        "id": "4935",
+        "name": "Ypiranga",
+        "leagues": [
+          "bra.copa_do_brazil",
+          "bra.camp.gaucho"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "696": {
+      "name": "Zalgiris Vilnius",
+      "countryId": 119,
+      "espn": {
+        "id": "523",
+        "name": "Zalgiris Vilnius",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "697": {
+      "name": "Zamalek",
+      "countryId": 57,
+      "espn": {
+        "id": "8392",
+        "name": "Zamalek",
+        "leagues": [
+          "caf.champions"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "698": {
+      "name": "Zeljeznicar",
+      "countryId": 27,
+      "espn": {
+        "id": "2494",
+        "name": "Zeljeznicar Sarajevo",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "699": {
+      "name": "Zenit St. Petersburg",
+      "countryId": 162,
+      "espn": {
+        "id": "2533",
+        "name": "Zenit St Petersburg",
+        "leagues": [
+          "rus.1"
+        ],
+        "matchMethod": "exact"
+      }
+    },
+    "700": {
+      "name": "Zeta Golubovac",
+      "countryId": 105
+    },
+    "701": {
+      "name": "Zilina",
+      "countryId": 63,
+      "espn": {
+        "id": "2491",
+        "name": "MSK Zilina",
+        "leagues": [
+          "uefa.europa_qual",
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "702": {
+      "name": "Zorya Lugansk",
+      "countryId": 193,
+      "espn": {
+        "id": "17520",
+        "name": "FC Zorya Luhansk",
+        "leagues": [
+          "uefa.europa.conf"
+        ],
+        "matchMethod": "reviewed"
+      }
+    },
+    "703": {
+      "name": "Zrinjski",
+      "countryId": 27,
+      "espn": {
+        "id": "5239",
+        "name": "Zrinjski Mostar",
+        "leagues": [
+          "uefa.europa.conf_qual"
+        ],
+        "matchMethod": "reviewed"
+      }
+    }
+  }
+}

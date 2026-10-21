@@ -1,0 +1,7 @@
+[
+  {"trigger":{"url-filter":".*"},"action":{"type":"block"}},
+  {"trigger":{"url-filter":"^file:"},"action":{"type":"ignore-previous-rules"}},
+  {"trigger":{"url-filter":"^data:"},"action":{"type":"ignore-previous-rules"}},
+  {"trigger":{"url-filter":"^blob:"},"action":{"type":"ignore-previous-rules"}},
+  {"trigger":{"url-filter":"^about:"},"action":{"type":"ignore-previous-rules"}}
+]

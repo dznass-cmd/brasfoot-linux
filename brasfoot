@@ -1,0 +1,41 @@
+#!/bin/bash
+# ==============================================================================
+# BRASFOOT LINUX - EXECUTÁVEL NATIVO (100% SEM SERVIDOR, SEM INTERNET, SEM JAVA)
+# ==============================================================================
+
+BRASFOOT_PROJECT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd -- "$BRASFOOT_PROJECT_DIR" || exit 1
+
+BRASFOOT_LOG_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/brasfoot"
+BRASFOOT_LOG_FILE=/dev/null
+if mkdir -p -- "$BRASFOOT_LOG_DIR" 2>/dev/null; then
+    BRASFOOT_LOG_FILE="$BRASFOOT_LOG_DIR/launcher.log"
+fi
+
+# Desvincula o jogo do terminal e guarda mensagens de diagnóstico em arquivo.
+launch_background() {
+    if command -v setsid >/dev/null 2>&1; then
+        setsid --fork -- "$@" </dev/null >"$BRASFOOT_LOG_FILE" 2>&1
+    else
+        nohup "$@" </dev/null >"$BRASFOOT_LOG_FILE" 2>&1 &
+        disown
+    fi
+}
+
+# 1. Executa o aplicativo nativo compilado (GTK4 + WebKit)
+if [ -x "$BRASFOOT_PROJECT_DIR/brasfoot-app" ]; then
+    launch_background "$BRASFOOT_PROJECT_DIR/brasfoot-app" "$@"
+    exit $?
+fi
+
+# 2. Fallback para navegador local via protocolo file:// (sem servidor)
+if command -v firefox >/dev/null 2>&1; then
+    launch_background firefox --new-window "file://$BRASFOOT_PROJECT_DIR/index.html"
+elif command -v epiphany >/dev/null 2>&1; then
+    launch_background epiphany --application-mode="file://$BRASFOOT_PROJECT_DIR/index.html"
+elif command -v xdg-open >/dev/null 2>&1; then
+    launch_background xdg-open "$BRASFOOT_PROJECT_DIR/index.html"
+else
+    printf 'Abra o arquivo diretamente no navegador: file://%s/index.html\n' "$BRASFOOT_PROJECT_DIR" >"$BRASFOOT_LOG_FILE"
+    exit 1
+fi

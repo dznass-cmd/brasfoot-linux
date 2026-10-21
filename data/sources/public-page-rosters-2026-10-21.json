@@ -1,0 +1,2117 @@
+{
+  "126": {
+    "provider": "ogol",
+    "sourceClubId": "3155",
+    "sourceClubName": "Bragantino-PA",
+    "seasonYear": 2026,
+    "seasonLabel": "2026",
+    "fetchedAt": "2026-10-21T05:09:51Z",
+    "sourceUrl": "https://www.ogol.com.br/equipe/bragantino-pa/3155",
+    "dataUrl": "https://www.ogol.com.br/equipe/bragantino-pa/3155",
+    "collectionMethod": "public-page-text",
+    "players": [
+      {
+        "name": "Régis",
+        "position": "G",
+        "jersey": "1",
+        "stats": {},
+        "age": 32
+      },
+      {
+        "name": "Douglas",
+        "position": "G",
+        "jersey": "12",
+        "stats": {},
+        "age": 34
+      },
+      {
+        "name": "Deco Júnior",
+        "position": "G",
+        "jersey": "22",
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Leandro Cabecinha",
+        "position": "D",
+        "jersey": "6",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Ronaldo",
+        "position": "D",
+        "jersey": "2",
+        "stats": {},
+        "age": 29
+      },
+      {
+        "name": "Matheus Souza",
+        "position": "D",
+        "jersey": "3",
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Junior Morango",
+        "position": "D",
+        "jersey": "16",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Japa",
+        "position": "D",
+        "jersey": "17",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Douglas Santos",
+        "position": "D",
+        "jersey": "19",
+        "stats": {},
+        "age": 29
+      },
+      {
+        "name": "Enzo Faria",
+        "position": "D",
+        "jersey": "21",
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Taygor",
+        "position": "D",
+        "jersey": "4",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Ângelo",
+        "position": "M",
+        "jersey": "13",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Dioguinho",
+        "position": "M",
+        "jersey": "7",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Edicleber",
+        "position": "M",
+        "jersey": "8",
+        "stats": {},
+        "age": 32
+      },
+      {
+        "name": "Túlio",
+        "position": "M",
+        "jersey": "10",
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Danilo Cirqueira",
+        "position": "M",
+        "jersey": "14",
+        "stats": {},
+        "age": 34
+      },
+      {
+        "name": "Matheus Silva",
+        "position": "M",
+        "jersey": "14",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Jeferson",
+        "position": "M",
+        "jersey": "15",
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Nilsinho",
+        "position": "M",
+        "jersey": "20",
+        "stats": {},
+        "age": 29
+      },
+      {
+        "name": "Jhonson",
+        "position": "M",
+        "jersey": "5",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "João Victor",
+        "position": "F",
+        "jersey": "9",
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Pedrinho",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Gileard",
+        "position": "F",
+        "jersey": "9",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Leilton Tracateua",
+        "position": "F",
+        "jersey": "11",
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Vinicius Henrique",
+        "position": "F",
+        "jersey": "18",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Dill",
+        "position": "F",
+        "jersey": "21",
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Wander Silva",
+        "position": "F",
+        "jersey": "23",
+        "stats": {},
+        "age": 33
+      }
+    ],
+    "complete": true,
+    "country": "Brasil",
+    "activityEvidence": {
+      "type": "current-public-page",
+      "url": "https://www.ogol.com.br/equipe/bragantino-pa/3155",
+      "seasonYear": 2026
+    }
+  },
+  "144": {
+    "provider": "ogol",
+    "sourceClubId": "43195",
+    "sourceClubName": "FC Cascavel",
+    "seasonYear": 2026,
+    "seasonLabel": "2026",
+    "fetchedAt": "2026-10-21T05:09:51Z",
+    "sourceUrl": "https://www.ogol.com.br/equipe/fc-cascavel/43195",
+    "dataUrl": "https://www.ogol.com.br/equipe/fc-cascavel/43195",
+    "collectionMethod": "public-page-text",
+    "players": [
+      {
+        "name": "Felipe Léo",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "André Luiz",
+        "position": "G",
+        "jersey": "1",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Sidnei",
+        "position": "G",
+        "jersey": "12",
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Thierry Wessling",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "Gabriel Ramos",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "Ian Barreto",
+        "position": "D",
+        "jersey": "6",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Zé Rodrigues",
+        "position": "D",
+        "jersey": "14",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Yan Bentz",
+        "position": "D",
+        "jersey": "17",
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Edu Oliveira",
+        "position": "D",
+        "jersey": "23",
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "Cleiton",
+        "position": "D",
+        "jersey": "30",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Libano",
+        "position": "D",
+        "jersey": "2",
+        "stats": {},
+        "age": 37
+      },
+      {
+        "name": "Renan Cosenza",
+        "position": "D",
+        "jersey": "4",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Geovane Henrique",
+        "position": "D",
+        "jersey": "5",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Gustavo Tapioca",
+        "position": "D",
+        "jersey": "16",
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Flávio Ramos",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 32
+      },
+      {
+        "name": "Lucas Cordeiro",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Paim",
+        "position": "D",
+        "jersey": "6",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Léo Herrero",
+        "position": "D",
+        "jersey": "28",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Borech",
+        "position": "D",
+        "jersey": "3",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Zé Augusto",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Willian Santos",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Kevin Malthus",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Vitor Braga",
+        "position": "M",
+        "jersey": "18",
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Robinho",
+        "position": "M",
+        "jersey": "20",
+        "stats": {},
+        "age": 32
+      },
+      {
+        "name": "Choco",
+        "position": "M",
+        "jersey": "23",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Guilherme Pinheiro",
+        "position": "M",
+        "jersey": "26",
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Gustavo Amaro",
+        "position": "M",
+        "jersey": "27",
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Fábio",
+        "position": "M",
+        "jersey": "28",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Pedrinho",
+        "position": "M",
+        "jersey": "31",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Ayrton",
+        "position": "M",
+        "jersey": "34",
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "Pedro Peçanha",
+        "position": "M",
+        "jersey": "8",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Vitor Amaral",
+        "position": "M",
+        "jersey": "15",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Antony",
+        "position": "M",
+        "jersey": "22",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Vanderlei",
+        "position": "M",
+        "jersey": "25",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Luiz Henrique",
+        "position": "M",
+        "jersey": "10",
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Luizinho",
+        "position": "M",
+        "jersey": "21",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Juninho",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Garraty",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Gustavo Andrade",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Kauhe Galdino",
+        "position": "M",
+        "jersey": "19",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Murilo Kock",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Gabryel Freitas",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Negueba",
+        "position": "F",
+        "jersey": "7",
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "João Victor",
+        "position": "F",
+        "jersey": "7",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Samuel Tiba",
+        "position": "F",
+        "jersey": "9",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Vitor Saci",
+        "position": "F",
+        "jersey": "17",
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Guilherme Gomes",
+        "position": "F",
+        "jersey": "18",
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "Cirilo",
+        "position": "F",
+        "jersey": "22",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Zé Carlos",
+        "position": "F",
+        "jersey": "34",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Haruna Hassan",
+        "position": "F",
+        "jersey": "11",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Jonathan Palacios",
+        "position": "F",
+        "jersey": "29",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Ryan Kelvy",
+        "position": "F",
+        "jersey": "35",
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "Caio Rocha",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Gabriel Lyra",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 22
+      }
+    ],
+    "complete": true,
+    "country": "Brasil",
+    "activityEvidence": {
+      "type": "current-public-page",
+      "url": "https://www.ogol.com.br/equipe/fc-cascavel/43195",
+      "seasonYear": 2026
+    }
+  },
+  "445": {
+    "provider": "ogol",
+    "sourceClubId": "3353",
+    "sourceClubName": "Moto Club",
+    "seasonYear": 2026,
+    "seasonLabel": "2026",
+    "fetchedAt": "2026-10-21T05:09:51Z",
+    "sourceUrl": "https://www.ogol.com.br/equipe/moto-club/3353",
+    "dataUrl": "https://www.ogol.com.br/equipe/moto-club/3353",
+    "collectionMethod": "public-page-text",
+    "players": [
+      {
+        "name": "Marcus Vinícius",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Kássio",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Brunão",
+        "position": "G",
+        "jersey": "12",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Isaac",
+        "position": "G",
+        "jersey": "23",
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Carlos Brito",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Pablo",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "Renan",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Ciriaco",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Anderson Correa",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Jeferson",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "João Miranda",
+        "position": "D",
+        "jersey": "22",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Roberth Silva",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Marquinho Carioca",
+        "position": "D",
+        "jersey": "2",
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Neto",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 29
+      },
+      {
+        "name": "Roni",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Lucas Lima",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Jhon",
+        "position": "D",
+        "jersey": "14",
+        "stats": {},
+        "age": 18
+      },
+      {
+        "name": "Ian Couto",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Jadiel",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Bruno Eduardo",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Victor Souza",
+        "position": "D",
+        "jersey": "3",
+        "stats": {},
+        "age": 33
+      },
+      {
+        "name": "Denilson",
+        "position": "D",
+        "jersey": "4",
+        "stats": {},
+        "age": 29
+      },
+      {
+        "name": "Washington",
+        "position": "D",
+        "jersey": "13",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Gustavo Rodrigues",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Yan Ferreira",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 29
+      },
+      {
+        "name": "Romullo Carioca",
+        "position": "D",
+        "jersey": "6",
+        "stats": {},
+        "age": 32
+      },
+      {
+        "name": "Patrick Weyderr",
+        "position": "M",
+        "jersey": "15",
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Felipe Silva",
+        "position": "M",
+        "jersey": "16",
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Valderrama",
+        "position": "M",
+        "jersey": "17",
+        "stats": {},
+        "age": 32
+      },
+      {
+        "name": "Cleitinho",
+        "position": "M",
+        "jersey": "27",
+        "stats": {},
+        "age": 36
+      },
+      {
+        "name": "Athos",
+        "position": "M",
+        "jersey": "10",
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Ariel Robert",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 18
+      },
+      {
+        "name": "Kauan",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Jojo",
+        "position": "M",
+        "jersey": "21",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Pio",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 38
+      },
+      {
+        "name": "Milton Lucas",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Hudson",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Jair Berlitz",
+        "position": "M",
+        "jersey": "5",
+        "stats": {},
+        "age": 29
+      },
+      {
+        "name": "Wanderson Gotinha",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Thiago Matheus",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Matheus Wladymir",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Emerson Nike",
+        "position": "F",
+        "jersey": "11",
+        "stats": {},
+        "age": 34
+      },
+      {
+        "name": "Manoel Reis",
+        "position": "F",
+        "jersey": "18",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Dagson",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Henrique",
+        "position": "F",
+        "jersey": "25",
+        "stats": {},
+        "age": 33
+      },
+      {
+        "name": "William Fernandes",
+        "position": "F",
+        "jersey": "9",
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Fábio",
+        "position": "F",
+        "jersey": "19",
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Bacurau",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Jeffinho",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Edrean",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Warllem Mateus",
+        "position": "F",
+        "jersey": "20",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Andrezinho",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 29
+      },
+      {
+        "name": "Jean",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Joarlyson",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 26
+      }
+    ],
+    "complete": true,
+    "country": "Brasil",
+    "activityEvidence": {
+      "type": "current-public-page",
+      "url": "https://www.ogol.com.br/equipe/moto-club/3353",
+      "seasonYear": 2026
+    }
+  },
+  "490": {
+    "provider": "ogol",
+    "sourceClubId": "2249",
+    "sourceClubName": "Paraná",
+    "seasonYear": 2026,
+    "seasonLabel": "2026",
+    "fetchedAt": "2026-10-21T05:09:51Z",
+    "sourceUrl": "https://www.ogol.com.br/equipe/parana/2249",
+    "dataUrl": "https://www.ogol.com.br/equipe/parana/2249",
+    "collectionMethod": "public-page-text",
+    "players": [
+      {
+        "name": "Matheus Barônio",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Cabral",
+        "position": "G",
+        "jersey": "1",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Juliano Chade",
+        "position": "G",
+        "jersey": "12",
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Murillo Rodrigues",
+        "position": "G",
+        "jersey": "40",
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "Lucas Serafini",
+        "position": "D",
+        "jersey": "2",
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Luis Salazar",
+        "position": "D",
+        "jersey": "3",
+        "stats": {},
+        "age": 32
+      },
+      {
+        "name": "Mateus Santana",
+        "position": "D",
+        "jersey": "4",
+        "stats": {},
+        "age": 34
+      },
+      {
+        "name": "Lorenzo",
+        "position": "D",
+        "jersey": "13",
+        "stats": {},
+        "age": 18
+      },
+      {
+        "name": "Leonardo",
+        "position": "D",
+        "jersey": "14",
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "Alex Júnior",
+        "position": "D",
+        "jersey": "16",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Eltinho",
+        "position": "D",
+        "jersey": "20",
+        "stats": {},
+        "age": 39
+      },
+      {
+        "name": "Arthur Yan",
+        "position": "D",
+        "jersey": "7",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Vitor Mota",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Eduardo",
+        "position": "D",
+        "jersey": "3",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Bruno Dip",
+        "position": "D",
+        "jersey": "6",
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Thiago Dombroski",
+        "position": "D",
+        "jersey": "4",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Caíque Geloni",
+        "position": "D",
+        "jersey": "2",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Thiaguinho",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Murillo",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "Cristiano",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 39
+      },
+      {
+        "name": "Clayton",
+        "position": "M",
+        "jersey": "5",
+        "stats": {},
+        "age": 37
+      },
+      {
+        "name": "Bruno Vinicius",
+        "position": "M",
+        "jersey": "5",
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Vinícius Michelon",
+        "position": "M",
+        "jersey": "8",
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Otávio Henrique",
+        "position": "M",
+        "jersey": "15",
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "Lucas Nunes",
+        "position": "M",
+        "jersey": "17",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Gabriel Pfeifer",
+        "position": "M",
+        "jersey": "10",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Nagi Kawatani",
+        "position": "M",
+        "jersey": "17",
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Elvis",
+        "position": "M",
+        "jersey": "20",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Antônio Pedro",
+        "position": "M",
+        "jersey": "11",
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Ferreira",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Lucas Gabriel",
+        "position": "M",
+        "jersey": "18",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Coutinho",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Daniel Cruz",
+        "position": "F",
+        "jersey": "11",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Viní Ribeiro",
+        "position": "F",
+        "jersey": "21",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Gustavo Sagui",
+        "position": "F",
+        "jersey": "21",
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Ueslei Brito",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Adriano",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 18
+      },
+      {
+        "name": "Ruan Lima",
+        "position": "F",
+        "jersey": "9",
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Liliu",
+        "position": "F",
+        "jersey": "19",
+        "stats": {},
+        "age": 36
+      },
+      {
+        "name": "Lucas Bueno",
+        "position": "F",
+        "jersey": "22",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Lucas Caniggia",
+        "position": "F",
+        "jersey": "23",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Samuel",
+        "position": "F",
+        "jersey": "23",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "João Felipe",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 27
+      }
+    ],
+    "complete": true,
+    "country": "Brasil",
+    "activityEvidence": {
+      "type": "current-public-page",
+      "url": "https://www.ogol.com.br/equipe/parana/2249",
+      "seasonYear": 2026
+    }
+  },
+  "562": {
+    "provider": "ogol",
+    "sourceClubId": "3444",
+    "sourceClubName": "Sampaio Corrêa",
+    "seasonYear": 2026,
+    "seasonLabel": "2026",
+    "fetchedAt": "2026-10-21T05:09:51Z",
+    "sourceUrl": "https://www.ogol.com.br/equipe/sampaio-correa/3444",
+    "dataUrl": "https://www.ogol.com.br/equipe/sampaio-correa/3444",
+    "collectionMethod": "public-page-text",
+    "players": [
+      {
+        "name": "Vinicius Taquini",
+        "position": "G",
+        "jersey": "12",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Raynon",
+        "position": "G",
+        "jersey": "32",
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Welligton Lima",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 36
+      },
+      {
+        "name": "Deijair",
+        "position": "G",
+        "jersey": "1",
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Joécio",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 40
+      },
+      {
+        "name": "Gui França",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Vitor Manoel",
+        "position": "D",
+        "jersey": "2",
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Matheus Alves",
+        "position": "D",
+        "jersey": "14",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Matheus Albino",
+        "position": "D",
+        "jersey": "22",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Bruno Oliveira",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 33
+      },
+      {
+        "name": "Yago Rocha",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 32
+      },
+      {
+        "name": "Jardson",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Ball",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Igor Sanchs",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Izaldo",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 33
+      },
+      {
+        "name": "Hugo Leonardo",
+        "position": "D",
+        "jersey": "6",
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Clebson",
+        "position": "D",
+        "jersey": "21",
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Edimar",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 38
+      },
+      {
+        "name": "Felipe Cauã",
+        "position": "D",
+        "jersey": "3",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Itambé",
+        "position": "D",
+        "jersey": "4",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Dimas",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Patrik",
+        "position": "M",
+        "jersey": "15",
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Alex Sandre",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Hitalo Sousa",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Alecio",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Henrique Marcos",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Cavi",
+        "position": "M",
+        "jersey": "5",
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Pedro Teixeira",
+        "position": "M",
+        "jersey": "8",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Esquerdinha",
+        "position": "M",
+        "jersey": "10",
+        "stats": {},
+        "age": 35
+      },
+      {
+        "name": "Neto Pacas",
+        "position": "M",
+        "jersey": "17",
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Peu",
+        "position": "M",
+        "jersey": "7",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Nikollas Sena",
+        "position": "M",
+        "jersey": "16",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Daniel Mazerochi",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Luis Carlos",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Gustavo Furtado",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Luis Guilherme",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Matheus Moresche",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Wendson",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 29
+      },
+      {
+        "name": "Rayllan",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Warllem Mateus",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Gean",
+        "position": "F",
+        "jersey": "9",
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Felipe Freitas",
+        "position": "F",
+        "jersey": "11",
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Adriano",
+        "position": "F",
+        "jersey": "19",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Kaká",
+        "position": "F",
+        "jersey": "20",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Emerson Carioca",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Eric Carral",
+        "position": "F",
+        "jersey": "18",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Histone",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 26
+      }
+    ],
+    "complete": true,
+    "country": "Brasil",
+    "activityEvidence": {
+      "type": "current-public-page",
+      "url": "https://www.ogol.com.br/equipe/sampaio-correa/3444",
+      "seasonYear": 2026
+    }
+  },
+  "642": {
+    "provider": "ogol",
+    "sourceClubId": "3499",
+    "sourceClubName": "Treze",
+    "seasonYear": 2026,
+    "seasonLabel": "2026",
+    "fetchedAt": "2026-10-21T05:09:51Z",
+    "sourceUrl": "https://www.ogol.com.br/equipe/treze/3499",
+    "dataUrl": "https://www.ogol.com.br/equipe/treze/3499",
+    "collectionMethod": "public-page-text",
+    "players": [
+      {
+        "name": "Erivelton",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 34
+      },
+      {
+        "name": "Marcos",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Lucas",
+        "position": "G",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Rodolfo Castro",
+        "position": "G",
+        "jersey": "1",
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Soares",
+        "position": "G",
+        "jersey": "12",
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Fernandinho",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 33
+      },
+      {
+        "name": "Léo Azevedo",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Vital",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Pedro Ivo",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "John Lessa",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Luan Freire",
+        "position": "D",
+        "jersey": "6",
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Felipe Santana",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Saimon",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Juninho Piancó",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Matheus Barbosa",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Mateus Neto",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 18
+      },
+      {
+        "name": "Luan",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 20
+      },
+      {
+        "name": "Cauã Maia",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Diego Clemente",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 32
+      },
+      {
+        "name": "Yan Oliveira",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Natan Masiero",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Bruno Ré",
+        "position": "D",
+        "jersey": "15",
+        "stats": {},
+        "age": 36
+      },
+      {
+        "name": "Caio Gomes",
+        "position": "D",
+        "jersey": "20",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Ítalo Melo",
+        "position": "D",
+        "jersey": "22",
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Ryan Santos",
+        "position": "D",
+        "jersey": "2",
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Bruno Gabriel",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Lucas Rocha",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 31
+      },
+      {
+        "name": "Carlos Henrique",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Renilson",
+        "position": "D",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Wendel Lessa",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Giovane Mário",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Marquinhos",
+        "position": "M",
+        "jersey": "8",
+        "stats": {},
+        "age": 32
+      },
+      {
+        "name": "Thiago Alagoano",
+        "position": "M",
+        "jersey": "10",
+        "stats": {},
+        "age": 37
+      },
+      {
+        "name": "Talison",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 29
+      },
+      {
+        "name": "Lucas Gomes",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 30
+      },
+      {
+        "name": "Gabriel Feitosa",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Sotero",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 19
+      },
+      {
+        "name": "William",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 18
+      },
+      {
+        "name": "Douglas Lukaku",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Gustavo Petrocelli",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Hugo Borges",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Gregory",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Wilker",
+        "position": "M",
+        "jersey": "5",
+        "stats": {},
+        "age": 27
+      },
+      {
+        "name": "Vinícius Michelon",
+        "position": "M",
+        "jersey": null,
+        "stats": {},
+        "age": 26
+      },
+      {
+        "name": "Kevin Rivas",
+        "position": "M",
+        "jersey": "17",
+        "stats": {},
+        "age": 22
+      },
+      {
+        "name": "Brinquedo",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Dioran",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Vinícius Bala",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "João Victor",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 21
+      },
+      {
+        "name": "Buba",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 33
+      },
+      {
+        "name": "Jean Carlo",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 33
+      },
+      {
+        "name": "Viní Ribeiro",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 25
+      },
+      {
+        "name": "Silvano",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 28
+      },
+      {
+        "name": "Rafael Tanque",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 34
+      },
+      {
+        "name": "Pedro Maycon",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 32
+      },
+      {
+        "name": "Pedro Igor",
+        "position": "F",
+        "jersey": "7",
+        "stats": {},
+        "age": 24
+      },
+      {
+        "name": "Lucas Vieira",
+        "position": "F",
+        "jersey": "9",
+        "stats": {},
+        "age": 33
+      },
+      {
+        "name": "Zé Felipe",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 23
+      },
+      {
+        "name": "Giva",
+        "position": "F",
+        "jersey": "77",
+        "stats": {},
+        "age": 33
+      },
+      {
+        "name": "Kauã Giancler",
+        "position": "F",
+        "jersey": null,
+        "stats": {},
+        "age": 22
+      }
+    ],
+    "complete": true,
+    "country": "Brasil",
+    "activityEvidence": {
+      "type": "current-public-page",
+      "url": "https://www.ogol.com.br/equipe/treze/3499",
+      "seasonYear": 2026
+    }
+  }
+}

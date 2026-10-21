@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' file: 'unsafe-inline'; style-src 'self' file: 'unsafe-inline'; img-src 'self' file: data: blob:; media-src 'self' file: data: blob:; font-src 'self' file: data:; connect-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brasfoot Revenge</title>
+  <link rel="icon" type="image/png" href="assets/icons/ic_champion.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="main-menu" class="main-menu">
+    <div class="menu-art" role="group" aria-label="Brasfoot Revenge">
+      <img src="assets/ui/menu-original.jpg" alt="Brasfoot Revenge" class="menu-art-image">
+      <div class="menu-art-revenge" aria-hidden="true">REVENGE</div>
+      <button id="main-new-game-btn" class="menu-hotspot menu-new" aria-label="Novo jogo"></button>
+      <button id="main-continue-btn" class="menu-hotspot menu-load" aria-label="Carregar jogo salvo"></button>
+      <button id="main-editor-btn" class="menu-hotspot menu-editor" aria-label="Editor de clubes"></button>
+    </div>
+    <button class="menu-import" data-action="import">Importar jogo de um arquivo</button>
+  </div>
+
+  <div id="options-modal" class="modal-overlay" style="display:none">
+    <div class="modal-card options-card">
+      <div class="modal-header"><h2>Opções do jogo</h2><button class="window-close" data-close="options-modal" aria-label="Fechar opções">×</button></div>
+      <div class="options-list">
+        <button id="save-game-btn" class="btn"><img src="assets/icons/save1.png" alt="">Salvar jogo</button>
+        <button id="export-save-btn" class="btn">Exportar jogo para arquivo</button>
+        <button class="btn" data-action="import">Importar jogo</button>
+        <button id="sound-toggle-btn" class="btn" aria-pressed="true">Som: ligado</button>
+        <button class="btn" data-action="new-game">Novo jogo</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="editor-modal" class="modal-overlay" style="display:none">
+    <form id="club-editor-form" class="modal-card editor-card">
+      <div class="modal-header"><h2>Editor de clubes</h2><button type="button" class="window-close" data-close="editor-modal" aria-label="Fechar editor">×</button></div>
+      <div class="editor-fields">
+        <label>Clube<select id="editor-team-select"></select></label>
+        <label>Nome<input id="editor-team-name" required maxlength="60"></label>
+        <label>Estádio<input id="editor-stadium" required maxlength="80"></label>
+        <label>Técnico<input id="editor-manager" required maxlength="60"></label>
+      </div>
+      <div class="modal-footer"><button type="button" class="btn" data-close="editor-modal">Cancelar</button><button type="submit" class="btn btn-primary">Salvar alterações</button></div>
+    </form>
+  </div>
+
+  <!-- New Game / Welcome Screen -->
+  <div id="new-game-modal" class="modal-overlay" style="display:none">
+    <div class="modal-card select-team-card">
+      <div class="modal-header">
+        <img src="assets/icons/ic_champion.png" class="header-logo" alt="Brasfoot">
+        <h2>Novo jogo — escolha seu clube</h2><button class="window-close" data-close="new-game-modal" aria-label="Fechar seleção">×</button>
+      </div>
+      <p class="subtitle" id="new-game-subtitle">Selecione o seu clube para iniciar a temporada:</p>
+      <p id="new-game-database-summary" class="database-summary" hidden></p>
+      
+      <div class="division-selector">
+        <label>Divisão:</label>
+        <select id="division-filter">
+          <option value="BRA_A">Brasileirão Série A</option>
+          <option value="BRA_B">Brasileirão Série B</option>
+          <option value="BRA_C">Brasileirão Série C</option>
+          <option value="BRA_D">Brasileirão Série D</option>
+        </select>
+      </div>
+
+      <div class="team-grid" id="teams-selection-grid">
+        <!-- Teams dynamically populated -->
+      </div>
+
+      <div class="modal-footer">
+        <button id="import-save-btn" class="btn btn-secondary">Importar jogo</button>
+        <input type="file" id="import-save-input" accept=".json" style="display: none;">
+        <button id="load-saved-game-btn" class="btn btn-secondary">Carregar jogo salvo</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="game-container" class="game-container" style="display:none">
+    <header class="desktop-toolbar">
+      <nav class="toolbar-nav" aria-label="Menu do jogo">
+        <button class="toolbar-btn" data-view="standings-tab" data-sub-view="fixtures-view"><img src="assets/icons/icon02.png" alt=""><span>Agenda</span></button>
+        <button class="toolbar-btn" data-view="standings-tab" data-sub-view="standings-view"><img src="assets/icons/icon04.png" alt=""><span>Tabelas</span></button>
+        <button class="toolbar-btn" data-view="stadium-tab"><img src="assets/icons/icon05.png" alt=""><span>Estádio</span></button>
+        <button class="toolbar-btn" data-view="finance-tab"><img src="assets/icons/iconmoney.png" alt=""><span>Finanças</span></button>
+        <button class="toolbar-btn active" data-view="squad-tab"><img src="assets/icons/icon06.png" alt=""><span>Meu time</span></button>
+        <button class="toolbar-btn" id="market-nav-btn" data-view="market-tab"><img src="assets/icons/icon07.png" alt=""><span>Mercado <small id="market-offer-count" class="profile-offer-count" hidden></small></span></button>
+        <button class="toolbar-btn" data-view="performance-tab"><img src="assets/icons/iconretrospecto.png" alt=""><span>Desempenho</span></button>
+        <button class="toolbar-btn" data-view="teams-tab"><img src="assets/icons/icon06.png" alt=""><span>Times</span></button>
+        <button class="toolbar-btn" id="profile-nav-btn" data-view="manager-profile-tab"><img src="assets/icons/iconcoach16.png" alt=""><span>Meu perfil <small id="profile-offer-count" class="profile-offer-count" hidden></small></span></button>
+        <button class="toolbar-btn" data-action="save"><img src="assets/icons/save1.png" alt=""><span>Salvar</span></button>
+        <button class="toolbar-btn" data-action="options"><img src="assets/icons/icon01.png" alt=""><span>Opções</span></button>
+      </nav>
+      <div class="toolbar-season"><strong>BRASFOOT <span class="badge-revenge">REVENGE</span></strong><span id="season-label">Temporada 2026</span></div>
+    </header>
+
+    <aside class="club-sidebar">
+      <div class="club-info">
+        <img id="user-club-shield" src="assets/icons/escudo.png" alt="Escudo do clube" class="club-shield">
+        <div><h1 id="user-club-name">Meu clube</h1><span id="user-manager-name"></span></div>
+      </div>
+      <div class="club-summary">
+        <strong class="club-cash"><img src="assets/icons/iconmoney2.png" alt=""><span id="user-balance">R$ 0</span></strong>
+        <span id="user-division">Série A</span>
+        <span id="user-club-stadium">Estádio</span>
+        <div class="club-metrics"><span>Condição física<strong id="squad-fitness">100%</strong></span><span>Força média<strong id="squad-strength">0</strong></span></div>
+      </div>
+      <section class="next-match-panel" aria-label="Próximo jogo">
+        <h2 id="next-match-label">Próximo jogo</h2>
+        <div class="next-match-club"><img id="next-opponent-shield" src="assets/icons/escudo.png" alt="Escudo do adversário"><div><strong id="next-opponent-name">Adversário</strong><span id="next-match-competition"></span></div></div>
+        <div class="round-info">Rodada <span id="current-round-text">1 / 38</span></div>
+        <button id="next-season-btn" class="btn btn-primary season-next-button" hidden>Encerrar temporada</button>
+      </section>
+      <button class="btn lineup-open-btn" data-view="tactics-tab"><img src="assets/icons/tactics.png" alt="">Escalar time</button>
+      <section class="player-profile" aria-label="Jogador selecionado">
+        <div class="profile-title"><strong id="profile-name">Selecione um jogador</strong><strong id="profile-strength"></strong></div>
+        <div class="profile-position" id="profile-position"></div>
+        <div class="profile-characteristics" id="profile-characteristics"></div>
+        <p class="profile-availability" id="profile-availability"></p>
+        <dl class="profile-data"><div><dt>Valor do passe</dt><dd id="profile-value">—</dd></div><div><dt>Salário</dt><dd id="profile-wage">—</dd></div><div><dt>Idade</dt><dd id="profile-age">—</dd></div><div><dt>Lado</dt><dd id="profile-side">—</dd></div><div><dt>Jogos</dt><dd id="profile-matches">—</dd></div><div><dt>Gols</dt><dd id="profile-goals">—</dd></div><div><dt>Assistências</dt><dd id="profile-assists">—</dd></div></dl>
+      </section>
+      <div class="sidebar-footer"><img src="assets/icons/player_shirt_green.png" alt=""><span id="squad-count"></span><button class="sidebar-link" data-action="options">Opções</button></div>
+    </aside>
+
+    <main class="main-content">
+      <section id="manager-profile-tab" class="tab-content" aria-labelledby="manager-profile-title">
+        <header class="manager-profile-header">
+          <img src="assets/icons/iconcoach16.png" alt="" class="manager-profile-icon">
+          <div><h2 id="manager-profile-title">Meu perfil</h2><p id="manager-profile-club"></p></div>
+          <form id="manager-name-form" class="manager-name-form">
+            <label for="manager-profile-name">Nome do técnico</label>
+            <div><input id="manager-profile-name" required maxlength="60" autocomplete="off"><button class="btn btn-small" type="submit">Salvar nome</button></div>
+          </form>
+        </header>
+        <dl id="manager-profile-stats" class="manager-profile-stats"></dl>
+        <div class="manager-profile-layout">
+          <div>
+            <section class="manager-profile-section" aria-labelledby="manager-clubs-title">
+              <h3 id="manager-clubs-title"><img src="assets/icons/iconhistoria.png" alt="">Clubes que dirigi</h3>
+              <div id="manager-club-history"></div>
+            </section>
+            <section class="manager-profile-section" aria-labelledby="manager-trophies-title">
+              <h3 id="manager-trophies-title"><img src="assets/icons/icontrophy.png" alt="">Sala de troféus</h3>
+              <div id="manager-trophies" class="manager-trophies"></div>
+            </section>
+          </div>
+          <section class="manager-profile-section manager-offers-section" aria-labelledby="manager-offers-title">
+            <h3 id="manager-offers-title"><img src="assets/icons/contract.png" alt="">Propostas de clubes</h3>
+            <p class="manager-profile-help">Novas propostas chegam ao iniciar o ano seguinte, conforme sua campanha. Você pode mudar de clube antes da primeira partida da temporada.</p>
+            <div id="manager-job-offers"></div>
+            <div id="profile-offer-confirmation" class="profile-offer-confirmation" role="region" aria-labelledby="profile-offer-confirm-title" hidden>
+              <h4 id="profile-offer-confirm-title">Confirmar mudança de clube</h4>
+              <p id="profile-offer-confirm-text"></p>
+              <div class="manager-offer-actions"><button id="profile-confirm-offer-btn" class="btn btn-primary">Confirmar mudança</button><button id="profile-cancel-offer-btn" class="btn">Cancelar</button></div>
+            </div>
+            <details id="manager-past-offers" class="manager-past-offers" hidden><summary>Propostas anteriores</summary><ul id="manager-past-offers-list"></ul></details>
+          </section>
+        </div>
+      </section>
+      <section id="squad-tab" class="tab-content active">
+        <p id="preseason-notice" class="preseason-notice" role="status" hidden></p>
+        <div class="roster-surface table-responsive">
+          <table class="brasfoot-table roster-table" id="squad-table">
+            <thead><tr><th></th><th>P</th><th>Nome</th><th>L</th><th>F</th><th>Energia</th><th>Salário</th><th>Passe</th><th>G</th><th>Car.</th><th>Idade</th><th>CA</th><th>CV</th></tr></thead>
+            <tbody id="squad-tbody"></tbody>
+          </table>
+        </div>
+        <div class="roster-status"><span id="roster-selection-status">Selecione um jogador para consultar seus dados.</span><span>Titulares <img src="assets/icons/player_shirt_greensmall.png" alt=""> · Reservas <img src="assets/icons/player_shirt_graysmall.png" alt=""></span></div>
+      </section>
+
+      <section id="teams-tab" class="tab-content" aria-label="Consultar times das ligas">
+        <div class="club-browser">
+          <aside class="browser-navigation" aria-label="Escolher clube">
+            <h2>Times</h2>
+            <div class="browser-filters">
+              <label for="browser-country">País</label><select id="browser-country"></select>
+              <label for="browser-division">Liga / divisão</label><select id="browser-division"></select>
+              <label for="browser-search">Procurar clube</label><input id="browser-search" type="search" placeholder="Nome do clube…" autocomplete="off">
+              <div class="browser-shortcuts"><button id="browser-own-team" class="btn btn-small">Meu time</button><button id="browser-opponent" class="btn btn-small">Adversário</button></div>
+            </div>
+            <div class="browser-list-heading"><span>Clube</span><span title="Força média do elenco">F</span></div>
+            <div id="browser-team-list" class="browser-team-list" aria-label="Clubes encontrados"></div>
+            <div id="browser-team-count" class="browser-team-count" role="status"></div>
+          </aside>
+          <div class="browser-detail">
+            <div id="browser-empty" class="browser-empty" hidden>Nenhum clube encontrado. Altere o nome ou os filtros.</div>
+            <div id="browser-club-detail" class="browser-club-detail">
+              <header class="browser-club-header">
+                <img id="browser-club-shield" class="browser-club-shield" src="assets/icons/escudo.png" alt="Escudo do clube selecionado">
+                <div class="browser-club-title"><div class="browser-country-line"><img id="browser-country-flag" src="assets/icons/paisVazio.png" alt=""><span id="browser-club-country"></span><span id="browser-own-label" hidden>Seu time</span></div><h2 id="browser-club-name"></h2><span id="browser-club-league"></span></div>
+                <div class="browser-kits"><img id="browser-kit-1" src="assets/icons/camisaVazia.png" alt="Primeiro uniforme"><img id="browser-kit-2" src="assets/icons/camisaVazia.png" alt="Segundo uniforme"></div>
+              </header>
+              <dl id="browser-club-facts" class="browser-club-facts"></dl>
+              <div id="browser-season-record" class="browser-season-record" hidden></div>
+              <div class="browser-roster-heading"><h3>Elenco</h3><span id="browser-roster-summary"></span></div>
+              <div class="table-responsive browser-roster"><table class="brasfoot-table" aria-label="Elenco do clube selecionado"><thead><tr><th aria-label="Titular ou reserva"></th><th title="Posição">P</th><th>Nome</th><th title="Lado">L</th><th title="Força">F</th><th>Energia</th><th>Salário</th><th>Passe</th><th title="Gols">G</th><th>Car.</th><th>Idade</th><th title="Cartões amarelos">CA</th><th title="Cartões vermelhos">CV</th></tr></thead><tbody id="browser-roster-tbody"></tbody></table></div>
+              <section id="browser-player-detail" class="browser-player-detail" aria-label="Ficha do jogador selecionado" aria-live="polite"></section>
+              <footer class="browser-status"><span id="browser-data-source"></span><span>Selecione um jogador para ver sua ficha.</span></footer>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tactics-tab" class="tab-content">
+        <div class="lineup-screen">
+          <div class="lineup-field">
+            <div class="pitch" id="tactical-pitch" aria-label="Titulares em campo"></div>
+            <div id="lineup-bench" class="lineup-bench" aria-label="Reservas"></div>
+          </div>
+          <div class="lineup-controls">
+            <div class="kit-bar"><div class="opponent-kit"><span>Adversário</span><strong id="lineup-opponent-name"></strong><img id="lineup-opponent-shirt" src="assets/icons/camisaVazia.png" alt="Uniforme adversário"></div><fieldset><legend>Uniforme</legend><label><input type="radio" name="club-kit" value="1" checked><img id="club-kit-1" src="assets/icons/camisaVazia.png" alt="Primeiro uniforme"></label><label><input type="radio" name="club-kit" value="2"><img id="club-kit-2" src="assets/icons/camisaVazia.png" alt="Segundo uniforme"></label></fieldset></div>
+            <div class="table-responsive lineup-roster"><table class="brasfoot-table"><thead><tr><th></th><th>P</th><th>Nome</th><th>F</th><th>Energia</th><th>L</th><th>Car.</th></tr></thead><tbody id="lineup-tbody"></tbody></table></div>
+            <div class="lineup-settings">
+              <label>Seleção tática automática<select id="formation-select"><option>4-4-2</option><option>4-3-3</option><option>3-5-2</option><option>4-5-1</option><option>4-2-3-1</option><option>3-4-3</option></select></label>
+              <label>Estilo de jogo<select id="style-select"><option value="Ofensivo">Ataque total</option><option value="Equilibrado">Equilibrado</option><option value="Defensivo">Defensivo</option></select></label>
+              <button id="auto-select-squad-btn" class="btn">Escalar melhores</button>
+            </div>
+            <div class="tactics-info-box"><span>Goleiro <strong id="tactics-power-gk">0</strong></span><span>Defesa <strong id="tactics-power-def">0</strong></span><span>Meio <strong id="tactics-power-mid">0</strong></span><span>Ataque <strong id="tactics-power-att">0</strong></span></div>
+            <section class="advanced-tactics" aria-labelledby="advanced-tactics-title">
+              <h3 id="advanced-tactics-title">Instruções do time</h3>
+              <div class="tactical-preset"><label>Plano rápido<select id="tactics-preset-select"></select></label><button id="tactics-preset-btn" class="btn btn-small" type="button">Aplicar plano</button></div>
+              <p id="tactics-preset-help" class="tactical-help"></p>
+              <div id="tactics-instructions" class="tactical-instructions"></div>
+              <details class="set-piece-settings"><summary>Cobradores de bolas paradas</summary><div id="tactics-set-pieces" class="tactical-instructions"></div><p class="tactical-help">Se o escolhido estiver fora de campo, outro atleta cobra automaticamente.</p></details>
+              <p id="tactics-effects-summary" class="tactical-help" role="status"></p>
+            </section>
+            <p class="lineup-help" id="lineup-help" aria-live="polite">Selecione dois jogadores para trocar suas posições.</p>
+            <footer class="lineup-actions"><button class="btn" data-view="squad-tab">&lt;&lt; Voltar ao time</button><button id="play-round-btn" class="btn btn-play">Jogar &gt;&gt;</button></footer>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Classificação Tab -->
+      <section id="standings-tab" class="tab-content">
+        <div class="sub-nav">
+          <button class="sub-tab-btn active" data-sub="standings-view">Tabela de Classificação</button>
+          <button class="sub-tab-btn" data-sub="scorers-view">Artilharia</button>
+          <button class="sub-tab-btn" data-sub="fixtures-view">Jogos da Rodada</button>
+          <button class="sub-tab-btn" data-sub="history-view">Histórico</button>
+        </div>
+
+        <div id="standings-view" class="sub-content active">
+          <div class="table-responsive">
+            <table class="brasfoot-table standings-table" id="standings-table">
+              <thead>
+                <tr>
+                  <th width="40">Pos</th>
+                  <th>Clube</th>
+                  <th width="45">P</th>
+                  <th width="40">J</th>
+                  <th width="40">V</th>
+                  <th width="40">E</th>
+                  <th width="40">D</th>
+                  <th width="40">GP</th>
+                  <th width="40">GC</th>
+                  <th width="45">SG</th>
+                </tr>
+              </thead>
+              <tbody id="standings-tbody">
+                <!-- Standings rows -->
+              </tbody>
+            </table>
+          </div>
+          <div class="legend">
+            <span id="legend-top" class="legend-item"><span class="color-box g4"></span> <span id="legend-top-label">G4 / Libertadores</span></span>
+            <span id="legend-middle" class="legend-item"><span class="color-box sula"></span> Sul-Americana</span>
+            <span id="legend-bottom" class="legend-item"><span class="color-box z4"></span> Rebaixamento</span>
+          </div>
+        </div>
+
+        <div id="scorers-view" class="sub-content">
+          <table class="brasfoot-table" id="scorers-table">
+            <thead>
+              <tr>
+                <th width="50">Pos</th>
+                <th>Jogador</th>
+                <th>Clube</th>
+                <th width="70">Gols</th>
+              </tr>
+            </thead>
+            <tbody id="scorers-tbody">
+              <!-- Scorers rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="fixtures-view" class="sub-content">
+          <div class="fixtures-grid" id="round-fixtures-grid">
+            <!-- Round matches -->
+          </div>
+        </div>
+        <div id="history-view" class="sub-content"><h2 class="season-history-title">Histórico da carreira</h2><div id="career-history"></div></div>
+      </section>
+
+      <!-- Estádio -->
+      <section id="stadium-tab" class="tab-content">
+        <div class="stadium-layout">
+          <div class="stadium-card">
+            <h3>Estádio</h3>
+            <div class="stadium-image-wrapper">
+              <img src="assets/icons/estadio.jpg" alt="Estádio" class="stadium-img">
+            </div>
+            <p>Nome: <strong id="stadium-name">Estádio</strong></p>
+            <p>Capacidade Atual: <strong id="stadium-capacity">0</strong> lugares</p>
+
+            <div class="expansion-box">
+              <h4>Obras e Ampliação</h4>
+              <p class="cost-note">Custo: R$ 400 por cadeira</p>
+              <div class="expansion-buttons">
+                <button class="btn btn-action" onclick="app.upgradeStadium(5000)">+ 5.000 Lugares (R$ 2.000.000)</button>
+                <button class="btn btn-action" onclick="app.upgradeStadium(10000)">+ 10.000 Lugares (R$ 4.000.000)</button>
+                <button class="btn btn-action" onclick="app.upgradeStadium(20000)">+ 20.000 Lugares (R$ 8.000.000)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="finance-card">
+            <h3>Planejamento das obras</h3>
+            <p>Caixa disponível: <strong id="stadium-budget"></strong></p>
+            <p class="finance-note">A ampliação é paga à vista e aumenta o custo de manutenção por rodada.</p>
+            <button class="btn" data-view="finance-tab">Consultar finanças e bilheteria</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="finance-tab" class="tab-content" aria-labelledby="finance-title">
+        <header class="finance-header">
+          <img src="assets/icons/iconmoney.png" alt="">
+          <div><h2 id="finance-title">Finanças do clube</h2><p id="finance-club-name"></p></div>
+          <label>Temporada do extrato<select id="finance-season-filter"></select></label>
+          <button class="btn btn-small" data-view="stadium-tab">Estádio e obras</button>
+        </header>
+        <dl class="finance-cards">
+          <div><dt>Caixa atual</dt><dd id="finance-cash"></dd></div>
+          <div><dt id="finance-income-label">Entradas da temporada</dt><dd id="finance-income" class="positive"></dd></div>
+          <div><dt id="finance-expense-label">Saídas da temporada</dt><dd id="finance-expenses" class="negative"></dd></div>
+          <div><dt>Resultado do período registrado</dt><dd id="finance-net"></dd></div>
+        </dl>
+        <p id="finance-coverage" class="finance-note"></p>
+        <div class="finance-layout finance-funding-layout">
+          <section class="finance-panel" aria-labelledby="finance-revenue-title">
+            <h3 id="finance-revenue-title">TV e patrocínio · temporada atual</h3>
+            <p id="finance-tv-summary"></p>
+            <p class="finance-note">Receitas pagas ao concluir cada rodada. Escolha um patrocinador até o fim do campeonato; o acordo vale para as rodadas seguintes, incluindo a atual.</p>
+            <div id="finance-sponsor-offers" class="sponsor-offers"></div>
+          </section>
+          <section class="finance-panel" aria-labelledby="finance-board-title">
+            <h3 id="finance-board-title">Orçamento da diretoria · temporada atual</h3>
+            <dl class="finance-projection">
+              <div><dt>Disponível para negociações</dt><dd id="finance-transfer-room"></dd></div>
+              <div><dt>Verba inicial / revisada</dt><dd id="finance-transfer-limit"></dd></div>
+              <div><dt>Receitas com negócios</dt><dd id="finance-sales-budget"></dd></div>
+              <div><dt>Passe, taxas, luvas e rescisões</dt><dd id="finance-budget-spent"></dd></div>
+              <div><dt>Folha comprometida / rodada</dt><dd id="finance-wage-committed"></dd></div>
+              <div><dt>Limite de salários / rodada</dt><dd id="finance-wage-limit"></dd></div>
+            </dl>
+            <p class="finance-note">O orçamento usa metade do caixa na abertura do ano. Vendas e taxas recebidas liberam verba. A folha comprometida inclui o retorno dos atletas cedidos por empréstimo. O caixa também precisa cobrir cada pagamento.</p>
+            <p id="finance-budget-review-status" class="finance-note"></p>
+            <button id="finance-budget-review" class="btn btn-small">Solicitar revisão</button>
+            <button class="btn btn-small" data-view="market-tab" data-sub-view="contracts">Gerenciar contratos</button>
+          </section>
+        </div>
+        <div class="finance-layout">
+          <section class="finance-panel" aria-labelledby="finance-chart-title">
+            <h3 id="finance-chart-title">Evolução do caixa</h3>
+            <p class="finance-note">Últimas 12 movimentações do período selecionado.</p>
+            <div id="finance-chart" class="finance-chart"></div>
+            <dl id="finance-categories" class="finance-categories"></dl>
+          </section>
+          <section class="finance-panel" aria-labelledby="finance-forecast-title">
+            <h3 id="finance-forecast-title">Planejamento da temporada atual</h3>
+            <label for="ticket-price-slider">Ingresso por jogo em casa</label>
+            <div class="price-control"><input type="range" id="ticket-price-slider" min="10" max="150" step="5" value="30"><output id="ticket-price-val" for="ticket-price-slider">R$ 30</output></div>
+            <p id="finance-ticket-status" class="finance-note" role="status"></p>
+            <dl class="finance-projection">
+              <div><dt>Público estimado em casa</dt><dd id="finance-attendance"></dd></div>
+              <div><dt>Bilheteria por jogo em casa</dt><dd id="fin-match-income" class="positive"></dd></div>
+              <div><dt>TV e patrocínio fixos / rodada</dt><dd id="finance-fixed-income" class="positive"></dd></div>
+              <div><dt>Salários por rodada</dt><dd id="fin-wage-bill" class="negative"></dd></div>
+              <div><dt>Manutenção por rodada</dt><dd id="fin-maintenance" class="negative"></dd></div>
+              <div><dt>Resultado estimado em casa</dt><dd id="finance-home-net"></dd></div>
+              <div><dt>Resultado estimado fora</dt><dd id="finance-away-net"></dd></div>
+            </dl>
+            <div class="finance-forecast"><span id="finance-remaining"></span><strong id="finance-projected-cash"></strong><span>Caixa estimado ao fim do campeonato</span></div>
+            <p class="finance-note">Cenário central com elenco, estádio, ingresso, TV e patrocínio fixo atuais. O público real varia a cada partida. Bônus por vitória ou colocação, premiação e negociações futuras ficam fora da previsão.</p>
+          </section>
+        </div>
+        <section class="finance-panel finance-advice" aria-labelledby="finance-advice-title">
+          <h3 id="finance-advice-title">Pontos de atenção</h3><ul id="finance-advice-list"></ul>
+          <div class="finance-shortcuts"><button class="btn btn-small" data-view="market-tab">Abrir mercado</button><button class="btn btn-small" data-view="performance-tab">Consultar desempenho</button></div>
+        </section>
+        <div class="finance-layout finance-details-layout">
+          <section class="finance-panel" aria-labelledby="finance-statement-title">
+            <div class="finance-panel-heading"><h3 id="finance-statement-title">Extrato do clube</h3><label>Mostrar<select id="finance-entry-filter"><option value="all">Todas as movimentações</option><option value="round">Rodadas, TV e patrocínio</option><option value="market">Transferências e empréstimos</option><option value="contract">Contratos e rescisões</option><option value="sponsor">Meta de patrocínio</option><option value="stadium">Obras</option><option value="prize">Premiações</option></select></label></div>
+            <p id="finance-opening" class="finance-note"></p>
+            <div class="table-responsive finance-statement"><table class="brasfoot-table"><thead><tr><th>Rodada</th><th>Movimentação</th><th>Entradas</th><th>Saídas</th><th>Saldo após</th></tr></thead><tbody id="finance-statement-tbody"></tbody></table></div>
+          </section>
+          <section class="finance-panel" aria-labelledby="finance-wages-title">
+            <h3 id="finance-wages-title">Folha salarial atual</h3><p id="finance-wages-summary" class="finance-note"></p>
+            <div class="table-responsive finance-wages"><table class="brasfoot-table"><thead><tr><th>Jogador</th><th>Salário / rodada</th><th>Da folha</th></tr></thead><tbody id="finance-wages-tbody"></tbody></table></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- 5. Mercado Tab -->
+      <section id="market-tab" class="tab-content">
+        <div class="panel-header">
+          <h2>Mercado</h2><span id="market-balance-label"></span>
+        </div>
+        <nav class="market-navigation" aria-label="Mercado de jogadores">
+          <button class="btn btn-small" data-market-view="search" aria-pressed="true">Contratar</button>
+          <button class="btn btn-small" data-market-view="squad" aria-pressed="false">Negociar meu elenco</button>
+          <button class="btn btn-small" data-market-view="contracts" aria-pressed="false">Contratos</button>
+          <button class="btn btn-small" data-market-view="freeAgents" aria-pressed="false">Sem clube</button>
+          <button class="btn btn-small" data-market-view="offers" aria-pressed="false">Propostas <span id="market-pending-label"></span></button>
+          <button class="btn btn-small" data-market-view="loans" aria-pressed="false">Empréstimos</button>
+          <button class="btn btn-small" data-market-view="history" aria-pressed="false">Negociações</button>
+        </nav>
+        <p class="market-help" id="market-status" role="status"></p>
+        <div class="market-panel" data-market-panel="search">
+        <div class="market-filters">
+          <input type="text" id="market-search-name" placeholder="Nome do jogador..." class="input-search">
+          <select id="market-pos-filter">
+            <option value="TODOS">Todas as Posições</option>
+            <option value="G">Goleiro (G)</option>
+            <option value="L">Lateral (L)</option>
+            <option value="Z">Zagueiro (Z)</option>
+            <option value="M">Meia (M)</option>
+            <option value="A">Atacante (A)</option>
+          </select>
+          <input type="number" id="market-min-str" placeholder="Força mínima" min="0" max="100" class="input-number" aria-label="Força mínima">
+          <button id="market-search-btn" class="btn btn-primary">Buscar</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="brasfoot-table" id="market-table">
+            <thead>
+              <tr>
+                <th width="45">Pos</th>
+                <th>Nome</th>
+                <th width="50">Idade</th>
+                <th width="50">Força</th>
+                <th>Carac. 1</th>
+                <th>Carac. 2</th>
+                <th>Clube Atual</th>
+                <th>Valor do Passe</th>
+                <th width="100">Ação</th>
+              </tr>
+            </thead>
+            <tbody id="market-tbody">
+              <!-- Market results -->
+            </tbody>
+          </table>
+        </div>
+        </div>
+        <div class="market-panel" data-market-panel="squad" hidden>
+          <p class="market-help">Venda ou empreste para outro clube. O elenco de origem precisa manter 15 jogadores e pelo menos um goleiro.</p>
+          <div class="table-responsive"><table class="brasfoot-table"><thead><tr><th>Jogador</th><th>Pos.</th><th>J</th><th>G</th><th>A</th><th>Nota</th><th>Passe</th><th>Negociar</th></tr></thead><tbody id="market-squad-tbody"></tbody></table></div>
+        </div>
+        <div class="market-panel" data-market-panel="contracts" hidden>
+          <p class="market-help">Contratos até o fim do ano indicado. Quem não renovar fica sem clube na virada da temporada. Uma renovação por atleta em cada ano; salários e luvas consideram o desempenho. Rescisão: até seis rodadas de salário, respeitando o prazo restante.</p>
+          <p id="market-contract-summary" role="status"></p>
+          <div class="table-responsive"><table class="brasfoot-table"><thead><tr><th>Jogador</th><th>Pos.</th><th>Vínculo até</th><th>Salário / rodada</th><th>Situação</th><th>Ações</th></tr></thead><tbody id="market-contracts-tbody"></tbody></table></div>
+        </div>
+        <div class="market-panel" data-market-panel="freeAgents" hidden>
+          <p class="market-help">Atletas liberados durante a carreira. A contratação não tem custo de passe; salário, luvas, prazo e orçamento são negociados antes de assinar.</p>
+          <div class="table-responsive"><table class="brasfoot-table"><thead><tr><th>Jogador</th><th>Pos.</th><th>Idade</th><th>Força</th><th>Último clube</th><th>Salário mínimo / rodada</th><th>Ação</th></tr></thead><tbody id="market-free-agents-tbody"></tbody></table></div>
+        </div>
+        <div class="market-panel" data-market-panel="offers" hidden><div id="market-incoming-offers" class="market-incoming-offers"></div></div>
+        <div class="market-panel" data-market-panel="loans" hidden><p class="market-help">Empréstimos até o fim da temporada. O clube que recebe o jogador assume o salário; o retorno ao dono do passe é automático no encerramento do ano.</p><div id="market-active-loans"></div></div>
+        <div class="market-panel" data-market-panel="history" hidden><div class="table-responsive"><table class="brasfoot-table"><thead><tr><th>Quando</th><th>Negócio</th><th>Jogador</th><th>Origem</th><th>Destino</th><th>Valor</th></tr></thead><tbody id="market-history-tbody"></tbody></table></div></div>
+      </section>
+
+      <section id="performance-tab" class="tab-content" aria-labelledby="performance-title">
+        <div class="panel-header"><h2 id="performance-title">Desempenho dos jogadores</h2><span id="performance-season-label"></span></div>
+        <p class="market-help">Notas de 1 a 10 pelos lances e minutos em campo. Gols, assistências, defesas, desarmes, resultado e disciplina entram na avaliação. As notas são calculadas nas novas partidas.</p>
+        <div id="performance-highlights" class="performance-highlights"></div>
+        <nav class="market-navigation" aria-label="Consultar desempenho"><button class="btn btn-small" data-performance-view="players" aria-pressed="true">Jogadores</button><button class="btn btn-small" data-performance-view="matches" aria-pressed="false">Destaques por jogo</button></nav>
+        <div data-performance-panel="players">
+          <div class="market-filters"><label>Posição <select id="performance-position"><option value="all">Todas</option><option value="G">Goleiros</option><option value="Z">Zagueiros</option><option value="L">Laterais</option><option value="M">Meias</option><option value="A">Atacantes</option></select></label><label>Ordenar por <select id="performance-sort"><option value="rating">Nota média</option><option value="form">Forma recente</option><option value="goals">Gols</option><option value="assists">Assistências</option><option value="minutes">Minutos</option><option value="motm">Destaques</option></select></label></div>
+          <div class="table-responsive"><table class="brasfoot-table performance-table"><thead><tr><th>Jogador</th><th>Pos.</th><th>J</th><th>Min.</th><th>G</th><th>A</th><th>Nota média</th><th>Últimas notas</th><th>Craque do jogo</th></tr></thead><tbody id="performance-players-tbody"></tbody></table></div>
+          <div id="performance-player-detail" class="performance-player-detail" hidden></div>
+        </div>
+        <div data-performance-panel="matches" hidden>
+          <div class="market-filters"><label>Temporada <select id="performance-season-select"></select></label><label>Partida <select id="performance-match-select"></select></label></div>
+          <div id="performance-match-highlight" class="performance-match-highlight"></div>
+          <div class="table-responsive"><table class="brasfoot-table"><thead><tr><th>Jogador</th><th>Clube</th><th>Min.</th><th>G</th><th>A</th><th>Defesas</th><th>Desarmes</th><th>Nota</th></tr></thead><tbody id="performance-match-tbody"></tbody></table></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Live match: every control changes the remaining simulation. -->
+  <div id="transfer-modal" class="modal-overlay" style="display:none">
+    <form id="transfer-form" class="modal-card transfer-card" role="dialog" aria-modal="true" aria-labelledby="transfer-title">
+      <header class="modal-header"><h2 id="transfer-title">Negociar jogador</h2><button type="button" class="window-close" data-close="transfer-modal" aria-label="Cancelar negociação">×</button></header>
+      <div class="transfer-body"><p id="transfer-player-summary"></p><label id="transfer-club-label" for="transfer-club">Clube de destino<select id="transfer-club"></select></label><label for="transfer-amount">Valor da negociação (R$)<input id="transfer-amount" type="number" min="1" step="1" required></label>
+        <fieldset id="transfer-contract-fields" class="contract-fields" hidden><legend>Contrato com o jogador</legend>
+          <label>Prazo (temporadas, incluindo a atual)<input id="transfer-contract-years" type="number" min="1" max="5" step="1"></label>
+          <label>Salário por rodada (R$)<input id="transfer-contract-wage" type="number" min="1" max="100000000" step="1"></label>
+          <label>Luvas à vista (R$)<input id="transfer-contract-bonus" type="number" min="0" max="1000000000" step="1"></label>
+        </fieldset><p id="transfer-terms" class="market-help"></p><p id="transfer-error" class="transfer-error" role="alert"></p></div>
+      <footer class="modal-footer"><button type="button" class="btn" data-close="transfer-modal">Cancelar</button><button type="submit" class="btn btn-primary">Confirmar negociação</button></footer>
+    </form>
+  </div>
+
+  <div id="contract-modal" class="modal-overlay" style="display:none">
+    <form id="contract-form" class="modal-card transfer-card" role="dialog" aria-modal="true" aria-labelledby="contract-title">
+      <header class="modal-header"><h2 id="contract-title">Contrato do jogador</h2><button type="button" class="window-close" data-close="contract-modal" aria-label="Cancelar">×</button></header>
+      <div class="transfer-body"><p id="contract-player-summary"></p>
+        <fieldset id="contract-terms-fields" class="contract-fields"><legend>Condições</legend>
+          <label>Prazo (temporadas, incluindo a atual)<input id="contract-years" type="number" min="1" max="5" step="1" required></label>
+          <label>Salário por rodada (R$)<input id="contract-wage" type="number" min="1" max="100000000" step="1" required></label>
+          <label>Luvas à vista (R$)<input id="contract-bonus" type="number" min="0" max="1000000000" step="1" required></label>
+        </fieldset><p id="contract-conditions" class="market-help"></p><p id="contract-total"></p><p id="contract-error" class="transfer-error" role="alert"></p>
+      </div>
+      <footer class="modal-footer"><button type="button" class="btn" data-close="contract-modal">Cancelar</button><button id="contract-submit" type="submit" class="btn btn-primary">Assinar contrato</button></footer>
+    </form>
+  </div>
+  <div id="match-modal" class="modal-overlay" style="display:none">
+    <div class="modal-card match-card" role="dialog" aria-modal="true" aria-label="Partida ao vivo">
+      <header class="match-header">
+        <div class="match-team home"><img id="match-home-shield" src="assets/icons/escudo.png" alt="" class="match-shield"><span id="match-home-name" class="team-name">Mandante</span></div>
+        <div class="match-scoreboard"><span id="match-home-score" class="score">0</span><span class="score-divider">×</span><span id="match-away-score" class="score">0</span><div id="match-timer" class="match-clock">0'</div><span id="match-phase" class="match-phase">1º tempo</span></div>
+        <div class="match-team away"><img id="match-away-shield" src="assets/icons/escudo.png" alt="" class="match-shield"><span id="match-away-name" class="team-name">Visitante</span></div>
+      </header>
+      <div class="match-playback">
+        <button id="pause-match-btn" class="btn" aria-pressed="false">Pausar jogo</button>
+        <label for="match-speed">Velocidade <select id="match-speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select></label>
+        <div class="match-view-toggle" id="match-view-toggle" role="tablist" aria-label="Visualização da partida">
+          <button type="button" class="btn btn-small match-tab-btn active" data-match-tab="all" role="tab" aria-selected="true">Geral</button>
+          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="lances" role="tab" aria-selected="false">Lances</button>
+          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="coach" role="tab" aria-selected="false">Comando</button>
+          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="round" role="tab" aria-selected="false">Placar (<span id="match-round-count">0</span>)</button>
+        </div>
+        <span id="match-status" class="match-status" role="status">Bola rolando</span>
+      </div>
+      <div class="match-workspace">
+        <section class="match-commentary" aria-label="Lances e estatísticas">
+          <h3 class="match-section-title">Lances da partida</h3>
+          <p id="match-player-highlight" class="match-player-highlight" hidden></p>
+          <div class="match-events-feed" id="match-events-feed" role="log" aria-live="polite" aria-relevant="additions"></div>
+          <div class="match-stats-panel">
+            <div class="stat-bar-group"><span class="stat-label">Posse de bola</span><div class="dual-bar"><div id="stat-possession-home" class="bar-fill home" style="width:50%">50%</div><div id="stat-possession-away" class="bar-fill away" style="width:50%">50%</div></div></div>
+            <div class="quick-stats-row"><span>Finalizações <strong id="stat-shots-home">0</strong> × <strong id="stat-shots-away">0</strong></span><span>No gol <strong id="stat-ontarget-home">0</strong> × <strong id="stat-ontarget-away">0</strong></span><span>Faltas <strong id="stat-fouls-home">0</strong> × <strong id="stat-fouls-away">0</strong></span></div>
+            <div class="quick-stats-row"><span title="Gols esperados: soma das probabilidades estimadas pelo simulador">xG <strong id="stat-xg-home">0,00</strong> × <strong id="stat-xg-away">0,00</strong></span><span>Escanteios <strong id="stat-corners-home">0</strong> × <strong id="stat-corners-away">0</strong></span><span>Passes certos <strong id="stat-passes-home">0%</strong> × <strong id="stat-passes-away">0%</strong></span></div>
+            <p id="match-stats-note" class="match-stats-note"></p>
+          </div>
+        </section>
+        <section class="match-coach-panel" aria-labelledby="match-coach-title">
+          <div class="match-coach-heading"><h3 id="match-coach-title">Comando do time</h3><strong id="match-sub-count">0 / 5 substituições</strong></div>
+          <form id="match-tactics-form" class="match-tactics-form">
+            <label>Formação<select id="match-formation"><option>4-4-2</option><option>4-3-3</option><option>3-5-2</option><option>4-5-1</option><option>4-2-3-1</option><option>3-4-3</option></select></label>
+            <label>Estilo de jogo<select id="match-style"><option value="Ofensivo">Ataque total</option><option value="Equilibrado">Equilibrado</option><option value="Defensivo">Defensivo</option></select></label>
+            <button id="apply-match-tactics-btn" class="btn" type="submit">Aplicar tática</button>
+            <details class="match-advanced-tactics"><summary>Instruções e bolas paradas</summary><div class="tactical-preset"><label>Plano rápido<select id="match-preset-select"></select></label><button id="match-preset-btn" class="btn btn-small" type="button">Usar plano</button></div><div id="match-instructions" class="tactical-instructions"></div><h4>Cobradores</h4><div id="match-set-pieces" class="tactical-instructions"></div></details>
+          </form>
+          <p class="match-coach-note">O jogo pausa ao selecionar uma alteração. Retome quando terminar.</p>
+          <div class="match-coach-reading"><p id="match-effective-power"></p><p id="match-opponent-tactics"></p></div>
+          <div class="match-squads">
+            <section><h4>Sai · Em campo <span id="match-active-count">11</span></h4><div id="match-on-field" class="match-player-list" role="group" aria-label="Escolha quem sai"></div></section>
+            <section><h4>Entra · Banco</h4><div id="match-reserves" class="match-player-list" role="group" aria-label="Escolha quem entra"></div></section>
+          </div>
+          <div id="match-unavailable" class="match-unavailable"></div>
+          <div class="match-substitution"><p id="match-change-message" role="status">Escolha quem sai e quem entra para fazer uma substituição.</p><button id="confirm-match-sub-btn" class="btn btn-primary" disabled>Confirmar substituição</button></div>
+        </section>
+        <section class="match-round-panel" id="match-round-panel" aria-label="Outros jogos da rodada">
+          <div class="match-section-title match-round-title">
+            <span>Placar da Rodada</span>
+            <span id="match-round-badge" class="match-round-badge">Rodada 1</span>
+          </div>
+          <div class="match-live-fixtures" id="match-live-fixtures" role="region" aria-live="polite"></div>
+        </section>
+      </div>
+      <footer class="match-footer"><span id="match-footer-note">Pausa automática no intervalo · até 5 substituições</span><button id="skip-match-btn" class="btn btn-secondary">Avançar para o fim</button><button id="close-match-btn" class="btn btn-primary" style="display:none">Continuar</button></footer>
+    </div>
+  </div>
+
+  <div id="season-modal" class="modal-overlay" style="display:none">
+    <section class="modal-card season-card" role="dialog" aria-modal="true" aria-labelledby="season-title">
+      <header class="modal-header"><h2 id="season-title">Encerramento da temporada</h2><button type="button" class="window-close" data-close="season-modal" aria-label="Fechar encerramento">×</button></header>
+      <div class="season-modal-body">
+        <p id="season-user-result" class="season-user-result"></p>
+        <p id="season-status" class="season-status" role="status" aria-live="polite"></p>
+        <progress id="season-progress" value="0" max="114" aria-label="Encerramento dos campeonatos"></progress>
+        <div id="season-overview"></div>
+      </div>
+      <footer class="modal-footer"><button type="button" class="btn" data-close="season-modal">Voltar</button><button type="button" id="advance-season-btn" class="btn btn-primary" disabled>Iniciar próxima temporada</button></footer>
+    </section>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast">Mensagem</div>
+
+  <!-- Audio Elements -->
+  <audio id="audio-gol" src="assets/sons/gol1.wav" preload="auto"></audio>
+  <audio id="audio-fimjogo" src="assets/sons/fimjogo.wav" preload="auto"></audio>
+  <audio id="audio-intervalo" src="assets/sons/intervalo.wav" preload="auto"></audio>
+  <audio id="audio-expulsao" src="assets/sons/expulsao.wav" preload="auto"></audio>
+  <audio id="audio-penalty" src="assets/sons/penalty.wav" preload="auto"></audio>
+  <audio id="audio-contusao" src="assets/sons/contusao.wav" preload="auto"></audio>
+
+  <!-- Local Data and Engines (Zero Server, Zero Internet) -->
+  <script src="data/teams_data.js"></script>
+  <script src="data/leagues_data.js"></script>
+  <script src="data/countries_data.js"></script>
+  <script src="data/database_info.js"></script>
+  <script src="data/assets_data.js"></script>
+  <script src="src/engine/squad.js"></script>
+  <script src="src/engine/tactics.js"></script>
+  <script src="src/engine/performance.js"></script>
+  <script src="src/engine/match.js"></script>
+  <script src="src/engine/league.js"></script>
+  <script src="src/engine/finance.js"></script>
+  <script src="src/engine/economy.js"></script>
+  <script src="src/engine/contracts.js"></script>
+  <script src="src/engine/market.js"></script>
+  <script src="src/engine/career.js"></script>
+  <script src="src/engine/storage.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

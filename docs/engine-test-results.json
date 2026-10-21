@@ -1,0 +1,120 @@
+{
+  "regressionCases": 12,
+  "seasons": [
+    {
+      "division": "BRA_A",
+      "matches": 380,
+      "goals": 1184,
+      "xG": 1171.2570524697776,
+      "shots": 10770,
+      "injuries": 140,
+      "yellowCards": 1648,
+      "redCards": 184,
+      "substitutions": 190,
+      "tacticalChanges": 39,
+      "forfeits": 0,
+      "saveBytes": 2186183,
+      "saveUtf16Bytes": 4350392,
+      "goalsPerMatch": 3.116,
+      "xGPerMatch": 3.082
+    },
+    {
+      "division": "BRA_B",
+      "matches": 380,
+      "goals": 1162,
+      "xG": 1165.8875987797794,
+      "shots": 10690,
+      "injuries": 147,
+      "yellowCards": 1497,
+      "redCards": 153,
+      "substitutions": 185,
+      "tacticalChanges": 37,
+      "forfeits": 0,
+      "saveBytes": 2084689,
+      "saveUtf16Bytes": 4148134,
+      "goalsPerMatch": 3.058,
+      "xGPerMatch": 3.068
+    },
+    {
+      "division": "BRA_C",
+      "matches": 380,
+      "goals": 1164,
+      "xG": 1124.4079943659397,
+      "shots": 10697,
+      "injuries": 144,
+      "yellowCards": 1612,
+      "redCards": 166,
+      "substitutions": 170,
+      "tacticalChanges": 38,
+      "forfeits": 0,
+      "saveBytes": 1921759,
+      "saveUtf16Bytes": 3824296,
+      "goalsPerMatch": 3.063,
+      "xGPerMatch": 2.959
+    },
+    {
+      "division": "BRA_D",
+      "matches": 380,
+      "goals": 1098,
+      "xG": 1110.1870621661692,
+      "shots": 10658,
+      "injuries": 129,
+      "yellowCards": 1573,
+      "redCards": 180,
+      "substitutions": 161,
+      "tacticalChanges": 38,
+      "forfeits": 0,
+      "saveBytes": 1920986,
+      "saveUtf16Bytes": 3823786,
+      "goalsPerMatch": 2.889,
+      "xGPerMatch": 2.922
+    }
+  ],
+  "exhibition": {
+    "clubsCovered": 703,
+    "matches": 352,
+    "forfeits": 0
+  },
+  "balance": {
+    "equal-neutral": {
+      "matches": 300,
+      "homeWins": 120,
+      "draws": 61,
+      "awayWins": 119,
+      "homeGoals": 520,
+      "awayGoals": 497,
+      "homeXG": 481.747690158475,
+      "awayXG": 503.5043746911941
+    },
+    "strong-vs-weak": {
+      "matches": 300,
+      "homeWins": 288,
+      "draws": 11,
+      "awayWins": 1,
+      "homeGoals": 1357,
+      "awayGoals": 114,
+      "homeXG": 1318.319978423482,
+      "awayXG": 113.73872082602247
+    },
+    "tired-vs-fresh": {
+      "matches": 300,
+      "homeWins": 10,
+      "draws": 10,
+      "awayWins": 280,
+      "homeGoals": 134,
+      "awayGoals": 1039,
+      "homeXG": 133.03811155279615,
+      "awayXG": 1050.2138314395654
+    },
+    "equal-home-advantage": {
+      "matches": 300,
+      "homeWins": 132,
+      "draws": 64,
+      "awayWins": 104,
+      "homeGoals": 534,
+      "awayGoals": 457,
+      "homeXG": 516.514989958288,
+      "awayXG": 453.9259894548828
+    }
+  }
+}

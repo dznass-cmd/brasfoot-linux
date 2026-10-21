@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brasfoot Linux — Textura Clássica Aprimorada</title>
+  <style>
+    /* BASE VARIABLES - IDENTICAL TO ORIGINAL GAME */
+    :root {
+      --text-main: #171717;
+      --text-muted: #545b58;
+      --border-color: #a0acb4;
+      --bg-card: #f0f0ed;
+      --accent-gold: #ead462;
+      --club-color: #102c1c;
+      --club-ink: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+    body.enhanced-texture {
+      background-color: #061c0d;
+      background-image:
+        radial-gradient(ellipse at 50% 30%, rgba(14, 52, 26, 0.85) 0%, rgba(4, 17, 8, 0.98) 75%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 2px, transparent 2px, transparent 6px),
+        repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.12) 0px, rgba(0, 0, 0, 0.12) 2px, transparent 2px, transparent 6px),
+        linear-gradient(180deg, #0a2e16 0%, #031408 100%);
+    }
+    body.plain-texture {
+      background: #05200e;
+    }
+
+    /* TOP COMPARISON CONTROL BAR */
+    .texture-banner {
+      background: linear-gradient(180deg, #1c3d25 0%, #0d2113 100%);
+      border-bottom: 2px solid #3c7a4b;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      font-size: 12px;
+    }
+    .texture-banner h1 {
+      font-size: 13px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+    }
+    .texture-toggle-btn {
+      background: linear-gradient(180deg, #ffffff 0%, #e2ece5 55%, #c8dcce 100%);
+      border: 1px solid #5a8566;
+      border-radius: 2px;
+      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #95b39e, 0 1px 3px rgba(0,0,0,0.4);
+      padding: 5px 14px;
+      font-weight: bold;
+      color: #0e2916;
+      cursor: pointer;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .texture-toggle-btn:active {
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.4);
+      background: #bdd4c4;
+    }
+
+    /* THE REAL GAME CONTAINER LAYOUT - EXACT REPLICA OF THE REAL APP */
+    .game-container {
+      height: calc(100vh - 42px);
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      grid-template-rows: 70px minmax(0, 1fr);
+      overflow: hidden;
+      background: #fff;
+    }
+
+    /* ============================================================== */
+    /* 1. TOOLBAR TEXTURES                                            */
+    /* ============================================================== */
+    .desktop-toolbar {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px 0 5px;
+      color: #fff;
+      gap: 12px;
+      user-select: none;
+    }
+
+    /* ENHANCED TEXTURE MODE (ON BY DEFAULT) */
+    body.enhanced-texture .desktop-toolbar {
+      background: linear-gradient(180deg, #172c1c 0%, #0d1a10 50%, #061108 100%);
+      border-top: 5px solid #285c32;
+      border-bottom: 1px solid #000;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 2px 5px rgba(0,0,0,0.4);
+    }
+    body.plain-texture .desktop-toolbar {
+      background: #08110c;
+      border-top: 5px solid #285c32;
+    }
+
+    .toolbar-nav {
+      display: flex;
+      height: 64px;
+      align-items: stretch;
+      overflow-x: auto;
+      flex: 1;
+    }
+    .toolbar-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      width: 70px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 11px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: transparent;
+      transition: all .1s ease;
+    }
+    .toolbar-btn img {
+      width: 35px;
+      height: 35px;
+      pointer-events: none;
+    }
+
+    /* Enhanced Toolbar button tactile texture */
+    body.enhanced-texture .toolbar-btn:hover {
+      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 100%);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 2px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+    body.enhanced-texture .toolbar-btn.active {
+      background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(20,50,26,0.6) 100%);
+      border: 1px solid #4a8258;
+      border-radius: 2px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.1);
+      color: #9fe2b0;
+    }
+    body.plain-texture .toolbar-btn:hover, body.plain-texture .toolbar-btn.active {
+      background: #ffffff0e;
+      border-color: #7eaa8c55;
+    }
+
+    .toolbar-season {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      text-align: right;
+      font-size: 11px;
+      color: #d5e4d8;
+      white-space: nowrap;
+    }
+    .toolbar-season strong {
+      font-size: 16px;
+      letter-spacing: .6px;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+
+    /* ============================================================== */
+    /* 2. SIDEBAR TEXTURES                                            */
+    /* ============================================================== */
+    .club-sidebar {
+      grid-row: 2;
+      overflow-y: auto;
+      padding: 14px 12px 10px;
+      color: var(--club-ink);
+    }
+
+    /* Rich tactile green texture on sidebar */
+    body.enhanced-texture .club-sidebar {
+      background: linear-gradient(180deg, #123320 0%, #0c2416 40%, #081a10 100%);
+      border-right: 2px solid #061108;
+      box-shadow: inset -1px 0 0 rgba(255,255,255,0.07), inset 1px 0 0 rgba(255,255,255,0.04);
+    }
+    body.plain-texture .club-sidebar {
+      background: var(--club-color);
+      border-right: 0;
+    }
+
+    .club-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 58px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+    }
+    body.enhanced-texture .club-info {
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+    }
+    .club-shield {
+      width: 54px;
+      height: 54px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+    .club-info h1 {
+      font-size: 16px;
+      margin: 0 0 4px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+    #user-manager-name {
+      font-size: 11px;
+      opacity: .9;
+      color: #a9d4b5;
+    }
+
+    .club-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .club-cash {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #f7e68e;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    }
+    .club-cash img {
+      width: 22px;
+      height: 18px;
+    }
+
+    /* Sunken beveled metrics texture */
+    .club-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 4px 0 10px;
+    }
+    .club-metrics span {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11px;
+      opacity: .95;
+    }
+    body.enhanced-texture .club-metrics strong {
+      display: block;
+      padding: 4px;
+      color: #ffffff;
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+      background: linear-gradient(180deg, #06150b 0%, #0d2615 100%);
+      border: 1px solid #1f4728;
+      box-shadow: inset 1px 1px 3px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.1);
+      border-radius: 2px;
+    }
+    body.plain-texture .club-metrics strong {
+      display: block;
+      border: 1px solid #bfd1de;
+      padding: 3px;
+      color: #fff;
+      text-align: center;
+      background: #0005;
+    }
+
+    /* Next Match Panel with Raised Title texture */
+    .next-match-panel {
+      margin: 0 0 14px;
+    }
+    body.enhanced-texture .next-match-panel h2 {
+      font-size: 11px;
+      padding: 5px 6px;
+      background: linear-gradient(180deg, #ffffff 0%, #edf1ec 60%, #dae2d9 100%);
+      color: #152417;
+      border: 1px solid #7d9682;
+      box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(0,0,0,0.25);
+      font-weight: bold;
+      border-radius: 1px;
+    }
+    body.plain-texture .next-match-panel h2 {
+      font-size: 11px;
+      padding: 6px 4px;
+      background: #f6f7f4;
+      color: #151a16;
+    }
+
+    .next-match-club {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 64px;
+      padding: 8px 4px;
+    }
+    .next-match-club img {
+      width: 44px;
+      height: 44px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+    .next-match-club div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .next-match-club strong {
+      font-size: 13px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+    .next-match-club span {
+      font-size: 11px;
+      color: #b5d5be;
+    }
+
+    /* Tactical Lineup Button - Classic Brasfoot 3D Relief */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 5px 12px;
+      min-height: 28px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    body.enhanced-texture .btn {
+      color: #172a38;
+      background: linear-gradient(180deg, #ffffff 0%, #ebf2f7 48%, #d3e2ed 52%, #c3d7e6 100%);
+      border: 1px solid #6b889d;
+      border-radius: 2px;
+      box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #9cb4c5, 0 1px 2px rgba(0,0,0,0.18);
+      font-weight: bold;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+    }
+    body.enhanced-texture .btn:hover {
+      background: linear-gradient(180deg, #ffffff 0%, #e2effa 48%, #c9e2f5 52%, #b5d6ed 100%);
+      border-color: #4b7491;
+    }
+    body.enhanced-texture .btn:active {
+      background: linear-gradient(180deg, #b9d2e4 0%, #cce0ee 100%);
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.35);
+    }
+
+    body.plain-texture .btn {
+      color: #202d36;
+      background: linear-gradient(#fff, #e8eff4 55%, #d2dfe9);
+      border: 1px solid #94a9b9;
+      border-radius: 1px;
+      box-shadow: inset 0 1px #fff;
+      font-weight: 600;
+    }
+    body.plain-texture .btn:hover {
+      background: linear-gradient(#fff, #e0f0fc);
+      border-color: #557f9b;
+    }
+
+    /* Primary / Play button texture */
+    body.enhanced-texture .btn-play, body.enhanced-texture .btn-primary {
+      color: #0d2e18;
+      background: linear-gradient(180deg, #ffffff 0%, #e3f5e7 48%, #c5e9cc 52%, #a8dcb2 100%);
+      border: 1px solid #4a7d57;
+      box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #85b892, 0 1px 3px rgba(0,0,0,0.22);
+    }
+    body.enhanced-texture .btn-play:hover, body.enhanced-texture .btn-primary:hover {
+      background: linear-gradient(180deg, #ffffff 0%, #d8f5dd 48%, #b5ebb0 52%, #95d3a2 100%);
+      border-color: #366642;
+    }
+
+    .lineup-open-btn {
+      width: 100%;
+      margin-bottom: 12px;
+    }
+    .lineup-open-btn img {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Player Profile Box on Sidebar */
+    .player-profile {
+      padding: 6px;
+    }
+    body.enhanced-texture .player-profile {
+      border: 1px solid #234d31;
+      background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.12) 100%);
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.08);
+      border-radius: 2px;
+    }
+    body.plain-texture .player-profile {
+      border: 1px solid #d5dfda;
+    }
+
+    body.enhanced-texture .profile-title {
+      background: linear-gradient(180deg, #ffffff 0%, #ecf1ed 60%, #d8e2da 100%);
+      color: #132415;
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+      padding: 4px 6px;
+      margin-bottom: 8px;
+      border: 1px solid #829a87;
+      box-shadow: inset 0 1px 0 #fff;
+      font-weight: bold;
+    }
+    body.plain-texture .profile-title {
+      background: #f6f7f4;
+      color: #131713;
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+      padding: 4px;
+      margin-bottom: 10px;
+    }
+
+    .profile-position, .profile-characteristics {
+      font-size: 11px;
+      margin: 6px 2px;
+      line-height: 1.4;
+      color: #b5d5be;
+    }
+    .profile-data {
+      margin: 10px 2px 0;
+    }
+    .profile-data div {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+      font-size: 11px;
+      border-bottom: 1px dotted rgba(255,255,255,0.1);
+      padding-bottom: 3px;
+    }
+    .profile-data dt {
+      opacity: .85;
+      color: #b5d5be;
+    }
+    .profile-data dd {
+      margin: 0;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    /* ============================================================== */
+    /* 3. TABLE & ROSTER TEXTURES                                     */
+    /* ============================================================== */
+    .main-content {
+      grid-row: 2;
+      grid-column: 2;
+      padding: 6px 8px 8px 0;
+      overflow: auto;
+      min-width: 0;
+      background: #f4f6f3;
+    }
+
+    .table-responsive {
+      overflow: auto;
+      background: #fff;
+      height: 100%;
+    }
+    body.enhanced-texture .table-responsive {
+      border: 1px solid #758a99;
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.15);
+    }
+    body.plain-texture .table-responsive {
+      border: 1px solid #8f9da8;
+    }
+
+    .brasfoot-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      font-size: 12px;
+      color: #171717;
+      text-align: left;
+      background: #fff;
+    }
+
+    /* Classic Tactile Raised Table Header */
+    body.enhanced-texture .brasfoot-table th {
+      padding: 5px 7px;
+      background: linear-gradient(180deg, #fbfcfd 0%, #e7edf2 48%, #d5e0e8 52%, #c3d2dc 100%);
+      color: #1c3242;
+      border-right: 1px solid #8da2b2;
+      border-bottom: 2px solid #6b8293;
+      border-top: 1px solid #ffffff;
+      box-shadow: inset 0 1px 0 #ffffff;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+      white-space: nowrap;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      font-size: 11px;
+    }
+    body.plain-texture .brasfoot-table th {
+      padding: 4px 6px;
+      background: #ececec;
+      color: #343434;
+      border-right: 1px solid #9ba8b4;
+      border-bottom: 1px solid #a6afb8;
+      white-space: nowrap;
+      font-weight: 400;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .brasfoot-table td {
+      padding: 4px 7px;
+      height: 24px;
+      white-space: nowrap;
+      border-bottom: 1px solid #e3e8ec;
+      border-right: 1px solid #f0f3f5;
+    }
+    .brasfoot-table tbody tr {
+      cursor: pointer;
+    }
+
+    /* Subtle texture on table rows */
+    body.enhanced-texture .brasfoot-table tbody tr:nth-child(even) {
+      background: #fbfcfc;
+    }
+    body.enhanced-texture .brasfoot-table tbody tr:hover {
+      background: #edf5fd !important;
+    }
+    body.enhanced-texture .brasfoot-table tr.squad-selected {
+      background: linear-gradient(180deg, #d3e7fa 0%, #bad9f5 100%) !important;
+      outline: 1px solid #5a8ab8;
+      box-shadow: inset 0 1px 0 #fff;
+    }
+
+    body.plain-texture .brasfoot-table tbody tr:hover {
+      background: #eef4fa;
+    }
+    body.plain-texture .brasfoot-table tr.squad-selected {
+      background: #b8d8f5;
+      outline: 1px solid #6289ac;
+    }
+
+    .brasfoot-table td:nth-child(2),
+    .brasfoot-table td:nth-child(4),
+    .brasfoot-table td:nth-child(5),
+    .brasfoot-table td:nth-child(n+9) {
+      text-align: center;
+    }
+
+    /* ============================================================== */
+    /* 4. ENERGY BAR TEXTURES                                         */
+    /* ============================================================== */
+    .energy-bar-wrap {
+      width: 72px;
+      height: 16px;
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+    }
+
+    body.enhanced-texture .energy-bar-wrap {
+      border: 1px solid #6b8295;
+      background: #d8e1e7;
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.5);
+      border-radius: 1px;
+    }
+    body.enhanced-texture .energy-bar-fill {
+      height: 100%;
+      background: linear-gradient(180deg, #4da4e0 0%, #2974b8 50%, #1a5791 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.2);
+    }
+    body.enhanced-texture .energy-label {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #0b2238;
+      font-size: 10px;
+      font-weight: bold;
+      text-shadow: 0 0 2px #fff, 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    body.plain-texture .energy-bar-wrap {
+      border: 1px solid #849aaf;
+      background: #edf2f6;
+    }
+    body.plain-texture .energy-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg,#285686,#a3c9ef);
+    }
+    body.plain-texture .energy-label {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #102c49;
+      font-size: 11px;
+      font-weight: 600;
+      text-shadow: 0 0 2px #fff;
+    }
+
+    /* Mini Card Icons */
+    .mini-card-yellow {
+      display: inline-block;
+      width: 10px;
+      height: 13px;
+      background: #f0c300;
+      border: 1px solid #997c00;
+      box-shadow: 1px 1px 1px rgba(0,0,0,0.25);
+      border-radius: 1px;
+      vertical-align: middle;
+      font-size: 9px;
+      line-height: 12px;
+      color: #000;
+      font-weight: bold;
+    }
+
+    /* Roster status bottom bar */
+    .roster-status {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 6px 8px;
+      font-size: 11px;
+    }
+    body.enhanced-texture .roster-status {
+      background: linear-gradient(180deg, #f3f5f2 0%, #e6eae4 100%);
+      border-top: 1px solid #b8c4ba;
+      color: #3b4d3f;
+      box-shadow: inset 0 1px 0 #fff;
+    }
+    body.plain-texture .roster-status {
+      background: #f3f3f1;
+      color: #51585a;
+    }
+  </style>
+</head>
+<body class="enhanced-texture">
+
+  <!-- TOP BAR TO SWITCH BETWEEN NEW TEXTURE AND OLD PLAIN TEXTURE -->
+  <aside class="texture-banner">
+    <h1>
+      <span>⚽</span> Brasfoot Linux — Demonstração da Nova Textura
+    </h1>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span id="current-mode-label" style="color:#a8e6b9; font-weight:bold;">Modo: Textura Aprimorada (Relevos 3D, Gradientes Táteis, Profundidade Clássica)</span>
+      <button class="texture-toggle-btn" onclick="toggleTexture()">
+        <span>🔄</span> Alternar: Textura Nova vs Original
+      </button>
+    </div>
+  </aside>
+
+  <!-- GAME CONTAINER (EXACT SAME ORIGINAL DOM & LAYOUT) -->
+  <div class="game-container">
+
+    <!-- ORIGINAL TOOLBAR WITH ENHANCED TEXTURE -->
+    <header class="desktop-toolbar">
+      <nav class="toolbar-nav">
+        <button class="toolbar-btn"><img src="assets/icons/icon02.png" alt=""><span>Agenda</span></button>
+        <button class="toolbar-btn"><img src="assets/icons/icon04.png" alt=""><span>Tabelas</span></button>
+        <button class="toolbar-btn"><img src="assets/icons/icon05.png" alt=""><span>Estádio</span></button>
+        <button class="toolbar-btn"><img src="assets/icons/iconmoney.png" alt=""><span>Finanças</span></button>
+        <button class="toolbar-btn active"><img src="assets/icons/icon06.png" alt=""><span>Meu time</span></button>
+        <button class="toolbar-btn"><img src="assets/icons/icon07.png" alt=""><span>Mercado</span></button>
+        <button class="toolbar-btn"><img src="assets/icons/iconretrospecto.png" alt=""><span>Desempenho</span></button>
+        <button class="toolbar-btn"><img src="assets/icons/icon06.png" alt=""><span>Times</span></button>
+        <button class="toolbar-btn"><img src="assets/icons/iconcoach16.png" alt=""><span>Meu perfil</span></button>
+        <button class="toolbar-btn"><img src="assets/icons/save1.png" alt=""><span>Salvar</span></button>
+        <button class="toolbar-btn"><img src="assets/icons/icon01.png" alt=""><span>Opções</span></button>
+      </nav>
+      <div class="toolbar-season">
+        <strong>BRASFOOT <span>22/23</span></strong>
+        <span>Temporada 2026</span>
+      </div>
+    </header>
+
+    <!-- ORIGINAL SIDEBAR WITH ENHANCED TEXTURE -->
+    <aside class="club-sidebar">
+      <div class="club-info">
+        <img class="club-shield" src="assets/escudos/flarj.png" alt="Flamengo">
+        <div>
+          <h1>Flamengo</h1>
+          <span id="user-manager-name">Treinador</span>
+        </div>
+      </div>
+
+      <div class="club-summary">
+        <strong class="club-cash">
+          <img src="assets/icons/iconmoney2.png" alt="">
+          <span>R$ 84.500.000</span>
+        </strong>
+        <span>Série A</span>
+        <span>Estádio Maracanã</span>
+
+        <div class="club-metrics">
+          <span>Condição física<strong>98%</strong></span>
+          <span>Força média<strong>82</strong></span>
+        </div>
+      </div>
+
+      <section class="next-match-panel">
+        <h2>Próximo jogo</h2>
+        <div class="next-match-club">
+          <img src="assets/escudos/palmeiras.png" alt="Palmeiras">
+          <div>
+            <strong>Palmeiras</strong>
+            <span>Brasileirão Série A · Rodada 14/38</span>
+          </div>
+        </div>
+      </section>
+
+      <button class="btn btn-primary lineup-open-btn">
+        <img src="assets/icons/tactics.png" alt="">
+        Escalar time
+      </button>
+
+      <section class="player-profile">
+        <div class="profile-title">
+          <strong id="p-name">Arrascaeta</strong>
+          <strong id="p-str">86</strong>
+        </div>
+        <div class="profile-position">Meia / Armação</div>
+        <div class="profile-characteristics">Passe, Armação, Finalização</div>
+        <dl class="profile-data">
+          <div><dt>Valor do passe</dt><dd>R$ 65.000.000</dd></div>
+          <div><dt>Salário</dt><dd>R$ 380.000</dd></div>
+          <div><dt>Idade</dt><dd>30</dd></div>
+          <div><dt>Lado</dt><dd>C</dd></div>
+          <div><dt>Jogos</dt><dd>13</dd></div>
+          <div><dt>Gols</dt><dd>6</dd></div>
+          <div><dt>Assistências</dt><dd>8</dd></div>
+        </dl>
+      </section>
+    </aside>
+
+    <!-- ORIGINAL SQUAD TABLE WITH ENHANCED TEXTURE -->
+    <main class="main-content">
+      <div class="table-responsive">
+        <table class="brasfoot-table">
+          <thead>
+            <tr>
+              <th width="28"></th>
+              <th width="35">P</th>
+              <th>Nome</th>
+              <th width="35">L</th>
+              <th width="40">F</th>
+              <th width="85">Energia</th>
+              <th>Salário</th>
+              <th>Passe</th>
+              <th width="35">G</th>
+              <th>Car.</th>
+              <th width="45">Idade</th>
+              <th width="35">CA</th>
+              <th width="35">CV</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="selectPlayer('Agustín Rossi', '81', 'Goleiro', 'Reflexos, Saída')">
+              <td><img src="assets/icons/player_shirt_greensmall.png" alt=""></td>
+              <td><strong>G</strong></td>
+              <td>Agustín Rossi</td>
+              <td>C</td>
+              <td>81</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:100%"></div>
+                  <span class="energy-label">100%</span>
+                </div>
+              </td>
+              <td>R$ 220.000</td>
+              <td>R$ 28.000.000</td>
+              <td>0</td>
+              <td>Reflexos</td>
+              <td>29</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr onclick="selectPlayer('Fabrício Bruno', '80', 'Zagueiro', 'Desarme, Cabeceio')">
+              <td><img src="assets/icons/player_shirt_greensmall.png" alt=""></td>
+              <td><strong>Z</strong></td>
+              <td>Fabrício Bruno</td>
+              <td>D</td>
+              <td>80</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:92%"></div>
+                  <span class="energy-label">92%</span>
+                </div>
+              </td>
+              <td>R$ 190.000</td>
+              <td>R$ 24.000.000</td>
+              <td>1</td>
+              <td>Desarme</td>
+              <td>28</td>
+              <td><span class="mini-card-yellow">2</span></td>
+              <td>0</td>
+            </tr>
+            <tr onclick="selectPlayer('Léo Pereira', '81', 'Zagueiro', 'Marcação, Lançamento')">
+              <td><img src="assets/icons/player_shirt_greensmall.png" alt=""></td>
+              <td><strong>Z</strong></td>
+              <td>Léo Pereira</td>
+              <td>E</td>
+              <td>81</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:88%"></div>
+                  <span class="energy-label">88%</span>
+                </div>
+              </td>
+              <td>R$ 200.000</td>
+              <td>R$ 26.000.000</td>
+              <td>2</td>
+              <td>Marcação</td>
+              <td>28</td>
+              <td><span class="mini-card-yellow">1</span></td>
+              <td>0</td>
+            </tr>
+            <tr onclick="selectPlayer('Ayrton Lucas', '80', 'Lateral', 'Apoio, Velocidade')">
+              <td><img src="assets/icons/player_shirt_greensmall.png" alt=""></td>
+              <td><strong>L</strong></td>
+              <td>Ayrton Lucas</td>
+              <td>E</td>
+              <td>80</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:76%"></div>
+                  <span class="energy-label">76%</span>
+                </div>
+              </td>
+              <td>R$ 180.000</td>
+              <td>R$ 22.000.000</td>
+              <td>1</td>
+              <td>Apoio</td>
+              <td>27</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr onclick="selectPlayer('Guillermo Varela', '78', 'Lateral', 'Marcação, Passe')">
+              <td><img src="assets/icons/player_shirt_greensmall.png" alt=""></td>
+              <td><strong>L</strong></td>
+              <td>Guillermo Varela</td>
+              <td>D</td>
+              <td>78</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:90%"></div>
+                  <span class="energy-label">90%</span>
+                </div>
+              </td>
+              <td>R$ 160.000</td>
+              <td>R$ 18.000.000</td>
+              <td>0</td>
+              <td>Marcação</td>
+              <td>31</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr onclick="selectPlayer('Erick Pulgar', '82', 'Meia', 'Desarme, Passe longo')">
+              <td><img src="assets/icons/player_shirt_greensmall.png" alt=""></td>
+              <td><strong>M</strong></td>
+              <td>Erick Pulgar</td>
+              <td>C</td>
+              <td>82</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:85%"></div>
+                  <span class="energy-label">85%</span>
+                </div>
+              </td>
+              <td>R$ 250.000</td>
+              <td>R$ 32.000.000</td>
+              <td>1</td>
+              <td>Desarme</td>
+              <td>30</td>
+              <td><span class="mini-card-yellow">1</span></td>
+              <td>0</td>
+            </tr>
+            <tr onclick="selectPlayer('Nicolás De la Cruz', '85', 'Meia', 'Drible, Finalização')">
+              <td><img src="assets/icons/player_shirt_greensmall.png" alt=""></td>
+              <td><strong>M</strong></td>
+              <td>Nicolás De la Cruz</td>
+              <td>C</td>
+              <td>85</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:72%"></div>
+                  <span class="energy-label">72%</span>
+                </div>
+              </td>
+              <td>R$ 360.000</td>
+              <td>R$ 58.000.000</td>
+              <td>4</td>
+              <td>Drible</td>
+              <td>27</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr class="squad-selected" onclick="selectPlayer('Arrascaeta', '86', 'Meia', 'Armação, Passe, Finalização')">
+              <td><img src="assets/icons/player_shirt_greensmall.png" alt=""></td>
+              <td><strong>M</strong></td>
+              <td>Giorgian de Arrascaeta</td>
+              <td>C</td>
+              <td>86</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:98%"></div>
+                  <span class="energy-label">98%</span>
+                </div>
+              </td>
+              <td>R$ 380.000</td>
+              <td>R$ 65.000.000</td>
+              <td>6</td>
+              <td>Armação</td>
+              <td>30</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr onclick="selectPlayer('Gerson', '83', 'Meia', 'Condução, Passe')">
+              <td><img src="assets/icons/player_shirt_greensmall.png" alt=""></td>
+              <td><strong>M</strong></td>
+              <td>Gerson</td>
+              <td>C</td>
+              <td>83</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:94%"></div>
+                  <span class="energy-label">94%</span>
+                </div>
+              </td>
+              <td>R$ 290.000</td>
+              <td>R$ 38.000.000</td>
+              <td>3</td>
+              <td>Passe</td>
+              <td>27</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr onclick="selectPlayer('Pedro', '86', 'Atacante', 'Finalização, Cabeceio')">
+              <td><img src="assets/icons/player_shirt_greensmall.png" alt=""></td>
+              <td><strong>A</strong></td>
+              <td>Pedro</td>
+              <td>C</td>
+              <td>86</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:91%"></div>
+                  <span class="energy-label">91%</span>
+                </div>
+              </td>
+              <td>R$ 390.000</td>
+              <td>R$ 72.000.000</td>
+              <td>11</td>
+              <td>Finalização</td>
+              <td>27</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr onclick="selectPlayer('Bruno Henrique', '82', 'Atacante', 'Velocidade, Finalização')">
+              <td><img src="assets/icons/player_shirt_greensmall.png" alt=""></td>
+              <td><strong>A</strong></td>
+              <td>Bruno Henrique</td>
+              <td>E</td>
+              <td>82</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:79%"></div>
+                  <span class="energy-label">79%</span>
+                </div>
+              </td>
+              <td>R$ 270.000</td>
+              <td>R$ 30.000.000</td>
+              <td>5</td>
+              <td>Velocidade</td>
+              <td>33</td>
+              <td><span class="mini-card-yellow">1</span></td>
+              <td>0</td>
+            </tr>
+            <tr onclick="selectPlayer('Allan', '78', 'Meia', 'Marcação, Passe')">
+              <td><img src="assets/icons/player_shirt_graysmall.png" alt=""></td>
+              <td><strong>M</strong></td>
+              <td>Allan</td>
+              <td>C</td>
+              <td>78</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:100%"></div>
+                  <span class="energy-label">100%</span>
+                </div>
+              </td>
+              <td>R$ 170.000</td>
+              <td>R$ 19.000.000</td>
+              <td>0</td>
+              <td>Marcação</td>
+              <td>27</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr onclick="selectPlayer('Luiz Araújo', '79', 'Atacante', 'Drible, Velocidade')">
+              <td><img src="assets/icons/player_shirt_graysmall.png" alt=""></td>
+              <td><strong>A</strong></td>
+              <td>Luiz Araújo</td>
+              <td>D</td>
+              <td>79</td>
+              <td>
+                <div class="energy-bar-wrap">
+                  <div class="energy-bar-fill" style="width:100%"></div>
+                  <span class="energy-label">100%</span>
+                </div>
+              </td>
+              <td>R$ 180.000</td>
+              <td>R$ 21.000.000</td>
+              <td>2</td>
+              <td>Drible</td>
+              <td>28</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="roster-status">
+        <span>Selecione um jogador para consultar seus dados.</span>
+        <span>Titulares <img src="assets/icons/player_shirt_greensmall.png" alt=""> · Reservas <img src="assets/icons/player_shirt_graysmall.png" alt=""></span>
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    function toggleTexture() {
+      const isEnhanced = document.body.classList.contains('enhanced-texture');
+      const label = document.getElementById('current-mode-label');
+
+      if (isEnhanced) {
+        document.body.classList.remove('enhanced-texture');
+        document.body.classList.add('plain-texture');
+        label.textContent = 'Modo: Textura Original (Plana / Antiga sem relevo)';
+        label.style.color = '#cbd5e1';
+      } else {
+        document.body.classList.remove('plain-texture');
+        document.body.classList.add('enhanced-texture');
+        label.textContent = 'Modo: Textura Aprimorada (Relevos 3D, Gradientes Táteis, Profundidade Clássica)';
+        label.style.color = '#a8e6b9';
+      }
+    }
+
+    function selectPlayer(name, str, pos, traits) {
+      document.getElementById('p-name').textContent = name;
+      document.getElementById('p-str').textContent = str;
+      document.querySelector('.profile-position').textContent = pos;
+      document.querySelector('.profile-characteristics').textContent = traits;
+
+      document.querySelectorAll('.brasfoot-table tbody tr').forEach(r => r.classList.remove('squad-selected'));
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.add('squad-selected');
+      }
+    }
+  </script>
+</body>
+</html>

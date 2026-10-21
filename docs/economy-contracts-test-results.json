@@ -1,0 +1,11 @@
+{
+  "regressionGroups": 15,
+  "storage": "isolated in-memory only",
+  "visualWebKitTest": false,
+  "economyScan": {
+    "freshDatabaseClubs": 80,
+    "negativeWithTV": 17,
+    "negativeWithStableSponsor": 4,
+    "assumptions": "Initial club balances, unchanged wages, full unplayed season, central attendance; no prizes, bonuses or future negotiations."
+  }
+}

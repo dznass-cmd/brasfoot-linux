@@ -1,0 +1,24 @@
+{
+  "regressionGroups": 9,
+  "simulatedSeasons": [
+    {
+      "year": 2026,
+      "playedDivision": "BRA_A",
+      "nextDivision": "BRA_B",
+      "matches": 1520,
+      "position": 17,
+      "saveBeforeTransitionBytes": 4263120,
+      "saveAfterTransitionBytes": 3488877
+    },
+    {
+      "year": 2027,
+      "playedDivision": "BRA_B",
+      "nextDivision": "BRA_A",
+      "matches": 1520,
+      "position": 2,
+      "saveBeforeTransitionBytes": 5235273,
+      "saveAfterTransitionBytes": 3627872
+    }
+  ],
+  "syntheticTransitions": 10
+}

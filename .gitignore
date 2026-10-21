@@ -1,0 +1,18 @@
+# Backups locais
+.backups/
+
+# Binários compilados (podem ser recompilados via ./scripts/build-native.sh)
+brasfoot-app
+
+# Instalador legado do Windows (os recursos já estão extraídos em assets/)
+brasfoot22-23.exe
+
+# Caches e logs
+__pycache__/
+*.pyc
+*.log
+.cache/
+
+# Sistema
+.DS_Store
+Thumbs.db

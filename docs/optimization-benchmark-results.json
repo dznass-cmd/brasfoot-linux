@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-10-21T16:11:06.252Z",
+  "environment": {
+    "node": "v24.22.0",
+    "scope": "Node/V8, isolated teams and in-memory storage; no profiler, rendering or browser I/O",
+    "baseline": ".backups/before-optimizations-20261021-125309"
+  },
+  "engine": {
+    "matchesPerVersion": 120,
+    "identicalSeededMatches": 120,
+    "versions": {
+      "before": {
+        "medianMatchMs": 28.837,
+        "totalMs": 3498.252
+      },
+      "after": {
+        "medianMatchMs": 8.836,
+        "totalMs": 1093.573
+      }
+    },
+    "elapsedReductionPercent": 68.739
+  },
+  "market": {
+    "before": {
+      "medianBroadSearchMs": 9.445
+    },
+    "after": {
+      "medianBroadSearchMs": 0.674
+    }
+  },
+  "directory": {
+    "before": {
+      "medianRepeatedLookupMs": 3.793851
+    },
+    "after": {
+      "medianRepeatedLookupMs": 0.000321
+    }
+  },
+  "career": {
+    "identicalBackgroundFixtures": 20,
+    "compared": "original whole rounds vs optimized single-fixture steps"
+  },
+  "save": {
+    "medianFullSaveMs": 9.882,
+    "fullBytes": 2462061,
+    "medianCheckpointMs": 0.298,
+    "checkpointBytes": 79959,
+    "payloadReductionPercent": 96.752
+  }
+}

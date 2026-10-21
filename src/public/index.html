@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brasfoot Linux</title>
+  <link rel="icon" type="image/png" href="/assets/icons/ic_champion.png">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- New Game / Welcome Screen -->
+  <div id="new-game-modal" class="modal-overlay">
+    <div class="modal-card select-team-card">
+      <div class="modal-header">
+        <img src="/assets/icons/ic_champion.png" class="header-logo" alt="Brasfoot">
+        <h2>BRASFOOT LINUX</h2>
+      </div>
+      <p class="subtitle">Selecione o seu clube para iniciar a temporada 2023:</p>
+      
+      <div class="division-selector">
+        <label>Divisão:</label>
+        <select id="division-filter">
+          <option value="BRA_A">Brasileirão Série A</option>
+          <option value="BRA_B">Brasileirão Série B</option>
+          <option value="BRA_C">Brasileirão Série C</option>
+          <option value="BRA_D">Brasileirão Série D</option>
+        </select>
+      </div>
+
+      <div class="team-grid" id="teams-selection-grid">
+        <!-- Teams will be dynamically populated -->
+      </div>
+
+      <div class="modal-footer">
+        <button id="load-saved-game-btn" class="btn btn-secondary">📂 Carregar Jogo Salvo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Game Container -->
+  <div id="game-container" class="game-container" style="display: none;">
+    <!-- Top Header Status Bar -->
+    <header class="top-bar">
+      <div class="club-info">
+        <img id="user-club-shield" src="" alt="Escudo" class="club-shield">
+        <div class="club-details">
+          <h1 id="user-club-name">Meu Clube</h1>
+          <span id="user-club-stadium" class="meta-item">Estádio</span>
+        </div>
+      </div>
+
+      <div class="game-meta">
+        <div class="meta-block">
+          <span class="meta-label">Divisão</span>
+          <span id="user-division" class="meta-val highlight">Série A</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Rodada</span>
+          <span id="current-round-text" class="meta-val">1 / 38</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Saldo em Caixa</span>
+          <span id="user-balance" class="meta-val balance">R$ 0</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="play-round-btn" class="btn btn-play">⚽ JOGAR RODADA</button>
+        <button id="save-game-btn" class="btn btn-icon" title="Salvar Jogo">💾</button>
+        <button id="sound-toggle-btn" class="btn btn-icon" title="Alternar Som">🔊</button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="squad-tab">📋 Elenco</button>
+      <button class="tab-btn" data-tab="tactics-tab">⚽ Tática</button>
+      <button class="tab-btn" data-tab="standings-tab">🏆 Classificação</button>
+      <button class="tab-btn" data-tab="stadium-tab">🏟️ Estádio & Finanças</button>
+      <button class="tab-btn" data-tab="market-tab">💼 Mercado</button>
+    </nav>
+
+    <!-- Tab Contents -->
+    <main class="main-content">
+      <!-- 1. Elenco (Squad) Tab -->
+      <section id="squad-tab" class="tab-content active">
+        <div class="panel-header">
+          <h2>Elenco Profissional</h2>
+          <div class="panel-tools">
+            <span class="info-tip">💡 Clique em dois jogadores para inverter a escalação!</span>
+            <button id="auto-select-squad-btn" class="btn btn-small">⚡ Escalar Melhores</button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="brasfoot-table" id="squad-table">
+            <thead>
+              <tr>
+                <th width="40">Nº</th>
+                <th width="50">Pos</th>
+                <th>Nome</th>
+                <th width="50">Idade</th>
+                <th width="50">Força</th>
+                <th>Carac. 1</th>
+                <th>Carac. 2</th>
+                <th width="40">Lado</th>
+                <th width="100">Energia</th>
+                <th width="50">Gols</th>
+                <th>Salário</th>
+                <th>Valor do Passe</th>
+              </tr>
+            </thead>
+            <tbody id="squad-tbody">
+              <!-- Players loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 2. Tática Tab -->
+      <section id="tactics-tab" class="tab-content">
+        <div class="tactics-layout">
+          <div class="pitch-container">
+            <div class="pitch" id="tactical-pitch">
+              <!-- Starting 11 players rendered on pitch -->
+            </div>
+          </div>
+
+          <div class="tactics-settings-card">
+            <h3>Configurações Táticas</h3>
+            
+            <div class="form-group">
+              <label for="formation-select">Formação:</label>
+              <select id="formation-select">
+                <option value="4-4-2">4-4-2 (Tradicional)</option>
+                <option value="4-3-3">4-3-3 (Ofensivo)</option>
+                <option value="3-5-2">3-5-2 (Ala)</option>
+                <option value="4-5-1">4-5-1 (Controle)</option>
+                <option value="4-2-3-1">4-2-3-1 (Moderno)</option>
+                <option value="3-4-3">3-4-3 (Ultra-Ataque)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="style-select">Estilo de Jogo:</label>
+              <select id="style-select">
+                <option value="Ofensivo">Ofensivo (+ Ataque, - Defesa)</option>
+                <option value="Equilibrado" selected>Equilibrado (Balanceado)</option>
+                <option value="Defensivo">Defensivo (+ Defesa, - Ataque)</option>
+              </select>
+            </div>
+
+            <div class="tactics-info-box">
+              <h4>Resumo da Força</h4>
+              <p>Goleiro: <strong id="tactics-power-gk">0</strong></p>
+              <p>Defesa: <strong id="tactics-power-def">0</strong></p>
+              <p>Meio-campo: <strong id="tactics-power-mid">0</strong></p>
+              <p>Ataque: <strong id="tactics-power-att">0</strong></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Classificação Tab -->
+      <section id="standings-tab" class="tab-content">
+        <div class="sub-nav">
+          <button class="sub-tab-btn active" data-sub="standings-view">Tabela de Classificação</button>
+          <button class="sub-tab-btn" data-sub="scorers-view">Artilharia</button>
+          <button class="sub-tab-btn" data-sub="fixtures-view">Jogos da Rodada</button>
+        </div>
+
+        <div id="standings-view" class="sub-content active">
+          <div class="table-responsive">
+            <table class="brasfoot-table standings-table" id="standings-table">
+              <thead>
+                <tr>
+                  <th width="40">Pos</th>
+                  <th>Clube</th>
+                  <th width="45">P</th>
+                  <th width="40">J</th>
+                  <th width="40">V</th>
+                  <th width="40">E</th>
+                  <th width="40">D</th>
+                  <th width="40">GP</th>
+                  <th width="40">GC</th>
+                  <th width="45">SG</th>
+                </tr>
+              </thead>
+              <tbody id="standings-tbody">
+                <!-- Standings rows -->
+              </tbody>
+            </table>
+          </div>
+          <div class="legend">
+            <span class="legend-item"><span class="color-box g4"></span> G4 / Libertadores</span>
+            <span class="legend-item"><span class="color-box sula"></span> Sul-Americana</span>
+            <span class="legend-item"><span class="color-box z4"></span> Z4 / Rebaixamento</span>
+          </div>
+        </div>
+
+        <div id="scorers-view" class="sub-content">
+          <table class="brasfoot-table" id="scorers-table">
+            <thead>
+              <tr>
+                <th width="50">Pos</th>
+                <th>Jogador</th>
+                <th>Clube</th>
+                <th width="70">Gols</th>
+              </tr>
+            </thead>
+            <tbody id="scorers-tbody">
+              <!-- Scorers rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="fixtures-view" class="sub-content">
+          <div class="fixtures-grid" id="round-fixtures-grid">
+            <!-- Round matches -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Estádio & Finanças Tab -->
+      <section id="stadium-tab" class="tab-content">
+        <div class="stadium-layout">
+          <div class="stadium-card">
+            <h3>🏟️ Estádio</h3>
+            <div class="stadium-image-wrapper">
+              <img src="/assets/icons/estadio.jpg" alt="Estádio" class="stadium-img">
+            </div>
+            <p>Nome: <strong id="stadium-name">Estádio</strong></p>
+            <p>Capacidade Atual: <strong id="stadium-capacity">0</strong> lugares</p>
+
+            <div class="expansion-box">
+              <h4>Obras e Ampliação</h4>
+              <p class="cost-note">Custo: R$ 400 por cadeira</p>
+              <div class="expansion-buttons">
+                <button class="btn btn-action" onclick="app.upgradeStadium(5000)">+ 5.000 Lugares (R$ 2.000.000)</button>
+                <button class="btn btn-action" onclick="app.upgradeStadium(10000)">+ 10.000 Lugares (R$ 4.000.000)</button>
+                <button class="btn btn-action" onclick="app.upgradeStadium(20000)">+ 20.000 Lugares (R$ 8.000.000)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="finance-card">
+            <h3>💰 Finanças e Ingressos</h3>
+            
+            <div class="form-group">
+              <label for="ticket-price-input">Preço do Ingresso (R$):</label>
+              <div class="price-control">
+                <input type="range" id="ticket-price-slider" min="10" max="120" step="5" value="30">
+                <span id="ticket-price-val" class="price-badge">R$ 30</span>
+              </div>
+            </div>
+
+            <div class="finance-summary-box">
+              <h4>Balanço Semanal Estimado</h4>
+              <div class="finance-row">
+                <span>Renda média por jogo em casa:</span>
+                <strong id="fin-match-income" class="positive">R$ 0</strong>
+              </div>
+              <div class="finance-row">
+                <span>Folha salarial do elenco:</span>
+                <strong id="fin-wage-bill" class="negative">R$ 0</strong>
+              </div>
+              <div class="finance-row">
+                <span>Manutenção do estádio:</span>
+                <strong id="fin-maintenance" class="negative">R$ 0</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Mercado Tab -->
+      <section id="market-tab" class="tab-content">
+        <div class="panel-header">
+          <h2>Mercado de Transferências</h2>
+        </div>
+
+        <div class="market-filters">
+          <input type="text" id="market-search-name" placeholder="Nome do jogador..." class="input-search">
+          <select id="market-pos-filter">
+            <option value="TODOS">Todas as Posições</option>
+            <option value="G">Goleiro (G)</option>
+            <option value="L">Lateral (L)</option>
+            <option value="Z">Zagueiro (Z)</option>
+            <option value="M">Meia (M)</option>
+            <option value="A">Atacante (A)</option>
+          </select>
+          <input type="number" id="market-min-str" placeholder="Força Mínima" min="20" max="65" class="input-number">
+          <button id="market-search-btn" class="btn btn-primary">🔍 Buscar</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="brasfoot-table" id="market-table">
+            <thead>
+              <tr>
+                <th width="45">Pos</th>
+                <th>Nome</th>
+                <th width="50">Idade</th>
+                <th width="50">Força</th>
+                <th>Carac. 1</th>
+                <th>Carac. 2</th>
+                <th>Clube Atual</th>
+                <th>Valor do Passe</th>
+                <th width="100">Ação</th>
+              </tr>
+            </thead>
+            <tbody id="market-tbody">
+              <!-- Market results -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Live Match Simulator Modal -->
+  <div id="match-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card match-card">
+      <div class="match-header">
+        <div class="match-team home">
+          <img id="match-home-shield" src="" alt="Home" class="match-shield">
+          <span id="match-home-name" class="team-name">Time Mandante</span>
+        </div>
+        <div class="match-scoreboard">
+          <span id="match-home-score" class="score">0</span>
+          <span class="score-divider">x</span>
+          <span id="match-away-score" class="score">0</span>
+          <div id="match-timer" class="match-clock">0'</div>
+        </div>
+        <div class="match-team away">
+          <img id="match-away-shield" src="" alt="Away" class="match-shield">
+          <span id="match-away-name" class="team-name">Time Visitante</span>
+        </div>
+      </div>
+
+      <!-- Match Live Events Feed -->
+      <div class="match-events-feed" id="match-events-feed">
+        <!-- Live commentary items appear here -->
+      </div>
+
+      <!-- Match Stats Bars -->
+      <div class="match-stats-panel">
+        <div class="stat-bar-group">
+          <span class="stat-label">Posse de Bola</span>
+          <div class="dual-bar">
+            <div id="stat-possession-home" class="bar-fill home" style="width: 50%;">50%</div>
+            <div id="stat-possession-away" class="bar-fill away" style="width: 50%;">50%</div>
+          </div>
+        </div>
+        <div class="quick-stats-row">
+          <span>Finalizações: <strong id="stat-shots-home">0</strong> x <strong id="stat-shots-away">0</strong></span>
+          <span>No Gol: <strong id="stat-ontarget-home">0</strong> x <strong id="stat-ontarget-away">0</strong></span>
+          <span>Faltas: <strong id="stat-fouls-home">0</strong> x <strong id="stat-fouls-away">0</strong></span>
+        </div>
+      </div>
+
+      <div class="match-footer">
+        <button id="skip-match-btn" class="btn btn-secondary">⚡ Avançar para o Fim</button>
+        <button id="close-match-btn" class="btn btn-primary" style="display: none;">Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast">Mensagem</div>
+
+  <!-- Audio Elements -->
+  <audio id="audio-gol" src="/assets/sons/gol1.wav" preload="auto"></audio>
+  <audio id="audio-fimjogo" src="/assets/sons/fimjogo.wav" preload="auto"></audio>
+  <audio id="audio-intervalo" src="/assets/sons/intervalo.wav" preload="auto"></audio>
+  <audio id="audio-expulsao" src="/assets/sons/expulsao.wav" preload="auto"></audio>
+  <audio id="audio-penalty" src="/assets/sons/penalty.wav" preload="auto"></audio>
+  <audio id="audio-contusao" src="/assets/sons/contusao.wav" preload="auto"></audio>
+
+  <script src="/app.js"></script>
+</body>
+</html>

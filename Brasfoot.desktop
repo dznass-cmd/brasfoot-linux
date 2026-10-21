@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Brasfoot Revenge
+Comment=Simulador de Futebol Brasfoot Revenge (100% Nativo, Sem Java, Sem Servidor, 100% Offline)
+Exec=brasfoot
+Icon=assets/icons/ic_champion.png
+Terminal=false
+Categories=Game;Simulation;Sports;
+Keywords=brasfoot;revenge;futebol;soccer;manager;simulation;
+StartupNotify=true

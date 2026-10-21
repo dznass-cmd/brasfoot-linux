@@ -1,0 +1,24 @@
+{
+  "regressionGroups": 12,
+  "coverage": [
+    "legacy opening balance",
+    "round reconciliation and idempotence",
+    "pure forecasts",
+    "transfer and loan accounting",
+    "stadium costs and invalid inputs",
+    "prizes and reload",
+    "club ownership",
+    "five-season history",
+    "finance rendering and filters",
+    "invalid entries",
+    "failed persistence",
+    "live-round finalization"
+  ],
+  "storage": "isolated in-memory only",
+  "visualWebKitTest": false,
+  "economyScan": {
+    "freshDatabaseClubs": 80,
+    "negativeProjectedCash": 71,
+    "assumptions": "Full unplayed calendar; existing cash, wages, stadium and ticket price; central attendance; excludes prizes and future deals. No player save."
+  }
+}
