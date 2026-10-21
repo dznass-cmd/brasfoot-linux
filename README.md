@@ -20,10 +20,16 @@ Reimplementação completa do clássico **Brasfoot** (Edição **Revenge**) comp
 - **Pacote Debian / Ubuntu**: `brasfoot-revenge_1.0.0_amd64.deb` (instalação padrão via `sudo dpkg -i brasfoot-revenge_1.0.0_amd64.deb`).
 - **Pacote Portátil Tarball**: `brasfoot-revenge-linux-x86_64.tar.gz` (descompacte e jogue em qualquer distribuição).
 
-### 🪟 Para Windows
-- **Instalador Gráfico**: `Instalador-Brasfoot-Revenge.exe` (instalador nativo com interface gráfica, barra de progresso, atalhos na Área de Trabalho e Menu Iniciar, e desinstalador).
-- **Versão Portátil ZIP**: `Brasfoot-Revenge-Windows-Portable.zip` (basta descompactar e dar dois cliques em `BrasfootRevenge.exe` para jogar).
-- **Executável Nativo**: `BrasfootRevenge.exe` (executa em janela de aplicativo dedicada sem barra de navegação, com isolamento de saves locais).
+### 🪟 Para Windows 10/11 (64 bits)
+- [Baixar o instalador ou o pacote portátil](https://github.com/dznass-cmd/brasfoot-revenge/releases/latest).
+- **Instalador gráfico**: `Instalador-Brasfoot-Revenge.exe`. Instala o jogo, prepara o WebView2 e cria os atalhos.
+- **Versão portátil**: `Brasfoot-Revenge-Windows-Portable.zip`. Extraia **toda** a pasta e abra `BrasfootRevenge.exe`.
+- O jogo abre em uma janela própria do Windows, com Windows Forms e WebView2, sem abrir o navegador e sem servidor local.
+- O pacote inclui o instalador offline oficial x64 do WebView2. Se o componente estiver ausente, a preparação é automática; aguarde na primeira abertura. Depois de baixar o pacote, a instalação e o jogo não exigem internet.
+- Saves ficam em `%LOCALAPPDATA%\BrasfootRevenge\WebView2Data` e são preservados ao reinstalar ou desinstalar o jogo. Use a exportação de saves para manter uma cópia independente.
+- Não distribua apenas o `.exe`: mantenha os dados, as DLLs e a pasta `prerequisites` junto dele.
+
+[Compilação, dependências e verificação no Windows](docs/WINDOWS.md).
 
 Para compilar ou gerar novos pacotes a partir do código-fonte:
 ```bash

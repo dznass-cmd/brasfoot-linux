@@ -1,0 +1,58 @@
+name: Windows desktop
+on:
+  push:
+    branches: [main]
+    paths: ['src-windows/**', 'scripts/**', 'app.js', 'index.html', 'style.css', 'src/engine/**', 'data/**', '.github/workflows/windows.yml']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Dependencies and official offline runtime
+        shell: pwsh
+        run: |
+          python -m pip install Pillow
+          New-Item -ItemType Directory -Force dist/windows/prerequisites | Out-Null
+          $runtime = "$PWD/dist/windows/prerequisites/MicrosoftEdgeWebView2RuntimeInstallerX64.exe"
+          Invoke-WebRequest 'https://go.microsoft.com/fwlink/?linkid=2124701' -OutFile $runtime
+          $signature = Get-AuthenticodeSignature $runtime
+          if ($signature.Status -ne 'Valid' -or $signature.SignerCertificate.Subject -notmatch 'O=Microsoft Corporation') {
+            throw 'Invalid Microsoft runtime signature'
+          }
+      - name: Compile and package native Windows client
+        run: python scripts/build-windows.py
+      - name: Test packaged desktop application
+        shell: pwsh
+        run: |
+          Expand-Archive dist/windows/Brasfoot-Revenge-Windows-Portable.zip -DestinationPath "$env:RUNNER_TEMP/brasfoot-portable"
+          $exe = "$env:RUNNER_TEMP/brasfoot-portable/Brasfoot-Revenge/BrasfootRevenge.exe"
+          $process = Start-Process $exe -ArgumentList '--prepare-runtime' -PassThru
+          if (!$process.WaitForExit(180000)) { $process.Kill(); throw 'Runtime setup timed out' }
+          if ($process.ExitCode -ne 0) { throw "Runtime setup failed: $($process.ExitCode)" }
+          $process = Start-Process $exe -ArgumentList '--smoke-test' -PassThru
+          if (!$process.WaitForExit(90000)) { $process.Kill(); throw 'Desktop startup timed out' }
+          if ($process.ExitCode -ne 0) { throw "Desktop test failed: $($process.ExitCode)" }
+      - name: Game regression tests
+        shell: pwsh
+        run: |
+          Get-ChildItem scripts/test-*.cjs | ForEach-Object {
+            node $_.FullName
+            if ($LASTEXITCODE -ne 0) { throw "Failed: $($_.Name)" }
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Brasfoot-Revenge-Windows-x64
+          path: |
+            dist/windows/Instalador-Brasfoot-Revenge.exe
+            dist/windows/Brasfoot-Revenge-Windows-Portable.zip

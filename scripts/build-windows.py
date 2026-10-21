@@ -22,6 +22,7 @@ LIBS_DIR = os.path.join(PROJECT_DIR, 'src-windows', 'libs')
 
 def find_csc():
     candidates = [
+        os.path.join(os.environ.get('WINDIR', 'C:\\Windows'), 'Microsoft.NET', 'Framework64', 'v4.0.30319', 'csc.exe') if os.name == 'nt' else '',
         os.path.expanduser('~/.wine-classic/drive_c/windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe'),
         os.path.expanduser('~/.wine/drive_c/windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe'),
         os.path.expanduser('~/.wine-classic/drive_c/windows/Microsoft.NET/Framework/v4.0.30319/csc.exe'),
@@ -35,7 +36,7 @@ def find_csc():
 CSC_PATH = find_csc()
 
 def to_wine(p):
-    return 'Z:' + p.replace('/', '\\')
+    return p if os.name == 'nt' else 'Z:' + p.replace('/', '\\')
 
 def ensure_ico():
     png_path = os.path.join(PROJECT_DIR, 'assets', 'icons', 'ic_champion.png')
@@ -52,10 +53,10 @@ def build_launcher(ico_path):
     wf_dll = os.path.join(LIBS_DIR, 'Microsoft.Web.WebView2.WinForms.dll')
     
     cmd = [
-        'wine', CSC_PATH,
+        *([CSC_PATH] if os.name == 'nt' else ['wine', CSC_PATH]),
         '/target:winexe',
         '/optimize+',
-        '/platform:anycpu',
+        '/platform:x64',
         '/r:System.Windows.Forms.dll',
         '/r:System.Drawing.dll',
         f'/r:{to_wine(core_dll)}',
@@ -66,7 +67,7 @@ def build_launcher(ico_path):
     ]
     res = subprocess.run(cmd, capture_output=True)
     if res.returncode != 0:
-        print('Erro compilação launcher:', res.stderr.decode())
+        print('Erro compilação launcher:', res.stdout.decode(errors='replace'), res.stderr.decode(errors='replace'))
         sys.exit(1)
         
     # Copy DLLs to dist/windows for standalone test
@@ -86,7 +87,13 @@ def create_archive_payload(launcher_exe):
     root_files = ['index.html', 'style.css', 'app.js']
     dirs = ['assets', 'data', 'src']
     
-    files_to_pack = []
+    runtime_installer = os.path.join(DIST_WIN_DIR, 'prerequisites', 'MicrosoftEdgeWebView2RuntimeInstallerX64.exe')
+    if not os.path.isfile(runtime_installer) or os.path.getsize(runtime_installer) < 10_000_000:
+        raise RuntimeError('Baixe o instalador offline oficial x64 do WebView2 para ' + runtime_installer)
+    with open(runtime_installer, 'rb') as runtime_file:
+        if runtime_file.read(2) != b'MZ':
+            raise RuntimeError('O instalador WebView2 não é um executável Windows válido.')
+    files_to_pack = [('prerequisites/MicrosoftEdgeWebView2RuntimeInstallerX64.exe', runtime_installer)]
     # Launcher and native WebView2 runtime DLLs
     files_to_pack.append(('BrasfootRevenge.exe', launcher_exe))
     files_to_pack.append(('Microsoft.Web.WebView2.Core.dll', os.path.join(LIBS_DIR, 'Microsoft.Web.WebView2.Core.dll')))
@@ -137,10 +144,10 @@ def build_installer(ico_path, archive_path):
     out_installer = os.path.join(DIST_WIN_DIR, 'Instalador-Brasfoot-Revenge.exe')
     
     cmd = [
-        'wine', CSC_PATH,
+        *([CSC_PATH] if os.name == 'nt' else ['wine', CSC_PATH]),
         '/target:winexe',
         '/optimize+',
-        '/platform:anycpu',
+        '/platform:x64',
         '/r:System.Windows.Forms.dll',
         '/r:System.Drawing.dll',
         f'/resource:{to_wine(archive_path)},GameArchive',
@@ -150,7 +157,7 @@ def build_installer(ico_path, archive_path):
     ]
     res = subprocess.run(cmd, capture_output=True)
     if res.returncode != 0:
-        print('Erro compilação instalador:', res.stderr.decode())
+        print('Erro compilação instalador:', res.stdout.decode(errors='replace'), res.stderr.decode(errors='replace'))
         sys.exit(1)
         
     size_mb = os.path.getsize(out_installer) / (1024 * 1024)
@@ -174,7 +181,8 @@ def build_portable_zip(files_to_pack):
             "COMO JOGAR:\r\n"
             "1. Dê dois cliques em 'BrasfootRevenge.exe' para iniciar o jogo!\r\n"
             "2. O jogo inicia como um aplicativo nativo do Windows, sem abrir navegador.\r\n"
-            "3. 100% offline, sem necessidade de internet, servidor ou Java.\r\n"
+            "3. Windows 10/11 x64: o WebView2 é instalado automaticamente do pacote offline.\r\n"
+            "   Na primeira execução, aguarde a preparação da interface.\r\n"
             "4. Seus saves e histórico ficam salvos no seu computador com total segurança.\r\n\r\n"
             "Divirta-se!\r\n"
         )

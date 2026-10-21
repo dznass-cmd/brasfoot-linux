@@ -336,6 +336,15 @@ namespace BrasfootRevenge
                     }
                 }
 
+                UpdateStatus("Preparando o componente de interface do Windows...", 88);
+                using (var runtime = Process.Start(new ProcessStartInfo(
+                    Path.Combine(targetDir, "BrasfootRevenge.exe"), "--prepare-runtime")
+                    { UseShellExecute = false, WorkingDirectory = targetDir }))
+                {
+                    runtime.WaitForExit();
+                    if (runtime.ExitCode != 0)
+                        throw new Exception("O componente de interface não pôde ser preparado. Tente instalar novamente.");
+                }
                 UpdateStatus("Criando atalhos e desinstalador...", 90);
                 string exePath = Path.Combine(targetDir, "BrasfootRevenge.exe");
 
@@ -376,10 +385,14 @@ namespace BrasfootRevenge
                         "del \"%USERPROFILE%\\Desktop\\Brasfoot Revenge.lnk\" 2>nul\r\n" +
                         "del \"%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Brasfoot Revenge\\Brasfoot Revenge.lnk\" 2>nul\r\n" +
                         "rmdir \"%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Brasfoot Revenge\" 2>nul\r\n" +
-                        "cd ..\r\n" +
-                        "rmdir /s /q \"Brasfoot Revenge\"\r\n" +
+                        "set \"BRASFOOT_INSTALL_DIR=%~dp0\"\r\n" +
+                        "if not exist \"%BRASFOOT_INSTALL_DIR%BrasfootRevenge.exe\" exit /b 1\r\n" +
+                        "cd /d \"%TEMP%\"\r\n" +
+                        "(\r\n" +
+                        "rmdir /s /q \"%BRASFOOT_INSTALL_DIR%\"\r\n" +
                         "echo Brasfoot Revenge desinstalado com sucesso!\r\n" +
-                        "pause\r\n";
+                        "pause\r\n" +
+                        ")\r\n";
                     File.WriteAllText(uninstBat, batContent, Encoding.UTF8);
                 }
                 catch { }
@@ -402,10 +415,14 @@ namespace BrasfootRevenge
                     MessageBox.Show("Erro durante a instalação:\n\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     lblStatus.Text = "A instalação falhou.";
                     lblStatus.ForeColor = Color.Red;
-                    btnAction.Text = "Fechar";
+                    btnAction.Text = "Tentar novamente";
+                    txtPath.Enabled = true;
+                    btnBrowse.Enabled = true;
+                    chkDesktop.Enabled = true;
+                    chkStartMenu.Enabled = true;
                     btnAction.Enabled = true;
                     btnCancel.Enabled = true;
-                    isFinished = true;
+                    isFinished = false;
                 });
             }
         }
