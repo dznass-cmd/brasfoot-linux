@@ -3,6 +3,8 @@
 
 # Binários compilados (podem ser recompilados via ./scripts/build-native.sh)
 brasfoot-app
+*.exe
+dist/
 
 # Instalador legado do Windows (os recursos já estão extraídos em assets/)
 brasfoot22-23.exe

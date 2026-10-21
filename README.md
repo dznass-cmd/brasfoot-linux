@@ -13,6 +13,29 @@ Reimplementação completa do clássico **Brasfoot** (Edição **Revenge**) comp
 
 ---
 
+## 📦 Pacotes de Instalação e Downloads
+
+### 🐧 Para Linux
+- **Instalador Auto-executável**: `brasfoot-revenge-installer-linux.sh` (extrai e configura o atalho no menu com 1 comando: `bash brasfoot-revenge-installer-linux.sh`).
+- **Pacote Debian / Ubuntu**: `brasfoot-revenge_1.0.0_amd64.deb` (instalação padrão via `sudo dpkg -i brasfoot-revenge_1.0.0_amd64.deb`).
+- **Pacote Portátil Tarball**: `brasfoot-revenge-linux-x86_64.tar.gz` (descompacte e jogue em qualquer distribuição).
+
+### 🪟 Para Windows
+- **Instalador Gráfico**: `Instalador-Brasfoot-Revenge.exe` (instalador nativo com interface gráfica, barra de progresso, atalhos na Área de Trabalho e Menu Iniciar, e desinstalador).
+- **Versão Portátil ZIP**: `Brasfoot-Revenge-Windows-Portable.zip` (basta descompactar e dar dois cliques em `BrasfootRevenge.exe` para jogar).
+- **Executável Nativo**: `BrasfootRevenge.exe` (executa em janela de aplicativo dedicada sem barra de navegação, com isolamento de saves locais).
+
+Para compilar ou gerar novos pacotes a partir do código-fonte:
+```bash
+# Gerar pacotes Linux:
+python3 scripts/build-linux-packages.py
+
+# Gerar pacotes Windows:
+python3 scripts/build-windows.py
+```
+
+---
+
 ## 🚀 Como Jogar
 
 ### Opção 1: Pelo Executável Nativo (Recomendado)
