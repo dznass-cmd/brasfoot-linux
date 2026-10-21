@@ -2,7 +2,7 @@
 """
 Build Windows installer and portable packages for Brasfoot Revenge.
 Generates:
-  - dist/windows/BrasfootRevenge.exe
+  - dist/windows/BrasfootRevenge.exe (Native Windows Forms + WebView2 client)
   - dist/windows/Instalador-Brasfoot-Revenge.exe
   - dist/windows/Brasfoot-Revenge-Windows-Portable.zip
 """
@@ -18,6 +18,8 @@ from PIL import Image
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST_WIN_DIR = os.path.join(PROJECT_DIR, 'dist', 'windows')
+LIBS_DIR = os.path.join(PROJECT_DIR, 'src-windows', 'libs')
+
 def find_csc():
     candidates = [
         os.path.expanduser('~/.wine-classic/drive_c/windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe'),
@@ -43,9 +45,11 @@ def ensure_ico():
     return ico_path
 
 def build_launcher(ico_path):
-    print('[1/4] Compilando BrasfootRevenge.exe (Launcher)...')
+    print('[1/4] Compilando BrasfootRevenge.exe (Cliente Nativo Windows)...')
     cs_file = os.path.join(PROJECT_DIR, 'src-windows', 'Launcher.cs')
     out_exe = os.path.join(DIST_WIN_DIR, 'BrasfootRevenge.exe')
+    core_dll = os.path.join(LIBS_DIR, 'Microsoft.Web.WebView2.Core.dll')
+    wf_dll = os.path.join(LIBS_DIR, 'Microsoft.Web.WebView2.WinForms.dll')
     
     cmd = [
         'wine', CSC_PATH,
@@ -54,6 +58,8 @@ def build_launcher(ico_path):
         '/platform:anycpu',
         '/r:System.Windows.Forms.dll',
         '/r:System.Drawing.dll',
+        f'/r:{to_wine(core_dll)}',
+        f'/r:{to_wine(wf_dll)}',
         f'/win32icon:{to_wine(ico_path)}',
         f'/out:{to_wine(out_exe)}',
         to_wine(cs_file)
@@ -62,6 +68,13 @@ def build_launcher(ico_path):
     if res.returncode != 0:
         print('Erro compilação launcher:', res.stderr.decode())
         sys.exit(1)
+        
+    # Copy DLLs to dist/windows for standalone test
+    shutil.copy(core_dll, DIST_WIN_DIR)
+    shutil.copy(wf_dll, DIST_WIN_DIR)
+    shutil.copy(os.path.join(LIBS_DIR, 'WebView2Loader.dll'), DIST_WIN_DIR)
+    shutil.copytree(os.path.join(LIBS_DIR, 'runtimes'), os.path.join(DIST_WIN_DIR, 'runtimes'), dirs_exist_ok=True)
+    
     print('  -> Criado com sucesso:', out_exe)
     return out_exe
 
@@ -69,13 +82,23 @@ def create_archive_payload(launcher_exe):
     print('[2/4] Compactando payload do jogo (GameArchive)...')
     archive_path = os.path.join(DIST_WIN_DIR, 'game-archive.bin')
     
-    # Items to include
+    # Files to include in payload
     root_files = ['index.html', 'style.css', 'app.js']
     dirs = ['assets', 'data', 'src']
     
     files_to_pack = []
-    # Include launcher exe as BrasfootRevenge.exe
+    # Launcher and native WebView2 runtime DLLs
     files_to_pack.append(('BrasfootRevenge.exe', launcher_exe))
+    files_to_pack.append(('Microsoft.Web.WebView2.Core.dll', os.path.join(LIBS_DIR, 'Microsoft.Web.WebView2.Core.dll')))
+    files_to_pack.append(('Microsoft.Web.WebView2.WinForms.dll', os.path.join(LIBS_DIR, 'Microsoft.Web.WebView2.WinForms.dll')))
+    files_to_pack.append(('WebView2Loader.dll', os.path.join(LIBS_DIR, 'WebView2Loader.dll')))
+    
+    runtimes_dir = os.path.join(LIBS_DIR, 'runtimes')
+    for root, _, filenames in os.walk(runtimes_dir):
+        for fn in filenames:
+            full_fn = os.path.join(root, fn)
+            rel = os.path.relpath(full_fn, LIBS_DIR).replace('\\', '/')
+            files_to_pack.append((rel, full_fn))
     
     for rf in root_files:
         src = os.path.join(PROJECT_DIR, rf)
@@ -146,12 +169,13 @@ def build_portable_zip(files_to_pack):
         # Add LEIAME.txt
         readme = (
             "=====================================================\r\n"
-            "⚽ BRASFOOT REVENGE (Edição Windows Portable)\r\n"
+            "⚽ BRASFOOT REVENGE (Edição Windows Nativo Offline)\r\n"
             "=====================================================\r\n\r\n"
             "COMO JOGAR:\r\n"
             "1. Dê dois cliques em 'BrasfootRevenge.exe' para iniciar o jogo!\r\n"
-            "2. O jogo roda 100% offline, sem necessidade de internet, servidor ou Java.\r\n"
-            "3. Seus saves e histórico ficam salvos no seu computador com total segurança.\r\n\r\n"
+            "2. O jogo inicia como um aplicativo nativo do Windows, sem abrir navegador.\r\n"
+            "3. 100% offline, sem necessidade de internet, servidor ou Java.\r\n"
+            "4. Seus saves e histórico ficam salvos no seu computador com total segurança.\r\n\r\n"
             "Divirta-se!\r\n"
         )
         zf.writestr('Brasfoot-Revenge/LEIAME.txt', readme.encode('utf-8'))
@@ -172,7 +196,7 @@ def main():
     if os.path.exists(archive_path):
         os.remove(archive_path)
         
-    print('\n Pacotes Windows gerados com sucesso em dist/windows/!')
+    print('\n Pacotes Windows nativos gerados com sucesso em dist/windows/!')
 
 if __name__ == '__main__':
     main()
