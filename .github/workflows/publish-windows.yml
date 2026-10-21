@@ -1,0 +1,45 @@
+name: Publish verified Windows downloads
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Successful Windows desktop run ID
+        required: true
+      release_tag:
+        description: Existing draft release tag
+        required: true
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RUN_ID: ${{ inputs.run_id }}
+      RELEASE_TAG: ${{ inputs.release_tag }}
+    steps:
+      - name: Verify successful source run and release target
+        run: |
+          gh api "repos/$GH_REPO/actions/runs/$RUN_ID" > run.json
+          gh release view "$RELEASE_TAG" --json isDraft,targetCommitish > release.json
+          python3 - <<'PYTHON'
+          import json
+          run = json.load(open('run.json'))
+          release = json.load(open('release.json'))
+          assert run['conclusion'] == 'success' and run['name'] == 'Windows desktop'
+          assert release['isDraft'] and release['targetCommitish'] == run['head_sha']
+          PYTHON
+      - uses: actions/download-artifact@v4
+        with:
+          name: Brasfoot-Revenge-Windows-x64
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ github.token }}
+          path: packages
+      - name: Hash and upload verified packages
+        working-directory: packages
+        run: |
+          sha256sum Instalador-Brasfoot-Revenge.exe Brasfoot-Revenge-Windows-Portable.zip > SHA256SUMS.txt
+          gh release upload "$RELEASE_TAG" Instalador-Brasfoot-Revenge.exe Brasfoot-Revenge-Windows-Portable.zip SHA256SUMS.txt
