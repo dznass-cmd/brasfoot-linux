@@ -128,7 +128,7 @@
         <button id="next-season-btn" class="btn btn-primary season-next-button" hidden>Encerrar temporada</button>
       </section>
       <button class="btn lineup-open-btn" data-view="tactics-tab"><img src="assets/icons/tactics.png" alt="">Escalar time</button>
-      <section class="player-profile" aria-label="Jogador selecionado">
+      <section class="player-profile" id="player-profile-panel" aria-label="Jogador selecionado">
         <div class="profile-title"><strong id="profile-name">Selecione um jogador</strong><strong id="profile-strength"></strong></div>
         <div class="profile-position" id="profile-position"></div>
         <div class="profile-characteristics" id="profile-characteristics"></div>
@@ -145,6 +145,11 @@
           <div class="profile-humor-bar"><div class="profile-humor-fill" id="profile-humor-fill"></div></div>
         </div>
         <dl class="profile-data"><div><dt>Valor do passe</dt><dd id="profile-value">—</dd></div><div><dt>Salário</dt><dd id="profile-wage">—</dd></div><div><dt>Idade</dt><dd id="profile-age">—</dd></div><div><dt>Lado</dt><dd id="profile-side">—</dd></div><div><dt>Jogos</dt><dd id="profile-matches">—</dd></div><div><dt>Gols</dt><dd id="profile-goals">—</dd></div><div><dt>Assistências</dt><dd id="profile-assists">—</dd></div><div><dt>Humor / Moral</dt><dd id="profile-morale-detail">—</dd></div></dl>
+        <div class="profile-actions">
+          <button id="profile-transfer-btn" class="btn btn-small" type="button" title="Abrir opções de transferência e negociação deste jogador">
+            <img src="assets/icons/iconmoney2.png" alt="" width="14" height="14"> Transferir / Negociar
+          </button>
+        </div>
       </section>
       <div class="sidebar-footer"><img src="assets/icons/player_shirt_green.png" alt=""><span id="squad-count"></span><button class="sidebar-link" data-action="options">Opções</button></div>
     </aside>
@@ -690,6 +695,19 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Player Context Menu -->
+  <div id="player-context-menu" class="player-context-menu" style="display: none;" role="menu" aria-label="Ações do jogador">
+    <div class="player-context-header">
+      <span class="player-context-badge pos-badge" id="ctx-player-badge">A</span>
+      <div class="player-context-info">
+        <strong id="ctx-player-name">Nome do Jogador</strong>
+        <span id="ctx-player-meta">Força 58 · R$ 12 mi · Flamengo</span>
+      </div>
+    </div>
+    <div class="player-context-divider"></div>
+    <div class="player-context-actions" id="ctx-player-actions"></div>
   </div>
 
   <!-- Notification Toast -->

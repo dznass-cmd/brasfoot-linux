@@ -82,6 +82,7 @@ const app = {
     document.getElementById('options-modal').style.display = 'none';
     const dismissalModal = document.getElementById('dismissal-modal');
     if (dismissalModal) dismissalModal.style.display = 'none';
+    this.closePlayerContextMenu();
     document.getElementById('new-game-modal').style.display = 'flex';
   },
 
@@ -348,6 +349,38 @@ const app = {
       this.showView('squad-tab');
       this.checkManagerDismissal();
     });
+
+    // Player Context Menu Global Listeners & Sidebar Integration
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#player-context-menu')) {
+        this.closePlayerContextMenu();
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') this.closePlayerContextMenu();
+    });
+    window.addEventListener('resize', () => this.closePlayerContextMenu());
+    window.addEventListener('scroll', () => this.closePlayerContextMenu(), true);
+
+    const profilePanel = document.getElementById('player-profile-panel');
+    profilePanel?.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      const p = this.gameState?.userTeam?.players?.[this.inspectedPlayerIdx] || this.gameState?.userTeam?.players?.[0];
+      if (p) this.openPlayerContextMenu(p, this.gameState.userTeam, e.clientX, e.clientY);
+    });
+    document.getElementById('profile-name')?.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      const p = this.gameState?.userTeam?.players?.[this.inspectedPlayerIdx] || this.gameState?.userTeam?.players?.[0];
+      if (p) this.openPlayerContextMenu(p, this.gameState.userTeam, e.clientX, e.clientY);
+    });
+    document.getElementById('profile-transfer-btn')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const p = this.gameState?.userTeam?.players?.[this.inspectedPlayerIdx] || this.gameState?.userTeam?.players?.[0];
+      if (p) {
+        const rect = e.currentTarget.getBoundingClientRect();
+        this.openPlayerContextMenu(p, this.gameState.userTeam, rect.right + 6, rect.top);
+      }
+    });
   },
 
   renderTeamSelectionGrid(divisionId) {
@@ -456,6 +489,7 @@ const app = {
     document.getElementById('contract-modal').style.display = 'none';
     const dismissalModal = document.getElementById('dismissal-modal');
     if (dismissalModal) dismissalModal.style.display = 'none';
+    this.closePlayerContextMenu();
     this.transferRequest = null;
     this.contractRequest = null;
     this.selectedPlayerIdx = null;
@@ -786,6 +820,11 @@ const app = {
           if (next) { next.focus(); next.click(); }
         }
       });
+      row.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        inspect();
+        this.openPlayerContextMenu(p, team, e.clientX, e.clientY);
+      });
       fragment.appendChild(row);
     }
     if (!players.length) {
@@ -891,12 +930,15 @@ const app = {
       'profile-humor-desc': humor.desc,
       'profile-humor-val': `${humor.value}`,
       'profile-morale-detail': `${humor.emoji} ${humor.label} (${humor.value})`,
-      'roster-selection-status': `${p.name} · ${posName} · Humor: ${humor.emoji} ${humor.label} (${humor.value}) · ${this.playerAgeLabel(p, true)}`
+      'roster-selection-status': `${p.name} · ${posName} · Humor: ${humor.emoji} ${humor.label} (${humor.value}) · Botão direito no jogador para transferir`
     };
     Object.entries(values).forEach(([id, value]) => {
       const el = document.getElementById(id);
       if (el) el.textContent = value;
     });
+
+    const nameEl = document.getElementById('profile-name');
+    if (nameEl) nameEl.title = 'Clique com o botão direito para transferir ou negociar este atleta';
 
     const posEl = document.getElementById('profile-position');
     if (posEl) {
@@ -995,7 +1037,7 @@ const app = {
       const humor = this.playerHumor(p);
       const humorBadge = `<span class="player-humor-badge" title="Humor: ${humor.label} (${humor.value}) — ${humor.desc}">${humor.emoji}</span>`;
       const posBadge = `<span class="pos-badge pos-${p.position}">${this.playerPositionCode(p)}</span>`;
-      const rowTitle = `${p.name} (${this.playerPositionCode(p)}) · Humor: ${humor.emoji} ${humor.label} (${humor.value}) — ${humor.desc}`;
+      const rowTitle = `${p.name} (${this.playerPositionCode(p)}) · Humor: ${humor.emoji} ${humor.label} (${humor.value}) — Clique com o botão direito para transferir ou negociar`;
 
       if (tbody) {
         if (isReserva && !renderedReservesHeaderTbody) {
@@ -1015,6 +1057,12 @@ const app = {
         const inspect = () => { this.inspectedPlayerIdx = idx; this.renderSquad(); };
         tr.addEventListener('click', inspect);
         tr.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); inspect(); } });
+        tr.addEventListener('contextmenu', e => {
+          e.preventDefault();
+          this.inspectedPlayerIdx = idx;
+          this.renderSquad();
+          this.openPlayerContextMenu(p, this.gameState.userTeam, e.clientX, e.clientY);
+        });
         tbody.appendChild(tr);
       }
       if (lineupBody) {
@@ -1034,6 +1082,12 @@ const app = {
         lineupRow.innerHTML = `<td>${shirt}</td><td>${posBadge}</td><td>${name}${starBadge} ${humorBadge}</td><td>${p.strength}</td><td>${this.energyMarkup(p)}</td><td>${p.sideEstimated ? '—' : p.side || 'C'}</td><td title="${fullTraits}">${this.escapeHTML(traits)}</td>`;
         lineupRow.addEventListener('click', () => this.handleSquadRowClick(idx));
         lineupRow.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); this.handleSquadRowClick(idx); } });
+        lineupRow.addEventListener('contextmenu', e => {
+          e.preventDefault();
+          this.inspectedPlayerIdx = idx;
+          this.renderPlayerProfile();
+          this.openPlayerContextMenu(p, this.gameState.userTeam, e.clientX, e.clientY);
+        });
         lineupBody.appendChild(lineupRow);
       }
     }
@@ -1552,6 +1606,11 @@ const app = {
         </td>
       `;
       tr.querySelectorAll('[data-contract]').forEach(button => button.addEventListener('click', () => this.openTransfer(button.dataset.contract, p.id, p.teamId)));
+      tr.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        const club = this.findTeam(p.teamId);
+        this.openPlayerContextMenu(p, club || { id: p.teamId, name: p.teamName }, e.clientX, e.clientY);
+      });
       tbody.appendChild(tr);
     });
   },
@@ -1580,6 +1639,15 @@ const app = {
     squad.innerHTML = state.userTeam.players.map(player => `<tr><td>${escape(player.name)}${player.loan ? ' · Emprestado' : ''}</td><td><span class="pos-badge pos-${player.position}">${escape(this.playerPositionCode(player))}</span></td><td>${player.matchesPlayed || 0}</td><td>${player.goals || 0}</td><td>${player.assists || 0}</td><td>${this.ratingLabel(PerformanceEngine.average(player))}</td><td>${this.shortMoney(player.value)}</td><td>${player.loan ? `Retorno em ${player.loan.endYear}` : `<button class="btn btn-small" data-sell-player="${escape(player.id)}">Vender</button> <button class="btn btn-small" data-loan-player="${escape(player.id)}">Emprestar</button>`}</td></tr>`).join('');
     squad.querySelectorAll('[data-sell-player]').forEach(button => button.addEventListener('click', () => this.openTransfer('sell', button.dataset.sellPlayer)));
     squad.querySelectorAll('[data-loan-player]').forEach(button => button.addEventListener('click', () => this.openTransfer('loan-out', button.dataset.loanPlayer)));
+    squad.querySelectorAll('tr').forEach((tr, index) => {
+      const player = state.userTeam.players[index];
+      if (player) {
+        tr.addEventListener('contextmenu', e => {
+          e.preventDefault();
+          this.openPlayerContextMenu(player, state.userTeam, e.clientX, e.clientY);
+        });
+      }
+    });
     const offers = document.getElementById('market-incoming-offers');
     offers.innerHTML = pending.length ? pending.map(offer => `<article class="market-offer"><div class="manager-tenure-heading"><img src="${this.assetPath('escudos', offer.shield)}" alt=""><div><h3>${escape(offer.clubName)}</h3><span>${offer.type === 'loan' ? 'Empréstimo' : 'Compra definitiva'} · ${escape(offer.playerName)}</span></div><strong>R$ ${offer.amount.toLocaleString('pt-BR')}</strong></div><p>${escape(offer.reason)}</p><p class="market-help">Válida até ${offer.expiresRound > state.totalRounds ? 'o encerramento' : `a rodada ${offer.expiresRound}`} de ${offer.seasonYear}${offer.type === 'loan' ? ' · Retorno ao fim da temporada' : ''}.</p><div class="manager-offer-actions"><button class="btn btn-small btn-primary" data-player-offer="${escape(offer.id)}">Analisar proposta</button><button class="btn btn-small" data-decline-player-offer="${escape(offer.id)}">Recusar</button></div></article>`).join('')
       : '<p class="manager-profile-empty">Nenhuma proposta pendente. Continue jogando: boas atuações podem atrair compradores, e jogadores com poucos minutos podem receber convites de empréstimo.</p>';
@@ -1662,6 +1730,161 @@ const app = {
       this.gameState = result.state; this.selectedPlayerIdx = null; this.inspectedPlayerIdx = 0; this.clubBrowser = null;
       this.refreshUI(); this.showToast(result.message); return true;
     } catch (error) { document.getElementById('contract-error').textContent = error.message; this.showToast(error.message); return false; }
+  },
+
+  openPlayerContextMenu(player, club, x = 100, y = 100) {
+    if (!player) return;
+    const menu = document.getElementById('player-context-menu');
+    if (!menu) return;
+
+    const isOwnClub = !club || club.id === this.gameState.userTeamId;
+    const badge = document.getElementById('ctx-player-badge');
+    const nameEl = document.getElementById('ctx-player-name');
+    const metaEl = document.getElementById('ctx-player-meta');
+    const actionsEl = document.getElementById('ctx-player-actions');
+
+    const posCode = this.playerPositionCode(player);
+    if (badge) {
+      badge.textContent = posCode;
+      badge.className = `player-context-badge pos-badge pos-${player.position}`;
+    }
+    if (nameEl) {
+      const star = player.isTopWorld ? ' ⭐' : player.isStar ? ' ★' : '';
+      nameEl.textContent = `${player.name}${star}`;
+    }
+    if (metaEl) {
+      const clubName = club?.name || this.gameState.userTeam.name;
+      metaEl.textContent = `F: ${player.strength} · Passe: R$ ${this.shortMoney(player.value)} · ${clubName}`;
+    }
+
+    if (actionsEl) {
+      actionsEl.replaceChildren();
+
+      if (isOwnClub) {
+        // Option 1: Transfer / Sell (Highlighted as requested by user)
+        const btnSell = document.createElement('button');
+        btnSell.type = 'button';
+        btnSell.className = 'player-context-btn primary-action';
+        btnSell.innerHTML = `
+          <span class="player-context-icon">💼</span>
+          <div class="player-context-text">
+            <strong>Transferir jogador...</strong>
+            <span>Negociar venda para outro clube</span>
+          </div>
+        `;
+        btnSell.disabled = Boolean(player.loan) || Boolean(this.gameState.activeMatch);
+        btnSell.addEventListener('click', () => {
+          this.closePlayerContextMenu();
+          this.openTransfer('sell', player.id);
+        });
+        actionsEl.appendChild(btnSell);
+
+        // Option 2: Loan out
+        const remainingRounds = Math.max(0, (this.gameState.totalRounds || 38) - (this.gameState.currentRound || 1) + 1);
+        const btnLoan = document.createElement('button');
+        btnLoan.type = 'button';
+        btnLoan.className = 'player-context-btn';
+        btnLoan.innerHTML = `
+          <span class="player-context-icon">🔄</span>
+          <div class="player-context-text">
+            <strong>Emprestar jogador...</strong>
+            <span>Ceder a outro clube na temporada</span>
+          </div>
+        `;
+        btnLoan.disabled = Boolean(player.loan) || remainingRounds === 0 || Boolean(this.gameState.activeMatch);
+        btnLoan.addEventListener('click', () => {
+          this.closePlayerContextMenu();
+          this.openTransfer('loan-out', player.id);
+        });
+        actionsEl.appendChild(btnLoan);
+
+        // Option 3: Renew contract
+        const btnRenew = document.createElement('button');
+        btnRenew.type = 'button';
+        btnRenew.className = 'player-context-btn';
+        btnRenew.innerHTML = `
+          <span class="player-context-icon">📝</span>
+          <div class="player-context-text">
+            <strong>Renovar contrato...</strong>
+            <span>Estender vínculo e ajustar salário</span>
+          </div>
+        `;
+        btnRenew.disabled = Boolean(this.gameState.activeMatch);
+        btnRenew.addEventListener('click', () => {
+          this.closePlayerContextMenu();
+          this.openContract('renew', player.id);
+        });
+        actionsEl.appendChild(btnRenew);
+
+        // Option 4: Release contract
+        const btnRelease = document.createElement('button');
+        btnRelease.type = 'button';
+        btnRelease.className = 'player-context-btn danger-action';
+        btnRelease.innerHTML = `
+          <span class="player-context-icon">⚠️</span>
+          <div class="player-context-text">
+            <strong>Rescindir contrato...</strong>
+            <span>Pagar multa rescisória e liberar</span>
+          </div>
+        `;
+        btnRelease.disabled = Boolean(player.loan) || Boolean(this.gameState.activeMatch);
+        btnRelease.addEventListener('click', () => {
+          this.closePlayerContextMenu();
+          this.openContract('release', player.id);
+        });
+        actionsEl.appendChild(btnRelease);
+      } else {
+        // Option 1: Buy / Transfer in
+        const btnBuy = document.createElement('button');
+        btnBuy.type = 'button';
+        btnBuy.className = 'player-context-btn primary-action';
+        btnBuy.innerHTML = `
+          <span class="player-context-icon">💼</span>
+          <div class="player-context-text">
+            <strong>Comprar / Transferir...</strong>
+            <span>Fazer proposta de contratação</span>
+          </div>
+        `;
+        btnBuy.disabled = Boolean(player.loan) || Boolean(this.gameState.activeMatch);
+        btnBuy.addEventListener('click', () => {
+          this.closePlayerContextMenu();
+          this.openTransfer('buy', player.id, club?.id);
+        });
+        actionsEl.appendChild(btnBuy);
+
+        // Option 2: Loan in
+        const remainingRounds = Math.max(0, (this.gameState.totalRounds || 38) - (this.gameState.currentRound || 1) + 1);
+        const btnLoanIn = document.createElement('button');
+        btnLoanIn.type = 'button';
+        btnLoanIn.className = 'player-context-btn';
+        btnLoanIn.innerHTML = `
+          <span class="player-context-icon">🔄</span>
+          <div class="player-context-text">
+            <strong>Pedir por empréstimo...</strong>
+            <span>Solicitar cessão temporária</span>
+          </div>
+        `;
+        btnLoanIn.disabled = Boolean(player.loan) || remainingRounds === 0 || Boolean(this.gameState.activeMatch);
+        btnLoanIn.addEventListener('click', () => {
+          this.closePlayerContextMenu();
+          this.openTransfer('loan-in', player.id, club?.id);
+        });
+        actionsEl.appendChild(btnLoanIn);
+      }
+    }
+
+    const winW = typeof window !== 'undefined' && window.innerWidth ? window.innerWidth : 1024;
+    const winH = typeof window !== 'undefined' && window.innerHeight ? window.innerHeight : 768;
+    const posX = Math.max(8, Math.min(x, winW - 250));
+    const posY = Math.max(8, Math.min(y, winH - 220));
+    menu.style.left = `${posX}px`;
+    menu.style.top = `${posY}px`;
+    menu.style.display = 'block';
+  },
+
+  closePlayerContextMenu() {
+    const menu = document.getElementById('player-context-menu');
+    if (menu) menu.style.display = 'none';
   },
 
   openTransfer(type, playerId, clubId = null, offerId = null) {

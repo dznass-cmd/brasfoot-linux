@@ -6,6 +6,35 @@ Projeto: Brasfoot Revenge.
 
 [Contexto para retomar o desenvolvimento](../CONTEXTO-PROJETO.md) · [Guia principal](../README.md) · [Revisão de Negociações](REVISAO-NEGOCIACOES.md)
 
+## 22/10/2026 — Menu de contexto ao clicar com botão direito no jogador para transferir e negociar
+
+Solicitação: quero que no painel possa clicar com botao direito no nome do jogador e abrar opçao de transferir.
+
+- **Menu de Contexto Flutuante (`#player-context-menu`)**:
+  - Acionamento direto pelo clique com o botão direito do mouse (`contextmenu`) no nome ou na linha do jogador.
+  - Disponível nas principais telas e painéis:
+    - **Tabela do Elenco** (`#squad-table` / `#squad-tbody`): clique direito em qualquer atleta titular ou reserva abre imediatamente o menu.
+    - **Painel Lateral do Jogador** (`#player-profile-panel` / `#profile-name`): clique com o botão direito no nome ou na ficha do jogador inspecionado.
+    - **Botão Rápido no Painel Lateral** (`#profile-transfer-btn`): botão "Transferir / Negociar" para acesso também por clique convencional.
+    - **Tela de Táticas e Escalação** (`#lineup-tbody`): atalho direto para transferir reservas ou titulares.
+    - **Navegador de Clubes** (`#browser-roster-tbody`): clique com botão direito em atletas do próprio clube ou de clubes rivais.
+    - **Busca de Mercado** (`#market-tbody`) e **Elenco no Mercado** (`#market-squad-tbody`).
+- **Ações disponíveis conforme a titularidade e posse do passe**:
+  - **Jogadores do próprio clube**:
+    - 💼 **Transferir jogador...** (opção principal destacada): abre o modal oficial de venda (`#transfer-modal`) com valor sugerido de mercado, escolha do clube de destino e projeção de impacto orçamentário.
+    - 🔄 **Emprestar jogador...**: abre a negociação de empréstimo do atleta para outro clube até o fim da temporada.
+    - 📝 **Renovar contrato...**: abre o modal de extensão de vínculo e ajuste salarial (`#contract-modal`).
+    - ⚠️ **Rescindir contrato...**: abre o cálculo da multa rescisória e liberação imediata.
+  - **Jogadores de clubes rivais**:
+    - 💼 **Comprar / Transferir...**: faz proposta de contratação direta ao clube proprietário.
+    - 🔄 **Pedir por empréstimo...**: solicita a cessão temporária do atleta.
+- **Design e usabilidade**:
+  - Cabeçalho com o emblema da posição (G, L, Z, M, A com cores correspondentes), nome, estrelas, força, valor de passe e clube.
+  - Clamping inteligente de coordenadas para garantir que o menu nunca ultrapasse as bordas da tela.
+  - Fechamento automático ao clicar fora, ao pressionar tecla `Escape`, ao redimensionar a janela ou ao rolar a página.
+- **Testes automatizados**:
+  - Criado `scripts/test-player-context-menu.cjs` com 5 testes automatizados cobrindo abertura, renderização das opções para time próprio e rivais, disparo da transferência e fechamento.
+
 ## 22/10/2026 — Desempenho com a Diretoria, Confiança em Tempo Real e Sistema de Demissão
 
 Solicitação: colocar status do meu desempenho com a diretoria e caso muito baixa podemos ser demitidos.
