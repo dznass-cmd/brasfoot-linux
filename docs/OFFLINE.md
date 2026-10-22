@@ -25,7 +25,7 @@ python3 scripts/check-offline.py
 ./scripts/test-offline.sh
 ```
 
-O segundo comando compila um verificador usando a mesma criação de WebView do executável. Ele roda em um namespace sem interfaces IPv4 ou IPv6, com armazenamento e cache vazios, sem alterar a conexão do computador. Confere clubes, imagens, áudio, mercado, finanças, tabela, partida, substituição, tática, recarga, importação e exportação. Outro processo confirma a persistência do save após fechar e abrir novamente.
+O segundo comando compila um verificador usando a mesma criação de WebView do executável. Ele roda em um namespace sem interfaces IPv4 ou IPv6, com armazenamento e cache vazios, sem alterar a conexão do computador. Confere clubes, imagens, áudio, mercado, finanças, tabela, partida, substituição, tática, gráfico de análise e suas amostras, recarga, importação e exportação. Outro processo confirma a persistência do save e do histórico do gráfico após fechar e abrir novamente.
 
 As verificações não modificam os saves do jogador. Compilador C, Python, pkg-config e as bibliotecas de desenvolvimento são necessários para executar os testes; o jogo compilado não depende dessas ferramentas.
 

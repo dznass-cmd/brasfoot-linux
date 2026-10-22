@@ -80,6 +80,8 @@ const app = {
 
   showNewGame() {
     document.getElementById('options-modal').style.display = 'none';
+    const dismissalModal = document.getElementById('dismissal-modal');
+    if (dismissalModal) dismissalModal.style.display = 'none';
     document.getElementById('new-game-modal').style.display = 'flex';
   },
 
@@ -166,6 +168,11 @@ const app = {
       this.pendingJobOfferId = null;
       document.getElementById('profile-offer-confirmation').hidden = true;
       document.querySelector('#manager-job-offers button')?.focus();
+    });
+    document.getElementById('dismissal-restart-btn')?.addEventListener('click', () => {
+      const modal = document.getElementById('dismissal-modal');
+      if (modal) modal.style.display = 'none';
+      this.showNewGame();
     });
 
     // Save Game Button
@@ -265,6 +272,13 @@ const app = {
     document.getElementById('market-search-btn').addEventListener('click', () => {
       this.searchMarket();
     });
+    ['market-search-name', 'market-pos-filter', 'market-min-str', 'market-max-price', 'market-max-wage', 'market-max-age', 'market-contract-filter'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('change', () => this.searchMarket());
+        el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); this.searchMarket(); } });
+      }
+    });
     document.querySelectorAll('[data-market-view]').forEach(button => button.addEventListener('click', () => {
       this.marketView = button.dataset.marketView; this.renderMarket();
     }));
@@ -301,6 +315,10 @@ const app = {
     });
     document.getElementById('match-tactics-form').addEventListener('submit', e => { e.preventDefault(); this.applyLiveTactics(); });
     document.getElementById('confirm-match-sub-btn').addEventListener('click', () => this.confirmLiveSubstitution());
+    for (const id of ['match-analysis-metric', 'match-analysis-change']) {
+      document.getElementById(id).addEventListener('change', () => this.renderLiveTacticalAnalysis());
+    }
+    window.addEventListener('resize', () => { if (this.currentSimMatch) this.renderLiveTacticalAnalysis(); });
 
     document.querySelectorAll('.match-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -313,6 +331,7 @@ const app = {
         const view = btn.dataset.matchTab;
         const workspace = document.querySelector('.match-workspace');
         if (workspace) workspace.dataset.view = view;
+        this.renderLiveTacticalAnalysis();
       });
     });
 
@@ -327,6 +346,7 @@ const app = {
       this.currentView = 'squad-tab';
       this.refreshUI();
       this.showView('squad-tab');
+      this.checkManagerDismissal();
     });
   },
 
@@ -434,6 +454,8 @@ const app = {
     document.getElementById('match-modal').style.display = 'none';
     document.getElementById('transfer-modal').style.display = 'none';
     document.getElementById('contract-modal').style.display = 'none';
+    const dismissalModal = document.getElementById('dismissal-modal');
+    if (dismissalModal) dismissalModal.style.display = 'none';
     this.transferRequest = null;
     this.contractRequest = null;
     this.selectedPlayerIdx = null;
@@ -573,6 +595,23 @@ const app = {
     return player.positionDetailEstimated ? 'D' : player.position;
   },
 
+  playerHumor(player) {
+    const morale = Math.max(40, Math.min(110, Math.round(player?.morale ?? 100)));
+    if (morale >= 105) {
+      return { level: 'radiant', label: 'Radiante', emoji: '😄', value: morale, color: '#16a34a', desc: 'Em excelente fase e com moral nas alturas' };
+    }
+    if (morale >= 95) {
+      return { level: 'happy', label: 'Feliz', emoji: '😊', value: morale, color: '#22c55e', desc: 'Confiante e satisfeito com o momento' };
+    }
+    if (morale >= 80) {
+      return { level: 'neutral', label: 'Normal', emoji: '😐', value: morale, color: '#eab308', desc: 'Tranquilo e focado nos treinamentos' };
+    }
+    if (morale >= 65) {
+      return { level: 'unhappy', label: 'Descontente', emoji: '🙁', value: morale, color: '#f97316', desc: 'Insatisfeito com resultados ou poucos minutos' };
+    }
+    return { level: 'furious', label: 'Abatido', emoji: '😡', value: morale, color: '#ef4444', desc: 'Muito insatisfeito e com moral em baixa' };
+  },
+
   currentTeams() {
     const cached = this.teamDirectory;
     if (cached && cached.state === this.gameState && cached.source === this.allTeams) return cached.teams;
@@ -587,7 +626,7 @@ const app = {
     const ownedPlayers = new Set(careerTeams.flatMap(team => team.players.map(player => player.id)));
     for (const player of this.gameState?.freeAgents || []) ownedPlayers.add(player.id);
     const directory = [...teams.values()].map(team => careerIds.has(team.id) ? team
-      : { ...team, players: team.players.filter(player => !ownedPlayers.has(player.id)) });
+      : MarketEngine.prepareExternalClub(this.gameState, team));
     this.teamDirectory = { state: this.gameState, source: this.allTeams, teams: directory,
       byId: new Map(directory.map(team => [team.id, team])) };
     return directory;
@@ -725,7 +764,12 @@ const app = {
       row.setAttribute('aria-selected', String(p.id === this.clubBrowser.playerId));
       const status = SquadEngine.availabilityLabel(p);
       const traits = `${(p.cr1 || '—').slice(0, 3)}/${(p.cr2 || '—').slice(0, 3)}`;
-      row.innerHTML = `<td><img class="roster-shirt" src="assets/icons/player_shirt_${index < (team.starterCount ?? 11) ? 'green' : 'gray'}small.png" alt="${index < (team.starterCount ?? 11) ? 'Titular' : 'Reserva'}"></td><td>${this.escapeHTML(this.playerPositionCode(p))}</td><td>${this.escapeHTML(p.name)}${p.isStar ? ' ★' : ''}${status ? `<span class="browser-player-warning" title="${this.escapeHTML(status)}">!</span>` : ''}</td><td>${p.sideEstimated ? '—' : this.escapeHTML(p.side || 'C')}</td><td>${Number(p.strength) || 0}</td><td>${this.energyMarkup(p)}</td><td>${this.shortMoney(p.wage)}</td><td>${this.shortMoney(p.value)}</td><td>${Number(p.goals) || 0}</td><td title="${this.escapeHTML(`${p.cr1 || '—'} / ${p.cr2 || '—'}`)}">${this.escapeHTML(traits)}</td><td>${this.playerAgeLabel(p)}</td><td>${Number(p.yellowCards) || 0}</td><td>${Number(p.redCards) || 0}</td>`;
+      const starBadge = p.isTopWorld ? ' ⭐' : p.isStar ? ' ★' : '';
+      const posBadge = `<span class="pos-badge pos-${p.position}">${this.escapeHTML(this.playerPositionCode(p))}</span>`;
+      const humor = this.playerHumor(p);
+      const humorBadge = `<span class="player-humor-badge" title="Humor: ${humor.label} (${humor.value}) — ${humor.desc}">${humor.emoji}</span>`;
+      row.title = `${p.name} (${this.playerPositionCode(p)}) · Humor: ${humor.emoji} ${humor.label} (${humor.value}) — ${humor.desc}`;
+      row.innerHTML = `<td><img class="roster-shirt" src="assets/icons/player_shirt_${index < (team.starterCount ?? 11) ? 'green' : 'gray'}small.png" alt="${index < (team.starterCount ?? 11) ? 'Titular' : 'Reserva'}"></td><td>${posBadge}</td><td>${this.escapeHTML(p.name)}${starBadge} ${humorBadge}${status ? `<span class="browser-player-warning" title="${this.escapeHTML(status)}">!</span>` : ''}</td><td>${p.sideEstimated ? '—' : this.escapeHTML(p.side || 'C')}</td><td>${Number(p.strength) || 0}</td><td>${this.energyMarkup(p)}</td><td>${this.shortMoney(p.wage)}</td><td>${this.shortMoney(p.value)}</td><td>${Number(p.goals) || 0}</td><td title="${this.escapeHTML(`${p.cr1 || '—'} / ${p.cr2 || '—'}`)}">${this.escapeHTML(traits)}</td><td>${this.playerAgeLabel(p)}</td><td>${Number(p.yellowCards) || 0}</td><td>${Number(p.redCards) || 0}</td>`;
       const inspect = () => {
         this.clubBrowser.playerId = p.id;
         tbody.querySelectorAll('tr').forEach(tr => {
@@ -758,11 +802,15 @@ const app = {
     const positions = { G: 'Goleiro', L: 'Lateral', Z: 'Zagueiro', M: 'Meio-campista', A: 'Atacante' };
     const sides = { E: 'Esquerdo', D: 'Direito', C: 'Ambos' };
     const status = SquadEngine.availabilityLabel(player);
+    const humor = this.playerHumor(player);
+    const posCode = this.playerPositionCode(player);
+    const posBadge = `<span class="pos-badge pos-${player.position}">${this.escapeHTML(posCode)}</span>`;
     const stats = [['Idade', this.playerAgeLabel(player, true)], ['Lado', player.sideEstimated ? 'Não informado' : sides[player.side] || player.side || 'Ambos'], ['Passe', `R$ ${(Number(player.value) || 0).toLocaleString('pt-BR')}`], ['Salário', `R$ ${(Number(player.wage) || 0).toLocaleString('pt-BR')}`], ['Jogos', player.matchesPlayed || 0], ['Gols', player.goals || 0], ['Assistências', player.assists || 0]];
-    stats.push(['Moral', Math.round(player.morale ?? 100)], ['Amarelos no ciclo', `${player.yellowCardCycle ?? (player.yellowCards || 0) % 3}/3`]);
+    stats.push(['Humor', `${humor.emoji} ${humor.label} (${humor.value})`], ['Amarelos no ciclo', `${player.yellowCardCycle ?? (player.yellowCards || 0) % 3}/3`]);
     if (player.sourceProvider) stats.push(['Camisa', player.jerseyNumber || '—'], ['Nacionalidade', player.nationality || '—']);
     if (player.generated) stats.push(['Origem', 'Atleta fictício formado na base do clube']);
-    detail.innerHTML = `<div class="browser-player-title"><strong>${this.escapeHTML(player.name)}${player.isStar ? ' ★' : ''}</strong><span>${this.escapeHTML(player.positionDetailEstimated ? 'Defensor' : positions[player.position] || player.position)} · ${SquadEngine.starters(team).includes(player) ? 'Titular' : 'Reserva'}</span><strong>Força ${Number(player.strength) || 0}</strong></div><p class="browser-player-traits">${this.escapeHTML(player.cr1 || '—')} / ${this.escapeHTML(player.cr2 || '—')}${status ? `<span class="browser-player-health">${this.escapeHTML(status)}</span>` : ''}</p><dl>${stats.map(([label, value]) => `<div><dt>${label}</dt><dd>${this.escapeHTML(value)}</dd></div>`).join('')}</dl>`;
+    const starBadge = player.isTopWorld ? ' ⭐' : player.isStar ? ' ★' : '';
+    detail.innerHTML = `<div class="browser-player-title"><strong>${this.escapeHTML(player.name)}${starBadge}</strong><span>${posBadge} ${this.escapeHTML(player.positionDetailEstimated ? 'Defensor' : positions[player.position] || player.position)} · ${SquadEngine.starters(team).includes(player) ? 'Titular' : 'Reserva'}</span><strong>Força ${Number(player.strength) || 0}</strong></div><p class="browser-player-traits">${this.escapeHTML(player.cr1 || '—')} / ${this.escapeHTML(player.cr2 || '—')}${status ? `<span class="browser-player-health">${this.escapeHTML(status)}</span>` : ''}</p><dl>${stats.map(([label, value]) => `<div><dt>${label}</dt><dd>${this.escapeHTML(value)}</dd></div>`).join('')}</dl>`;
   },
 
   renderClubSidebar() {
@@ -789,6 +837,31 @@ const app = {
     this.setImage('club-kit-1', this.assetPath('camisas', team.shirt, 'camisat40.png'), 'assets/icons/camisat40.png');
     this.setImage('club-kit-2', this.assetPath('camisas2', team.shirt, 'camisar40.png'), 'assets/icons/camisar40.png');
     document.querySelector(`input[name="club-kit"][value="${team.selectedKit === 2 ? 2 : 1}"]`).checked = true;
+
+    const boardEval = typeof BoardEngine !== 'undefined' ? BoardEngine.evaluate(this.gameState) : (CareerEngine?.boardConfidence ? CareerEngine.boardConfidence(this.gameState) : null);
+    if (boardEval) {
+      const panel = document.getElementById('board-confidence-panel');
+      const statusEl = document.getElementById('board-confidence-status');
+      const fillEl = document.getElementById('board-confidence-fill');
+      const targetEl = document.getElementById('board-target-label');
+      const pctEl = document.getElementById('board-confidence-pct');
+
+      if (panel) panel.classList.toggle('threatened', Boolean(boardEval.threatened));
+      if (statusEl) {
+        statusEl.textContent = boardEval.label;
+        statusEl.style.color = boardEval.color;
+      }
+      if (fillEl) {
+        fillEl.style.width = `${boardEval.score}%`;
+        fillEl.style.backgroundColor = boardEval.color;
+      }
+      if (targetEl) {
+        targetEl.textContent = `Meta: ${boardEval.target?.label || 'A definir'}`;
+      }
+      if (pctEl) {
+        pctEl.textContent = `${boardEval.score}%`;
+      }
+    }
   },
 
   setImage(id, src, fallback) {
@@ -802,19 +875,53 @@ const app = {
     if (!p) return;
     const positions = { G: 'Goleiro', Z: 'Zagueiro', L: 'Lateral', M: 'Meio-campista', A: 'Atacante' };
     const side = { E: 'Esquerdo', D: 'Direito', C: 'Ambos' };
+    const starBadge = p.isTopWorld ? ' ⭐' : p.isStar ? ' ★' : '';
+    const humor = this.playerHumor(p);
+    const posCode = this.playerPositionCode(p);
+    const posName = p.positionDetailEstimated ? 'Defensor' : positions[p.position] || p.position;
+    const isStarter = SquadEngine.starters(this.gameState.userTeam).includes(p);
     const values = {
-      'profile-name': p.name, 'profile-strength': `F: ${p.strength}`,
-      'profile-position': `${p.positionDetailEstimated ? 'Defensor' : positions[p.position] || p.position} · ${SquadEngine.starters(this.gameState.userTeam).includes(p) ? 'Titular' : 'Reserva'}`,
+      'profile-name': `${p.name}${starBadge}`, 'profile-strength': `F: ${p.strength}`,
       'profile-characteristics': `${p.cr1 || '—'} / ${p.cr2 || '—'}`,
       'profile-value': `R$ ${(p.value || 0).toLocaleString('pt-BR')}`, 'profile-wage': `R$ ${(p.wage || 0).toLocaleString('pt-BR')}`,
       'profile-age': this.playerAgeLabel(p, true), 'profile-side': p.sideEstimated ? 'Não informado' : side[p.side] || p.side || '—',
       'profile-matches': p.matchesPlayed || 0, 'profile-goals': p.goals || 0, 'profile-assists': p.assists || 0,
-      'profile-availability': `${SquadEngine.availabilityLabel(p) || 'Disponível'} · Moral ${Math.round(p.morale ?? 100)} · Amarelos no ciclo: ${p.yellowCardCycle ?? (p.yellowCards || 0) % 3}/3`,
-      'roster-selection-status': `${p.name} · ${p.positionDetailEstimated ? 'Defensor' : positions[p.position] || p.position} · ${this.playerAgeLabel(p, true)}`
+      'profile-availability': `${SquadEngine.availabilityLabel(p) || 'Disponível'} · Amarelos no ciclo: ${p.yellowCardCycle ?? (p.yellowCards || 0) % 3}/3`,
+      'profile-humor-title': `Humor: ${humor.label}`,
+      'profile-humor-desc': humor.desc,
+      'profile-humor-val': `${humor.value}`,
+      'profile-morale-detail': `${humor.emoji} ${humor.label} (${humor.value})`,
+      'roster-selection-status': `${p.name} · ${posName} · Humor: ${humor.emoji} ${humor.label} (${humor.value}) · ${this.playerAgeLabel(p, true)}`
     };
-    Object.entries(values).forEach(([id, value]) => { document.getElementById(id).textContent = value; });
-    document.getElementById('profile-availability').classList.toggle('unavailable', !SquadEngine.isAvailable(p));
-    if (p.generated) document.getElementById('profile-position').textContent += ' · Atleta fictício da base';
+    Object.entries(values).forEach(([id, value]) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    });
+
+    const posEl = document.getElementById('profile-position');
+    if (posEl) {
+      posEl.innerHTML = `<span class="pos-badge pos-${p.position}">${posCode}</span> ${posName} · ${isStarter ? 'Titular' : 'Reserva'}${p.generated ? ' · Atleta da base' : ''}`;
+    }
+
+    const emojiEl = document.getElementById('profile-humor-emoji');
+    if (emojiEl) emojiEl.textContent = humor.emoji;
+
+    const fillEl = document.getElementById('profile-humor-fill');
+    if (fillEl) {
+      fillEl.style.width = `${Math.max(5, Math.min(100, Math.round(((humor.value - 40) / 70) * 100)))}%`;
+      fillEl.style.background = humor.color;
+    }
+
+    const cardEl = document.getElementById('profile-humor-card');
+    if (cardEl) {
+      cardEl.className = `profile-humor-card humor-${humor.level}`;
+      cardEl.classList.remove('pulse-highlight');
+      void cardEl.offsetWidth;
+      cardEl.classList.add('pulse-highlight');
+    }
+
+    const availEl = document.getElementById('profile-availability');
+    if (availEl) availEl.classList.toggle('unavailable', !SquadEngine.isAvailable(p));
   },
 
   openEditor() {
@@ -866,32 +973,65 @@ const app = {
     const rank = { G: 0, L: 1, Z: 2, M: 3, A: 4 };
     const starterCount = this.gameState.userTeam.starterCount ?? 11;
     const players = (this.gameState.userTeam.players || []).map((p, idx) => ({ p, idx }));
-    players.sort((a, b) => (rank[a.p.position] ?? 5) - (rank[b.p.position] ?? 5));
+    players.sort((a, b) => {
+      const isStarterA = a.idx < starterCount ? 0 : 1;
+      const isStarterB = b.idx < starterCount ? 0 : 1;
+      if (isStarterA !== isStarterB) return isStarterA - isStarterB;
+      const posA = rank[a.p.position] ?? 5;
+      const posB = rank[b.p.position] ?? 5;
+      if (posA !== posB) return posA - posB;
+      return (b.p.strength ?? 0) - (a.p.strength ?? 0);
+    });
+    let renderedReservesHeaderTbody = false;
+    let renderedReservesHeaderLineup = false;
     for (const { p, idx } of players) {
+      const isReserva = idx >= starterCount;
       const shirt = `<img class="roster-shirt" src="assets/icons/player_shirt_${idx < starterCount ? 'green' : 'gray'}small.png" alt="${idx < starterCount ? 'Titular' : 'Reserva'}">`;
       const traits = `${(p.cr1 || '-').slice(0, 3)}/${(p.cr2 || '-').slice(0, 3)}`;
       const fullTraits = this.escapeHTML(`${p.cr1 || '-'} / ${p.cr2 || '-'}`);
       const availability = SquadEngine.availabilityLabel(p);
       const name = this.escapeHTML(p.name) + (availability ? `<span class="availability-badge" title="${this.escapeHTML(availability)}">${p.injuredWeeks > 0 || p.pendingInjuryWeeks > 0 ? 'Lesão' : 'Suspenso'}</span>` : '');
+      const starBadge = p.isTopWorld ? ' ⭐' : p.isStar ? ' ★' : '';
+      const humor = this.playerHumor(p);
+      const humorBadge = `<span class="player-humor-badge" title="Humor: ${humor.label} (${humor.value}) — ${humor.desc}">${humor.emoji}</span>`;
+      const posBadge = `<span class="pos-badge pos-${p.position}">${this.playerPositionCode(p)}</span>`;
+      const rowTitle = `${p.name} (${this.playerPositionCode(p)}) · Humor: ${humor.emoji} ${humor.label} (${humor.value}) — ${humor.desc}`;
+
       if (tbody) {
+        if (isReserva && !renderedReservesHeaderTbody) {
+          renderedReservesHeaderTbody = true;
+          const sepTr = document.createElement('tr');
+          sepTr.className = 'roster-separator-row';
+          sepTr.innerHTML = '<td colspan="13"><span class="roster-separator-label"><img class="roster-shirt" src="assets/icons/player_shirt_graysmall.png" alt=""> RESERVAS</span></td>';
+          tbody.appendChild(sepTr);
+        }
         const tr = document.createElement('tr');
         tr.className = this.inspectedPlayerIdx === idx ? 'profile-selected' : '';
         tr.classList.toggle('roster-unavailable', Boolean(availability));
         tr.tabIndex = 0;
+        tr.title = rowTitle;
         tr.setAttribute('aria-selected', String(this.inspectedPlayerIdx === idx));
-        tr.innerHTML = `<td>${shirt}</td><td>${this.playerPositionCode(p)}</td><td>${name}${p.isStar ? ' ★' : ''}</td><td>${p.sideEstimated ? '—' : p.side || 'C'}</td><td>${p.strength}</td><td>${this.energyMarkup(p)}</td><td>${this.shortMoney(p.wage)}</td><td>${this.shortMoney(p.value)}</td><td>${p.goals || 0}</td><td title="${fullTraits}">${this.escapeHTML(traits)}</td><td class="player-age">${this.playerAgeLabel(p)}</td><td>${p.yellowCards || 0}</td><td>${p.redCards || 0}</td>`;
+        tr.innerHTML = `<td>${shirt}</td><td>${posBadge}</td><td>${name}${starBadge} ${humorBadge}</td><td>${p.sideEstimated ? '—' : p.side || 'C'}</td><td>${p.strength}</td><td>${this.energyMarkup(p)}</td><td>${this.shortMoney(p.wage)}</td><td>${this.shortMoney(p.value)}</td><td>${p.goals || 0}</td><td title="${fullTraits}">${this.escapeHTML(traits)}</td><td class="player-age">${this.playerAgeLabel(p)}</td><td>${p.yellowCards || 0}</td><td>${p.redCards || 0}</td>`;
         const inspect = () => { this.inspectedPlayerIdx = idx; this.renderSquad(); };
         tr.addEventListener('click', inspect);
         tr.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); inspect(); } });
         tbody.appendChild(tr);
       }
       if (lineupBody) {
+        if (isReserva && !renderedReservesHeaderLineup) {
+          renderedReservesHeaderLineup = true;
+          const sepLineup = document.createElement('tr');
+          sepLineup.className = 'roster-separator-row';
+          sepLineup.innerHTML = '<td colspan="7"><span class="roster-separator-label"><img class="roster-shirt" src="assets/icons/player_shirt_graysmall.png" alt=""> RESERVAS</span></td>';
+          lineupBody.appendChild(sepLineup);
+        }
         const lineupRow = document.createElement('tr');
         lineupRow.className = this.selectedPlayerIdx === idx ? 'squad-selected' : '';
         lineupRow.classList.toggle('roster-unavailable', Boolean(availability));
         lineupRow.tabIndex = 0;
+        lineupRow.title = rowTitle;
         lineupRow.setAttribute('aria-selected', String(this.selectedPlayerIdx === idx));
-        lineupRow.innerHTML = `<td>${shirt}</td><td>${this.playerPositionCode(p)}</td><td>${name}</td><td>${p.strength}</td><td>${this.energyMarkup(p)}</td><td>${p.sideEstimated ? '—' : p.side || 'C'}</td><td title="${fullTraits}">${this.escapeHTML(traits)}</td>`;
+        lineupRow.innerHTML = `<td>${shirt}</td><td>${posBadge}</td><td>${name}${starBadge} ${humorBadge}</td><td>${p.strength}</td><td>${this.energyMarkup(p)}</td><td>${p.sideEstimated ? '—' : p.side || 'C'}</td><td title="${fullTraits}">${this.escapeHTML(traits)}</td>`;
         lineupRow.addEventListener('click', () => this.handleSquadRowClick(idx));
         lineupRow.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); this.handleSquadRowClick(idx); } });
         lineupBody.appendChild(lineupRow);
@@ -900,7 +1040,8 @@ const app = {
     this.renderPlayerProfile();
     const selected = this.gameState.userTeam.players[this.selectedPlayerIdx];
     const unavailable = SquadEngine.starters(this.gameState.userTeam).filter(p => !SquadEngine.isAvailable(p));
-    document.getElementById('lineup-help').textContent = selected ? `${selected.name} selecionado. ${SquadEngine.availabilityLabel(selected) || 'Escolha outro jogador para trocar.'}`
+    const selHumor = selected ? this.playerHumor(selected) : null;
+    document.getElementById('lineup-help').textContent = selected ? `${selected.name} (${selHumor.emoji} Humor: ${selHumor.label} · ${selHumor.value}) selecionado. ${SquadEngine.availabilityLabel(selected) || 'Escolha outro jogador para trocar.'}`
       : unavailable.length ? `${unavailable.length} titular(es) indisponível(is). Troque-os ou use Escalar melhores.`
       : 'Selecione dois jogadores para trocar. Jogadores improvisados perdem rendimento.';
   },
@@ -1079,17 +1220,18 @@ const app = {
       const { p, idx } = entry;
       const slot = assignments[p.id];
       const fit = SquadEngine.positionFit(p, slot);
+      const humor = this.playerHumor(p);
       const el = document.createElement('button');
       el.type = 'button';
       el.className = 'pitch-player' + (this.selectedPlayerIdx === idx ? ' squad-selected' : '');
       el.classList.toggle('improvised', fit < .90);
-      el.title = `${p.name} · ${coord.pos} · Adaptação ${Math.round(fit * 100)}%${SquadEngine.availabilityLabel(p) ? ' · ' + SquadEngine.availabilityLabel(p) : ''}`;
+      el.title = `${p.name} · ${coord.pos} · Humor: ${humor.emoji} ${humor.label} (${humor.value}) · Adaptação ${Math.round(fit * 100)}%${SquadEngine.availabilityLabel(p) ? ' · ' + SquadEngine.availabilityLabel(p) : ''}`;
       el.style.left = `${coord.x}%`;
       el.style.top = `${coord.y}%`;
       el.setAttribute('aria-label', `${p.name}, ${p.position}, energia ${Math.round(p.energy ?? 100)}%`);
       el.setAttribute('aria-pressed', String(this.selectedPlayerIdx === idx));
       const shirt = p.position === 'G' ? 'assets/icons/camisag40.png' : this.assetPath(kit, team.shirt, 'camisat40.png');
-      el.innerHTML = `<img class="player-shirt" src="${shirt}" alt="" onerror="this.onerror=null;this.src='assets/icons/camisat40.png'"><span class="player-name-tag">${this.escapeHTML(p.name.length > 16 ? p.name.slice(0, 14) + '…' : p.name)}<span>${this.escapeHTML(coord.pos)}${fit < .90 ? ' !' : ''} (${Math.round(p.energy ?? 100)}%)</span></span>`;
+      el.innerHTML = `<img class="player-shirt" src="${shirt}" alt="" onerror="this.onerror=null;this.src='assets/icons/camisat40.png'"><span class="player-name-tag">${this.escapeHTML(p.name.length > 16 ? p.name.slice(0, 14) + '…' : p.name)}<span><span class="pos-badge pos-${p.position}">${this.escapeHTML(coord.pos)}</span>${fit < .90 ? ' !' : ''} (${Math.round(p.energy ?? 100)}%)</span></span>`;
       el.addEventListener('click', () => this.handleSquadRowClick(idx));
       pitch.appendChild(el);
     });
@@ -1098,11 +1240,13 @@ const app = {
     const starterCount = team.starterCount ?? 11;
     (team.players || []).slice(starterCount, starterCount + 7).forEach((p, offset) => {
       const idx = offset + starterCount;
+      const humor = this.playerHumor(p);
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'reserve-player' + (this.selectedPlayerIdx === idx ? ' squad-selected' : '');
       button.setAttribute('aria-pressed', String(this.selectedPlayerIdx === idx));
-      button.innerHTML = `<img src="assets/icons/camisar40.png" alt=""><span>${this.escapeHTML(p.name.length > 14 ? p.name.slice(0, 12) + '…' : p.name)}</span><span>${p.position} (${Math.round(p.energy ?? 100)}%)</span>`;
+      button.title = `${p.name} (${p.position}) · Humor: ${humor.emoji} ${humor.label} (${humor.value}) — ${humor.desc}`;
+      button.innerHTML = `<img src="assets/icons/camisar40.png" alt=""><span>${this.escapeHTML(p.name.length > 14 ? p.name.slice(0, 12) + '…' : p.name)}</span><span><span class="pos-badge pos-${p.position}">${p.position}</span> (${Math.round(p.energy ?? 100)}%)</span>`;
       button.addEventListener('click', () => this.handleSquadRowClick(idx));
       bench.appendChild(button);
     });
@@ -1362,14 +1506,23 @@ const app = {
   },
 
   searchMarket() {
-    const name = document.getElementById('market-search-name').value;
-    const position = document.getElementById('market-pos-filter').value;
-    const minStrength = Number(document.getElementById('market-min-str').value) || 0;
+    const name = document.getElementById('market-search-name')?.value || '';
+    const position = document.getElementById('market-pos-filter')?.value || 'TODOS';
+    const minStrength = Number(document.getElementById('market-min-str')?.value) || 0;
+    const maxPrice = Number(document.getElementById('market-max-price')?.value) || Infinity;
+    const maxWage = Number(document.getElementById('market-max-wage')?.value) || Infinity;
+    const maxAge = Number(document.getElementById('market-max-age')?.value) || Infinity;
+    const contractStatus = document.getElementById('market-contract-filter')?.value || 'all';
 
     const results = MarketEngine.searchPlayers(this.currentTeams(), {
       name,
       position,
-      minStrength
+      minStrength,
+      maxPrice,
+      maxWage,
+      maxAge,
+      contractStatus,
+      currentYear: this.gameState.seasonYear
     }, this.gameState.userTeam.id);
 
     const tbody = document.getElementById('market-tbody');
@@ -1384,7 +1537,7 @@ const app = {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><span class="pos-badge pos-${p.position}">${this.playerPositionCode(p)}</span></td>
-        <td><strong>${this.escapeHTML(p.name)}</strong> ${p.isStar ? '⭐' : ''}</td>
+        <td><strong>${this.escapeHTML(p.name)}</strong> ${p.isTopWorld ? '⭐' : p.isStar ? '★' : ''}</td>
         <td>${this.playerAgeLabel(p)}</td>
         <td><strong>${p.strength}</strong></td>
         <td>${this.escapeHTML(p.cr1 || '-')}</td>
@@ -1424,7 +1577,7 @@ const app = {
     if (['contracts', 'freeAgents'].includes(this.marketView)) { this.renderContracts(); return; }
     if (this.marketView === 'search') this.searchMarket();
     const squad = document.getElementById('market-squad-tbody');
-    squad.innerHTML = state.userTeam.players.map(player => `<tr><td>${escape(player.name)}${player.loan ? ' · Emprestado' : ''}</td><td>${escape(this.playerPositionCode(player))}</td><td>${player.matchesPlayed || 0}</td><td>${player.goals || 0}</td><td>${player.assists || 0}</td><td>${this.ratingLabel(PerformanceEngine.average(player))}</td><td>${this.shortMoney(player.value)}</td><td>${player.loan ? `Retorno em ${player.loan.endYear}` : `<button class="btn btn-small" data-sell-player="${escape(player.id)}">Vender</button> <button class="btn btn-small" data-loan-player="${escape(player.id)}">Emprestar</button>`}</td></tr>`).join('');
+    squad.innerHTML = state.userTeam.players.map(player => `<tr><td>${escape(player.name)}${player.loan ? ' · Emprestado' : ''}</td><td><span class="pos-badge pos-${player.position}">${escape(this.playerPositionCode(player))}</span></td><td>${player.matchesPlayed || 0}</td><td>${player.goals || 0}</td><td>${player.assists || 0}</td><td>${this.ratingLabel(PerformanceEngine.average(player))}</td><td>${this.shortMoney(player.value)}</td><td>${player.loan ? `Retorno em ${player.loan.endYear}` : `<button class="btn btn-small" data-sell-player="${escape(player.id)}">Vender</button> <button class="btn btn-small" data-loan-player="${escape(player.id)}">Emprestar</button>`}</td></tr>`).join('');
     squad.querySelectorAll('[data-sell-player]').forEach(button => button.addEventListener('click', () => this.openTransfer('sell', button.dataset.sellPlayer)));
     squad.querySelectorAll('[data-loan-player]').forEach(button => button.addEventListener('click', () => this.openTransfer('loan-out', button.dataset.loanPlayer)));
     const offers = document.getElementById('market-incoming-offers');
@@ -1449,12 +1602,12 @@ const app = {
     document.getElementById('market-contract-summary').textContent = `${owned.length} contratos do clube · ${expiring.length} vencem ao fim de ${state.seasonYear}. Atletas recebidos por empréstimo têm contrato com o clube de origem.`;
     document.getElementById('market-contracts-tbody').innerHTML = owned.map(({ player, club }) => {
       const signed = player.contract.renewedYear === Number(state.seasonYear), expires = player.contract.endYear <= Number(state.seasonYear);
-      return `<tr${expires ? ' class="contract-expiring"' : ''}><td>${escape(player.name)}</td><td>${escape(this.playerPositionCode(player))}</td><td>${Number(player.contract.endYear)}</td><td>${escape(this.financeMoney(player.contract.wage))}</td><td>${player.loan ? `Cedido ao ${escape(club.name)}` : expires ? 'Vence nesta temporada' : signed ? 'Assinado neste ano' : 'Em vigor'}</td><td><button class="btn btn-small" data-renew-contract="${escape(player.id)}" ${signed || state.activeMatch ? 'disabled' : ''}>Renovar</button> <button class="btn btn-small" data-release-contract="${escape(player.id)}" ${player.loan || state.activeMatch ? 'disabled' : ''}>Rescindir</button></td></tr>`;
+      return `<tr${expires ? ' class="contract-expiring"' : ''}><td>${escape(player.name)}</td><td><span class="pos-badge pos-${player.position}">${escape(this.playerPositionCode(player))}</span></td><td>${Number(player.contract.endYear)}</td><td>${escape(this.financeMoney(player.contract.wage))}</td><td>${player.loan ? `Cedido ao ${escape(club.name)}` : expires ? 'Vence nesta temporada' : signed ? 'Assinado neste ano' : 'Em vigor'}</td><td><button class="btn btn-small" data-renew-contract="${escape(player.id)}" ${signed || state.activeMatch ? 'disabled' : ''}>Renovar</button> <button class="btn btn-small" data-release-contract="${escape(player.id)}" ${player.loan || state.activeMatch ? 'disabled' : ''}>Rescindir</button></td></tr>`;
     }).join('') || '<tr><td colspan="6">Nenhum contrato próprio.</td></tr>';
     document.getElementById('market-contracts-tbody').querySelectorAll('[data-renew-contract]').forEach(button => button.addEventListener('click', () => this.openContract('renew', button.dataset.renewContract)));
     document.getElementById('market-contracts-tbody').querySelectorAll('[data-release-contract]').forEach(button => button.addEventListener('click', () => this.openContract('release', button.dataset.releaseContract)));
     const agents = [...state.freeAgents].sort((a, b) => b.strength - a.strength || a.name.localeCompare(b.name, 'pt-BR'));
-    document.getElementById('market-free-agents-tbody').innerHTML = agents.map(player => `<tr><td>${escape(player.name)}</td><td>${escape(this.playerPositionCode(player))}</td><td>${this.playerAgeLabel(player)}</td><td>${Number(player.strength)}</td><td>${escape(player.lastClubName || '—')}</td><td>${escape(this.financeMoney(ContractsEngine.quote(player, 'sign').wage))}</td><td><button class="btn btn-small" data-sign-contract="${escape(player.id)}" ${state.activeMatch ? 'disabled' : ''}>Negociar</button></td></tr>`).join('') || '<tr><td colspan="7">Nenhum atleta sem clube. A lista recebe jogadores liberados durante a carreira.</td></tr>';
+    document.getElementById('market-free-agents-tbody').innerHTML = agents.map(player => `<tr><td>${escape(player.name)}</td><td><span class="pos-badge pos-${player.position}">${escape(this.playerPositionCode(player))}</span></td><td>${this.playerAgeLabel(player)}</td><td>${Number(player.strength)}</td><td>${escape(player.lastClubName || '—')}</td><td>${escape(this.financeMoney(ContractsEngine.quote(player, 'sign').wage))}</td><td><button class="btn btn-small" data-sign-contract="${escape(player.id)}" ${state.activeMatch ? 'disabled' : ''}>Negociar</button></td></tr>`).join('') || '<tr><td colspan="7">Nenhum atleta sem clube. A lista recebe jogadores liberados durante a carreira.</td></tr>';
     document.getElementById('market-free-agents-tbody').querySelectorAll('[data-sign-contract]').forEach(button => button.addEventListener('click', () => this.openContract('sign', button.dataset.signContract)));
   },
 
@@ -1516,6 +1669,8 @@ const app = {
     const offer = type === 'accept' ? MarketEngine.ensureState(this.gameState).offers.find(entry => entry.id === offerId && entry.status === 'pending') : null;
     if (type === 'accept' && !offer) return this.showToast('Esta proposta não está mais disponível.');
     const outgoing = ['sell', 'loan-out', 'accept'].includes(type), loan = offer ? offer.type === 'loan' : type.startsWith('loan');
+    const remainingRounds = Math.max(0, (this.gameState.totalRounds || 38) - (this.gameState.currentRound || 1) + 1);
+    if (loan && remainingRounds === 0) return this.showToast('Não é possível realizar empréstimos após o término dos jogos da temporada.');
     const source = outgoing ? this.gameState.userTeam : this.findTeam(clubId);
     const player = source?.players.find(entry => String(entry.id) === String(offer?.playerId ?? playerId));
     if (!player) return this.showToast('Jogador não encontrado.');
@@ -1531,7 +1686,7 @@ const app = {
     if (offer) select.value = offer.clubId;
     document.getElementById('transfer-club-label').hidden = !outgoing || Boolean(offer);
     const amount = document.getElementById('transfer-amount');
-    amount.value = offer ? offer.amount : MarketEngine.quote(player, loan); amount.readOnly = Boolean(offer);
+    amount.value = offer ? offer.amount : MarketEngine.quote(player, loan, this.gameState); amount.readOnly = Boolean(offer);
     const contractFields = document.getElementById('transfer-contract-fields');
     contractFields.hidden = outgoing || loan; contractFields.disabled = outgoing || loan;
     if (!outgoing && !loan) {
@@ -1548,12 +1703,101 @@ const app = {
     const request = this.transferRequest; if (!request) return;
     const clubId = request.type === 'accept' || !request.outgoing ? request.clubId : Number(document.getElementById('transfer-club').value);
     const club = this.findTeam(clubId);
-    document.getElementById('transfer-terms').textContent = `${request.outgoing ? 'Destino' : 'Origem'}: ${club?.name || 'Escolha um clube'}. ${request.loan ? `Empréstimo até o fim de ${this.gameState.seasonYear}, com retorno automático. Quem recebe paga o salário integral.` : 'Transferência definitiva do passe.'} ${request.outgoing ? 'O valor será creditado ao seu clube.' : 'O valor será descontado do caixa do seu clube.'}`;
-    if (!request.outgoing) {
-      const budget = EconomyEngine.budget(this.gameState), fee = Number(document.getElementById('transfer-amount').value) || 0;
-      const bonus = request.loan ? 0 : Number(document.getElementById('transfer-contract-bonus').value) || 0;
-      document.getElementById('transfer-terms').textContent += ` Pagamento imediato: ${this.financeMoney(fee + bonus)}. Orçamento disponível: ${this.financeMoney(budget.available)}; espaço na folha: ${this.financeMoney(budget.wageRoom)} por rodada.`;
-      if (!request.loan) document.getElementById('transfer-terms').textContent += ` Vínculo até ${Number(this.gameState.seasonYear) + Number(document.getElementById('transfer-contract-years').value) - 1}; salário ${this.financeMoney(Number(document.getElementById('transfer-contract-wage').value))} por rodada.`;
+    const source = request.outgoing ? this.gameState.userTeam : club;
+    const player = source?.players.find(entry => String(entry.id) === String(request.playerId));
+    const fee = Number(document.getElementById('transfer-amount').value) || 0;
+    const bonus = request.outgoing || request.loan ? 0 : (Number(document.getElementById('transfer-contract-bonus')?.value) || 0);
+    const years = request.outgoing || request.loan ? 1 : (Number(document.getElementById('transfer-contract-years')?.value) || 3);
+    const wage = request.outgoing ? 0 : (request.loan ? (Number(player?.wage) || 5000) : (Number(document.getElementById('transfer-contract-wage')?.value) || 5000));
+    const remainingRounds = Math.max(0, (this.gameState.totalRounds || 38) - (this.gameState.currentRound || 1) + 1);
+    const endYear = request.loan ? this.gameState.seasonYear : Number(this.gameState.seasonYear) + years - 1;
+
+    // Financial positions
+    const userBalance = Number(this.gameState.userTeam.balance) || 0;
+    const budget = EconomyEngine.budget(this.gameState, this.gameState.userTeam);
+    const immediateCashChange = request.outgoing ? fee : -(fee + bonus);
+    const projectedBalance = userBalance + immediateCashChange;
+    const wageDelta = request.outgoing ? (request.loan ? -(player?.wage || 0) : -(player?.contract?.wage || player?.wage || 0)) : (request.loan ? (player?.wage || 5000) : wage);
+    const projectedWages = Math.max(0, budget.committedWages + wageDelta);
+    const projectedAvailable = request.outgoing ? budget.available + fee : Math.max(0, budget.available - (fee + bonus));
+
+    // Description text
+    const termsEl = document.getElementById('transfer-terms');
+    if (termsEl) {
+      termsEl.textContent = `${request.outgoing ? 'Destino' : 'Origem'}: ${club?.name || 'Escolha um clube'}. ` +
+        (request.loan
+          ? `Empréstimo até o fim de ${this.gameState.seasonYear} (${remainingRounds} jogos restantes). Quem recebe o atleta arca com o salário integral.`
+          : `Transferência definitiva do passe com vínculo até ${endYear}. ${request.outgoing ? 'O valor acordado será creditado em seu caixa.' : 'O valor do passe será debitado do caixa.'}`);
+    }
+
+    // Comprehensive financial summary
+    const summaryEl = document.getElementById('transfer-summary-box');
+    if (summaryEl) {
+      summaryEl.innerHTML = `
+        <h4>Resumo Financeiro da Operação</h4>
+        <div class="transfer-summary-grid">
+          <div class="transfer-summary-item">
+            <span>${request.loan ? 'Taxa de empréstimo:' : 'Valor do passe:'}</span>
+            <strong>${this.financeMoney(fee)}</strong>
+          </div>
+          ${!request.outgoing && !request.loan ? `
+          <div class="transfer-summary-item">
+            <span>Luvas à vista:</span>
+            <strong>${this.financeMoney(bonus)}</strong>
+          </div>` : ''}
+          <div class="transfer-summary-item">
+            <span>${request.outgoing ? 'Recebimento imediato:' : 'Desembolso à vista:'}</span>
+            <strong>${this.financeMoney(Math.abs(immediateCashChange))}</strong>
+          </div>
+          <div class="transfer-summary-item">
+            <span>Salário do atleta:</span>
+            <strong>${request.outgoing ? 'Assumido pelo comprador' : `${this.financeMoney(wage)} / rodada`}</strong>
+          </div>
+          <div class="transfer-summary-item">
+            <span>Vigência do acordo:</span>
+            <strong>${request.loan ? `${remainingRounds} jogos (até dez/${this.gameState.seasonYear})` : `${years} temporada(s) (até ${endYear})`}</strong>
+          </div>
+          <div class="transfer-summary-item">
+            <span>Caixa projetado:</span>
+            <strong class="${projectedBalance < 0 ? 'text-danger' : ''}">${this.financeMoney(projectedBalance)}</strong>
+          </div>
+          <div class="transfer-summary-item">
+            <span>Folha salarial / Teto:</span>
+            <strong class="${projectedWages > budget.wageLimit ? 'text-danger' : ''}">${this.financeMoney(projectedWages)} / ${this.financeMoney(budget.wageLimit)}</strong>
+          </div>
+          <div class="transfer-summary-item">
+            <span>Verba diretoria restante:</span>
+            <strong class="${!request.outgoing && fee + bonus > budget.available ? 'text-danger' : ''}">${this.financeMoney(projectedAvailable)}</strong>
+          </div>
+        </div>
+      `;
+    }
+
+    // Impediments / Pre-flight warnings
+    const impedimentEl = document.getElementById('transfer-impediment');
+    if (impedimentEl) {
+      let impediment = null;
+      if (request.loan && remainingRounds === 0) {
+        impediment = 'Temporada encerrada: não há partidas restantes para empréstimo nesta temporada.';
+      } else if (!request.outgoing && userBalance < fee + bonus) {
+        impediment = `Saldo insuficiente: seu caixa atual é de ${this.financeMoney(userBalance)}, mas a operação exige ${this.financeMoney(fee + bonus)} à vista.`;
+      } else if (!request.outgoing && fee + bonus > budget.available) {
+        impediment = `Orçamento excedido: a diretoria autoriza até ${this.financeMoney(budget.available)} para contratações. Venda jogadores ou solicite revisão em Finanças.`;
+      } else if (!request.outgoing && projectedWages > budget.wageLimit) {
+        impediment = `Teto salarial atingido: a nova folha (${this.financeMoney(projectedWages)}) ultrapassará o limite de ${this.financeMoney(budget.wageLimit)} por rodada.`;
+      } else if (request.outgoing && this.gameState.userTeam.players.length <= 15) {
+        impediment = 'Limite de elenco: seu clube precisa manter pelo menos 15 atletas contratados.';
+      } else if (request.outgoing && player?.position === 'G' && this.gameState.userTeam.players.filter(p => p.position === 'G').length <= 1) {
+        impediment = 'Goleiro indispensável: o clube precisa manter pelo menos um goleiro no elenco.';
+      }
+      if (impediment) {
+        impedimentEl.hidden = false;
+        impedimentEl.className = 'transfer-impediment danger';
+        impedimentEl.textContent = `Aviso: ${impediment}`;
+      } else {
+        impedimentEl.hidden = true;
+        impedimentEl.textContent = '';
+      }
     }
   },
 
@@ -1572,7 +1816,30 @@ const app = {
       this.gameState = result.state; this.selectedPlayerIdx = null; this.inspectedPlayerIdx = 0; this.clubBrowser = null;
       this.refreshUI(); this.showToast(result.message); return true;
     } catch (error) {
-      if (this.transferRequest) document.getElementById('transfer-error').textContent = error.message;
+      if (this.transferRequest) {
+        const errorEl = document.getElementById('transfer-error');
+        if (errorEl) {
+          errorEl.textContent = error.message;
+          const match = error.message.match(/contraproposta:\s*aceita (?:negociar [^por]+ por|pagar até) R\$\s*([\d.,]+)/i);
+          if (match) {
+            const cleanNumber = parseInt(match[1].replace(/\./g, '').replace(/,/g, ''), 10);
+            if (Number.isFinite(cleanNumber) && cleanNumber > 0) {
+              const btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'transfer-counter-btn';
+              btn.textContent = `Aplicar contraproposta (R$ ${cleanNumber.toLocaleString('pt-BR')})`;
+              btn.addEventListener('click', () => {
+                document.getElementById('transfer-amount').value = cleanNumber;
+                this.updateTransferTerms();
+                errorEl.textContent = '';
+                document.getElementById('transfer-form').querySelector('button[type="submit"]')?.focus();
+              });
+              errorEl.appendChild(document.createElement('br'));
+              errorEl.appendChild(btn);
+            }
+          }
+        }
+      }
       this.showToast(error.message); return false;
     }
   },
@@ -1669,6 +1936,28 @@ const app = {
       ['Clubes', new Set(overview.tenures.map(tenure => tenure.teamId)).size], ['Jogos', total.played],
       ['Vitórias', total.won], ['Aproveitamento', percentage], ['Títulos', total.titles], ['Acessos', total.promotions]
     ].map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('');
+
+    const boardEval = typeof BoardEngine !== 'undefined' ? BoardEngine.evaluate(state) : (CareerEngine?.boardConfidence ? CareerEngine.boardConfidence(state) : null);
+    if (boardEval) {
+      const targetEl = document.getElementById('manager-board-target');
+      const posEl = document.getElementById('manager-board-position');
+      const effEl = document.getElementById('manager-board-efficiency');
+      const finEl = document.getElementById('manager-board-finance');
+      const secEl = document.getElementById('manager-board-security');
+      const ratEl = document.getElementById('manager-board-rating');
+      const feedEl = document.getElementById('manager-board-feedback');
+
+      if (targetEl) targetEl.textContent = boardEval.target?.label || '—';
+      if (posEl) posEl.textContent = `${boardEval.position}º lugar (${boardEval.played} j, ${boardEval.points} pts)`;
+      if (effEl) effEl.textContent = `${boardEval.efficiency}%`;
+      if (finEl) finEl.textContent = `R$ ${Number(state.userTeam.balance || 0).toLocaleString('pt-BR')}`;
+      if (secEl) {
+        secEl.textContent = boardEval.label;
+        secEl.style.color = boardEval.color;
+      }
+      if (ratEl) ratEl.textContent = `${boardEval.score} / 100`;
+      if (feedEl) feedEl.textContent = boardEval.feedback || '';
+    }
     document.getElementById('manager-club-history').innerHTML = [...overview.tenures].reverse().map(tenure => {
       const stats = tenure.stats, current = tenure.toYear === null;
       const period = current ? `${tenure.fromYear} → atual` : `${tenure.fromYear} → ${tenure.toYear}`;
@@ -1736,6 +2025,108 @@ const app = {
       if (!this.persistState(next)) return;
       this.gameState = next; this.refreshUI(); this.showToast('Proposta recusada.');
     } catch (error) { this.showToast(error.message); }
+  },
+
+  checkManagerDismissal() {
+    if (!this.gameState) return false;
+    const boardEval = typeof BoardEngine !== 'undefined' ? BoardEngine.evaluate(this.gameState) : (CareerEngine?.boardConfidence ? CareerEngine.boardConfidence(this.gameState) : null);
+    if (boardEval && boardEval.canBeDismissed) {
+      this.showDismissalModal(boardEval);
+      return true;
+    }
+    return false;
+  },
+
+  showDismissalModal(boardEval) {
+    const modal = document.getElementById('dismissal-modal');
+    if (!modal) return;
+
+    const team = this.gameState.userTeam;
+    const profile = this.gameState.managerProfile;
+    const shieldEl = document.getElementById('dismissal-club-shield');
+    if (shieldEl) shieldEl.src = this.assetPath('escudos', team.shield);
+
+    const statementEl = document.getElementById('dismissal-statement');
+    if (statementEl) {
+      statementEl.textContent = `A diretoria do ${team.name} comunica que, após avaliação do rendimento esportivo, encerrou o contrato do treinador ${profile?.name || 'da equipe'}. Desejamos sorte no seguimento da carreira.`;
+    }
+
+    const reasonsEl = document.getElementById('dismissal-reasons');
+    if (reasonsEl) {
+      reasonsEl.innerHTML = `
+        <ul>
+          <li><strong>Meta esportiva frustrada:</strong> O objetivo era ${this.escapeHTML(boardEval.target.label)}, mas o clube ocupa a ${boardEval.position}ª colocação.</li>
+          <li><strong>Rendimento insuficiente:</strong> Aproveitamento de ${boardEval.efficiency}% em ${boardEval.played} rodadas disputadas.</li>
+          <li><strong>Confiança da diretoria esgotada:</strong> Índice de satisfação caiu para ${boardEval.score}%.</li>
+        </ul>
+      `;
+    }
+
+    const playedEl = document.getElementById('dismissal-stat-played');
+    const wonEl = document.getElementById('dismissal-stat-won');
+    const drawnEl = document.getElementById('dismissal-stat-drawn');
+    const lostEl = document.getElementById('dismissal-stat-lost');
+    if (playedEl) playedEl.textContent = boardEval.played;
+    if (wonEl) wonEl.textContent = boardEval.won;
+    if (drawnEl) drawnEl.textContent = boardEval.drawn;
+    if (lostEl) lostEl.textContent = boardEval.lost;
+
+    const offersList = document.getElementById('dismissal-offers-list');
+    if (offersList) {
+      const offers = (typeof BoardEngine !== 'undefined' && BoardEngine.generateDismissalOffers)
+        ? BoardEngine.generateDismissalOffers(this.gameState)
+        : (CareerEngine?.generateDismissalOffers ? CareerEngine.generateDismissalOffers(this.gameState) : []);
+
+      if (offers.length) {
+        offersList.innerHTML = offers.map(offer => `
+          <div class="dismissal-offer-item">
+            <img src="${this.assetPath('escudos', offer.shield)}" alt="">
+            <div class="dismissal-offer-info">
+              <h4>${this.escapeHTML(offer.teamName)}</h4>
+              <span>${this.escapeHTML(offer.divisionName)} · ${this.escapeHTML(offer.stadium)}</span>
+              <p>${this.escapeHTML(offer.reason)}</p>
+            </div>
+            <button class="btn btn-small btn-primary" data-accept-dismissal="${offer.teamId}">Assumir Clube</button>
+          </div>
+        `).join('');
+
+        offersList.querySelectorAll('[data-accept-dismissal]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const teamId = Number(btn.dataset.acceptDismissal);
+            this.acceptDismissalOffer(teamId);
+          });
+        });
+      } else {
+        offersList.innerHTML = '<p class="dismissal-help-text">Nenhum clube fez proposta no momento. Escolha outro clube para reiniciar.</p>';
+      }
+    }
+
+    modal.style.display = 'flex';
+  },
+
+  acceptDismissalOffer(newTeamId) {
+    try {
+      const next = (typeof BoardEngine !== 'undefined' && BoardEngine.applyDismissal)
+        ? BoardEngine.applyDismissal(this.gameState, newTeamId)
+        : CareerEngine.applyDismissal(this.gameState, newTeamId);
+
+      if (typeof SquadEngine !== 'undefined' && next.userTeam) {
+        SquadEngine.autoSelectStarters(next.userTeam, next.userTeam.formation || '4-4-2');
+      }
+      FinanceEngine.ensureLedger(next.userTeam, { year: next.seasonYear, round: next.currentRound });
+      ContractsEngine.ensureState(next);
+      EconomyEngine.ensure(next);
+
+      if (!this.persistState(next)) return;
+      this.gameState = next;
+      document.getElementById('dismissal-modal').style.display = 'none';
+      this.refreshUI();
+      this.showView('squad-tab');
+      this.showToast(`Você assumiu o comando do ${this.gameState.userTeam.name}! Boa sorte na recuperação.`);
+    } catch (err) {
+      console.error('Erro ao aceitar novo clube pós-demissão:', err);
+      this.showToast('Erro ao assumir o novo clube.');
+    }
   },
 
   renderSeasonHistory() {
@@ -2033,6 +2424,7 @@ const app = {
     if (!fixture) {
       this.finalizeRound(null, roundIndex);
       this.persistState(); this.refreshUI();
+      this.checkManagerDismissal();
       return;
     }
     const home = this.gameState.divisionTeams.find(t => t.id === fixture.homeId);
@@ -2072,6 +2464,11 @@ const app = {
     this.matchTacticsDirty = false;
     const [home, away] = this.getLiveTeams();
     MatchEngine.ensureState(state, home, away);
+    document.getElementById('match-analysis-metric').value = 'possession';
+    const analysisChange = document.getElementById('match-analysis-change');
+    analysisChange.innerHTML = '<option value="latest">Última do meu time</option>';
+    analysisChange.value = 'latest';
+    this.renderedAnalysisChanges = -1;
     this.ensureConcurrentMatches(state);
     if (restored) {
       state.announcedOtherGoals = [];
@@ -2202,6 +2599,7 @@ const app = {
     const status = document.getElementById('match-status');
     status.textContent = state.finished ? 'Resultado final' : this.matchPaused ? `${this.matchPauseReason || 'Jogo pausado'} · pausado` : 'Bola rolando';
     status.classList.toggle('paused', this.matchPaused && !state.finished);
+    document.getElementById('match-analysis-status').textContent = state.finished ? 'FINAL' : this.matchPaused ? 'PAUSADO' : 'AO VIVO';
     for (const id of ['match-speed', 'match-formation', 'match-style', 'apply-match-tactics-btn']) document.getElementById(id).disabled = state.finished;
     document.querySelectorAll('#match-instructions select, #match-set-pieces select, #match-preset-select, #match-preset-btn').forEach(control => { control.disabled = state.finished; });
     document.getElementById('skip-match-btn').style.display = state.finished ? 'none' : 'inline-flex';
@@ -2232,6 +2630,86 @@ const app = {
     document.getElementById('match-stats-note').textContent = state.statsSinceMinute ? `xG e passes contabilizados a partir dos ${state.statsSinceMinute}' (partida de save antigo).` : '';
     this.renderLiveCoach();
     this.renderConcurrentMatches(state);
+    this.renderLiveTacticalAnalysis();
+  },
+
+  renderLiveTacticalAnalysis() {
+    const state = this.currentSimMatch, analysis = MatchEngine.Analysis;
+    if (!state?.tacticalAnalysis) return;
+    const history = state.tacticalAnalysis, teams = this.getLiveTeams();
+    const selectedMetric = document.getElementById('match-analysis-metric').value;
+    const metric = Object.hasOwn(analysis.METRICS, selectedMetric) ? selectedMetric : 'possession';
+    const definition = analysis.METRICS[metric];
+    const format = value => value === null ? '—' : value.toLocaleString('pt-BR', {
+      minimumFractionDigits: definition.decimals || 0, maximumFractionDigits: definition.decimals || 0
+    }) + (definition.percent ? '%' : '');
+    const changeSelect = document.getElementById('match-analysis-change');
+    if (this.renderedAnalysisChanges !== history.changes.length) {
+      const selected = changeSelect.value || 'latest';
+      changeSelect.innerHTML = '<option value="latest">Última do meu time</option>' + history.changes.map((change, index) =>
+        `<option value="${index}">${change.minute}' · ${this.escapeHTML(teams[change.side].name)} · ${change.formation} / ${change.style}</option>`).reverse().join('');
+      changeSelect.value = selected;
+      this.renderedAnalysisChanges = history.changes.length;
+    }
+    const points = analysis.series(state, metric), current = points.at(-1);
+    const palette = ['#2d703a', '#245ca0'];
+    document.getElementById('match-analysis-legend').innerHTML = teams.map((team, side) =>
+      `<span class="analysis-team analysis-team-${side}"><i></i><span>${this.escapeHTML(team.name)}</span><strong>${format(current?.values[side] ?? null)}</strong></span>`).join('');
+    const chart = document.getElementById('match-analysis-chart');
+    const width = Math.max(280, chart.clientWidth || 320), height = 168;
+    const left = 34, right = width - 12, top = 24, bottom = height - 24;
+    const maximum = Math.max(...points.flatMap(point => point.values).filter(value => value !== null), 0);
+    const ceiling = definition.percent ? 100 : metric === 'xG' ? Math.max(.5, Math.ceil(maximum * 1.1 * 4) / 4) : Math.max(2, Math.ceil(maximum * 1.1));
+    const x = minute => left + minute / 90 * (right - left);
+    const y = value => bottom - value / ceiling * (bottom - top);
+    const number = value => Number(value.toFixed(2));
+    const comparison = analysis.comparison(state, changeSelect.value || 'latest');
+    const grid = [0, ceiling / 2, ceiling].map(value => `<line x1="${left}" x2="${right}" y1="${y(value)}" y2="${y(value)}" stroke="#d9e2d4"/><text x="${left - 5}" y="${y(value) + 3}" text-anchor="end">${Number(value.toFixed(2))}</text>`).join('');
+    const ticks = [0, 15, 30, 45, 60, 75, 90].map(minute => `<text x="${x(minute)}" y="${height - 7}" text-anchor="middle">${minute}'</text>`).join('');
+    const changes = history.changes.map(change => {
+      const title = `${change.minute}' · ${teams[change.side].name}: ${change.formation}, ${change.style}. ${TacticsEngine.summary(change.instructions)}`;
+      const selected = comparison?.change === change;
+      return `<g fill="${palette[change.side]}"><title>${this.escapeHTML(title)}</title><line x1="${x(change.minute)}" x2="${x(change.minute)}" y1="${top}" y2="${bottom}" stroke="${palette[change.side]}" stroke-dasharray="3 3" opacity="${selected ? 1 : .4}"/><text x="${x(change.minute)}" y="${change.side === 0 ? 11 : 21}" text-anchor="middle" font-weight="bold">T</text></g>`;
+    }).join('');
+    const lines = [0, 1].map(side => {
+      let penDown = false;
+      const path = points.map(point => {
+        if (point.values[side] === null) { penDown = false; return ''; }
+        const command = penDown ? 'L' : 'M'; penDown = true;
+        return `${command}${number(x(point.minute))},${number(y(point.values[side]))}`;
+      }).join(' ');
+      const value = current?.values[side];
+      return `<path d="${path}" fill="none" stroke="${palette[side]}" stroke-width="2" ${side ? 'stroke-dasharray="5 3"' : ''}/>${value !== null && value !== undefined ? `<circle cx="${x(current.minute)}" cy="${y(value)}" r="3" fill="${palette[side]}"/>` : ''}`;
+    }).join('');
+    const tooltips = points.map(point => `<g><title>${point.minute}' · ${teams.map((team, side) => `${this.escapeHTML(team.name)}: ${format(point.values[side])}`).join(' · ')}</title>${point.values.map(value => value === null ? '' : `<circle cx="${x(point.minute)}" cy="${y(value)}" r="5" fill="transparent"/>`).join('')}</g>`).join('');
+    const shade = history.startedAt ? `<rect x="${left}" y="${top}" width="${x(history.startedAt) - left}" height="${bottom - top}" fill="#e8ebe5"/><text x="${left + 4}" y="${top + 13}">Sem histórico</text>` : '';
+    chart.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${definition.label} dos dois times ao longo da partida. T marca uma mudança tática."><title>${definition.label} · ${state.minute}'</title>${shade}${grid}${ticks}${changes}${lines}${tooltips}</svg>`;
+    const minutes = Math.min(5, state.minute - history.startedAt);
+    document.getElementById('match-analysis-window').textContent = metric === 'energy'
+      ? 'Energia média dos atletas em campo · T = mudança tática'
+      : `Janela móvel de ${minutes || 5} min · T = mudança tática`;
+    const plan = document.getElementById('match-analysis-plan'), table = document.getElementById('match-analysis-comparison');
+    if (comparison) {
+      const change = comparison.change, side = change.side, values = comparison.metrics[metric];
+      plan.textContent = `${change.minute}' · ${teams[side].name}: ${change.formation} · ${change.style} · ${TacticsEngine.summary(change.instructions)}`;
+      if (comparison.minutes > 0) {
+        const delta = index => {
+          if (values.before[index] === null || values.after[index] === null) return '—';
+          const value = Number((values.after[index] - values.before[index]).toFixed(definition.decimals || 0));
+          return `${value > 0 ? '+' : ''}${value.toLocaleString('pt-BR', { maximumFractionDigits: definition.decimals || 0 })}${definition.percent ? ' p.p.' : ''}`;
+        };
+        table.innerHTML = `<table><caption>${definition.label} · períodos de ${comparison.minutes} min</caption><thead><tr><th>Time</th><th>Antes<br>${comparison.beforeRange.join('–')}'</th><th>Depois<br>${comparison.afterRange.join('–')}'</th><th title="Diferença entre depois e antes; p.p. significa pontos percentuais">Variação</th></tr></thead><tbody>${teams.map((team, index) => `<tr><th>${this.escapeHTML(team.name)}</th><td>${format(values.before[index])}</td><td>${format(values.after[index])}</td><td>${delta(index)}</td></tr>`).join('')}</tbody></table>`;
+      } else {
+        table.textContent = comparison.pendingReason === 'no-before'
+          ? 'Sem período anterior com a mesma tática para esta comparação.' : comparison.pendingReason === 'replaced'
+            ? 'Outra mudança ocorreu no mesmo minuto; esta tática não chegou a ser observada.'
+            : 'Aguardando minutos com esta tática para comparar antes e depois.';
+      }
+    } else {
+      plan.textContent = 'Compare o rendimento após mudar a formação ou as instruções.';
+      table.textContent = 'As mudanças do adversário também ficam marcadas no gráfico.';
+    }
+    document.getElementById('match-analysis-note').textContent = `${history.startedAt ? `Registro iniciado aos ${history.startedAt}' neste save. ` : ''}Dados da simulação. Placar, adversário, trocas e expulsões também influenciam.`;
   },
 
   renderLiveCoach() {
@@ -2273,7 +2751,8 @@ const app = {
       button.title = `${player.name}, posição natural ${this.playerPositionCode(player)}, força ${player.strength}, energia ${energy}%${slot ? `, função ${slot.role}, adaptação ${Math.round(fit * 100)}%` : ''}${reason ? ', ' + reason : ''}`;
       const fields = button._liveFields, position = kind === 'outId' && slot ? slot.role : this.playerPositionCode(player);
       if (fields.position.textContent !== position) fields.position.textContent = position;
-      const name = `${this.escapeHTML(player.name)}${badges}`;
+      const starBadge = player.isTopWorld ? ' ⭐' : player.isStar ? ' ★' : '';
+      const name = `${this.escapeHTML(player.name)}${starBadge}${badges}`;
       if (button._nameMarkup !== name) { fields.name.innerHTML = name; button._nameMarkup = name; }
       if (fields.energy.textContent !== `${energy}%`) fields.energy.textContent = `${energy}%`;
       fields.energy.className = `match-player-energy${energy < 75 ? ' low' : ''}`;

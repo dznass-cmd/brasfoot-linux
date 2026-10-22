@@ -368,6 +368,7 @@ class CareerEngine {
       const previous = Number(player.strength) || 30;
       player.strength = Math.max(15, Math.min(Math.max(75, previous), previous + change));
       if (player.strength !== previous) report[player.strength > previous ? 'improved' : 'declined'].push({ id: player.id, name: player.name, from: previous, to: player.strength });
+      player.value = CareerMarket.calculateValue(player);
       player.energy = 100;
       delete player.performance;
       player.morale = Math.max(40, Math.min(110, Math.round(((player.morale ?? 100) + 100) / 2)));
@@ -449,5 +450,294 @@ class CareerEngine {
   }
 }
 
-if (typeof module !== 'undefined' && module.exports) module.exports = CareerEngine;
-else window.CareerEngine = CareerEngine;
+class BoardEngine {
+  static get EXPECTATION_LABELS() {
+    return {
+      title_g4: 'Vaga no G4 (Libertadores / Título)',
+      continental: 'Vaga continental (G6)',
+      midtable: 'Campanha estável (Sul-Americana)',
+      survival: 'Permanência na divisão (fora do Z4)',
+      promotion: 'Acesso à divisão superior (G4)'
+    };
+  }
+
+  static get STATUS_LABELS() {
+    return {
+      inabalavel: { label: 'Inabalável', color: '#16a34a', bg: '#dcfce7' },
+      muito_boa: { label: 'Muito Boa', color: '#22c55e', bg: '#f0fdf4' },
+      estavel: { label: 'Estável', color: '#eab308', bg: '#fefce8' },
+      pressao: { label: 'Sob Pressão', color: '#f97316', bg: '#fff7ed' },
+      ameacado: { label: 'Ameaçado', color: '#ef4444', bg: '#fef2f2' },
+      demissao: { label: 'Demissão Iminente', color: '#991b1b', bg: '#fee2e2' }
+    };
+  }
+
+  static expectation(state, teamId = state.userTeamId) {
+    const teams = state.divisionTeams || [];
+    const division = (state.careerDivisions || []).find(d => d.id === state.divisionId);
+    const divisionIndex = state.careerDivisions ? state.careerDivisions.indexOf(division) : 0;
+    const isTopTier = divisionIndex === 0;
+
+    const sorted = [...teams].sort((a, b) => {
+      const avgA = (a.players || []).reduce((s, p) => s + (p.strength || 0), 0) / Math.max(1, (a.players || []).length);
+      const avgB = (b.players || []).reduce((s, p) => s + (p.strength || 0), 0) / Math.max(1, (b.players || []).length);
+      return avgB - avgA;
+    });
+    const rank = sorted.findIndex(t => t.id === teamId);
+    const total = Math.max(1, teams.length);
+
+    if (isTopTier) {
+      if (rank <= 2) return { targetPosition: 4, label: 'Vaga no G4 (Libertadores / Título)', type: 'title_g4', minAcceptable: 6 };
+      if (rank <= 6) return { targetPosition: 6, label: 'Vaga continental (G6)', type: 'continental', minAcceptable: 10 };
+      if (rank <= 13) return { targetPosition: 12, label: 'Campanha estável (Sul-Americana)', type: 'midtable', minAcceptable: 15 };
+      return { targetPosition: 16, label: 'Permanência na Série A (fora do Z4)', type: 'survival', minAcceptable: 16 };
+    } else {
+      if (rank <= 3) return { targetPosition: 4, label: 'Acesso à divisão superior (G4)', type: 'promotion', minAcceptable: 6 };
+      if (rank <= 8) return { targetPosition: 8, label: 'Primeira metade da tabela', type: 'midtable', minAcceptable: 12 };
+      return { targetPosition: Math.max(1, total - 4), label: 'Permanência na divisão (fora do Z4)', type: 'survival', minAcceptable: Math.max(1, total - 4) };
+    }
+  }
+
+  static evaluate(state) {
+    const team = state.userTeam;
+    if (!team) return { score: 75, status: 'muito_boa', ...this.STATUS_LABELS.muito_boa, target: { label: 'A definir' }, feedback: '' };
+
+    const target = this.expectation(state, team.id);
+    const standings = CareerLeague.calculateStandings(state.divisionTeams || [], state.rounds || []);
+    const row = standings.find(t => t.id === team.id) || { position: 10, played: 0, won: 0, drawn: 0, lost: 0, points: 0, goalsFor: 0, goalsAgainst: 0 };
+    const pos = row.position || 10;
+    const played = row.played || 0;
+
+    let score = 70;
+
+    if (played === 0) {
+      score = 75;
+    } else {
+      // 1. Position vs Target impact
+      const diff = target.targetPosition - pos;
+      if (diff >= 0) {
+        score += Math.min(25, (diff + 1) * 3);
+      } else {
+        const penalty = Math.abs(diff) * 3.5;
+        score -= Math.min(40, penalty);
+      }
+
+      // Relegation zone penalty
+      const totalTeams = standings.length || 20;
+      if (pos > totalTeams - 4) {
+        score -= 15;
+      }
+
+      // 2. Recent form (last 5 rounds)
+      const userMatches = [];
+      for (const round of (state.rounds || [])) {
+        if (!round.isFinished) continue;
+        const m = (round.matches || []).find(fix => fix.homeId === team.id || fix.awayId === team.id);
+        if (m && m.isPlayed) {
+          const isHome = m.homeId === team.id;
+          const userScore = isHome ? m.homeScore : m.awayScore;
+          const oppScore = isHome ? m.awayScore : m.homeScore;
+          userMatches.push(userScore > oppScore ? 'W' : userScore < oppScore ? 'L' : 'D');
+        }
+      }
+      const last5 = userMatches.slice(-5);
+      const wins = last5.filter(r => r === 'W').length;
+      const draws = last5.filter(r => r === 'D').length;
+      const pts = wins * 3 + draws;
+
+      if (last5.length >= 3) {
+        if (pts >= 12) score += 12;
+        else if (pts >= 9) score += 6;
+        else if (pts <= 2) score -= 14;
+        else if (pts <= 4) score -= 8;
+      }
+
+      // Consecutive loss streak
+      let currentLossStreak = 0;
+      for (let i = userMatches.length - 1; i >= 0; i--) {
+        if (userMatches[i] === 'L') currentLossStreak++;
+        else break;
+      }
+      if (currentLossStreak >= 5) score -= 25;
+      else if (currentLossStreak >= 4) score -= 18;
+      else if (currentLossStreak >= 3) score -= 10;
+      else if (currentLossStreak >= 2) score -= 4;
+
+      // 3. Financial health
+      const balance = Number(team.balance || 0);
+      if (balance < -2000000) score -= 12;
+      else if (balance < -500000) score -= 6;
+      else if (balance > 10000000) score += 5;
+
+      // Grace period for early rounds (1 to 4)
+      if (played <= 4) {
+        score = Math.max(45, score);
+      }
+    }
+
+    score = Math.max(0, Math.min(100, Math.round(score)));
+
+    let statusKey = 'demissao';
+    let feedback = '';
+    if (score >= 85) {
+      statusKey = 'inabalavel';
+      feedback = 'A diretoria está extasiada com os resultados e confia plenamente na sua liderança!';
+    } else if (score >= 70) {
+      statusKey = 'muito_boa';
+      feedback = 'A diretoria considera o trabalho sólido e alinhado com as metas do clube.';
+    } else if (score >= 50) {
+      statusKey = 'estavel';
+      feedback = 'A diretoria vê a campanha como satisfatória, mas espera manter a regularidade.';
+    } else if (score >= 35) {
+      statusKey = 'pressao';
+      feedback = 'A diretoria manifesta preocupação com a oscilação da equipe. É preciso pontuar.';
+    } else if (score >= 20) {
+      statusKey = 'ameacado';
+      feedback = 'ALERTA: A diretoria emitiu um ultimato! Uma vitória na próxima rodada é crucial.';
+    } else {
+      statusKey = 'demissao';
+      feedback = 'CRISE TOTAL: A diretoria considera a situação insustentável e prepara a rescisão.';
+    }
+
+    const efficiency = played > 0 ? Math.round((row.points / (played * 3)) * 100) : 100;
+    const userMatchesList = [];
+    for (const round of (state.rounds || [])) {
+      if (!round.isFinished) continue;
+      const m = (round.matches || []).find(fix => fix.homeId === team.id || fix.awayId === team.id);
+      if (m && m.isPlayed) {
+        const isHome = m.homeId === team.id;
+        const uS = isHome ? m.homeScore : m.awayScore;
+        const oS = isHome ? m.awayScore : m.homeScore;
+        userMatchesList.push(uS > oS ? 'W' : uS < oS ? 'L' : 'D');
+      }
+    }
+    const lastResult = userMatchesList.at(-1);
+
+    return {
+      score,
+      status: statusKey,
+      ...this.STATUS_LABELS[statusKey],
+      target,
+      position: pos,
+      played,
+      points: row.points,
+      won: row.won || 0,
+      drawn: row.drawn || 0,
+      lost: row.lost || 0,
+      goalsFor: row.goalsFor || 0,
+      goalsAgainst: row.goalsAgainst || 0,
+      efficiency,
+      feedback,
+      threatened: score < 35,
+      canBeDismissed: played >= 5 && score < 20 && lastResult !== 'W'
+    };
+  }
+
+  static generateDismissalOffers(state) {
+    const teams = CareerEngine.teams(state);
+    const byId = new Map(teams.map(t => [t.id, t]));
+    const currentDivision = (state.careerDivisions || []).find(d => d.id === state.divisionId) || { teams: [] };
+    const currentDivIndex = state.careerDivisions ? state.careerDivisions.indexOf(currentDivision) : 0;
+
+    const candidates = [];
+    for (const teamId of currentDivision.teams) {
+      if (teamId !== state.userTeamId) {
+        const team = byId.get(teamId);
+        if (team) candidates.push({ team, division: currentDivision, reason: 'O clube busca um comandante experiente para reagir no campeonato.' });
+      }
+    }
+    if (state.careerDivisions && currentDivIndex < state.careerDivisions.length - 1) {
+      const lowerDiv = state.careerDivisions[currentDivIndex + 1];
+      for (const teamId of lowerDiv.teams) {
+        const team = byId.get(teamId);
+        if (team) candidates.push({ team, division: lowerDiv, reason: 'A diretoria quer sua liderança para buscar o acesso.' });
+      }
+    }
+
+    candidates.sort((a, b) => {
+      let hA = 2166136261, hB = 2166136261;
+      for (const ch of `${state.seasonYear}:${state.currentRound}:${a.team.id}`) hA = Math.imul(hA ^ ch.charCodeAt(0), 16777619) >>> 0;
+      for (const ch of `${state.seasonYear}:${state.currentRound}:${b.team.id}`) hB = Math.imul(hB ^ ch.charCodeAt(0), 16777619) >>> 0;
+      return hA - hB;
+    });
+
+    return candidates.slice(0, 3).map((entry, idx) => ({
+      id: `dismissal_offer_${state.seasonYear}_${entry.team.id}_${idx}`,
+      teamId: entry.team.id,
+      teamName: entry.team.name,
+      shield: entry.team.shield,
+      stadium: entry.team.stadium,
+      divisionId: entry.division.id,
+      divisionName: entry.division.name,
+      reason: entry.reason
+    }));
+  }
+
+  static applyDismissal(state, newTeamId) {
+    const next = CareerEngine.clone(state);
+    const teams = CareerEngine.teams(next);
+    const profile = CareerEngine.ensureProfile(next);
+    const currentTenure = profile.tenures.at(-1);
+
+    if (currentTenure) {
+      currentTenure.toYear = next.seasonYear;
+      currentTenure.status = 'dismissed';
+      currentTenure.reason = 'Rescisão de contrato por desempenho insuficiente';
+    }
+
+    const destination = teams.find(t => t.id === Number(newTeamId));
+    if (!destination) throw new Error('Clube de destino não encontrado.');
+
+    const newDivision = (next.careerDivisions || []).find(d => d.teams.includes(destination.id));
+    if (!newDivision) throw new Error('Divisão do clube não encontrada.');
+
+    const previousTeam = teams.find(t => t.id === next.userTeamId);
+    if (previousTeam && previousTeam.manager === profile.name) {
+      previousTeam.manager = 'Comissão técnica interina';
+    }
+
+    profile.tenures.push({
+      id: `tenure_${profile.tenures.length + 1}`,
+      teamId: destination.id,
+      teamName: destination.name,
+      shield: destination.shield,
+      fromYear: next.seasonYear,
+      toYear: null
+    });
+
+    next.userTeamId = destination.id;
+    next.userTeam = destination;
+    destination.manager = profile.name;
+
+    if (newDivision.id !== next.divisionId) {
+      next.divisionId = newDivision.id;
+      next.divisionName = newDivision.name;
+      next.divisionTeams = newDivision.teams.map(id => teams.find(t => t.id === id));
+      next.reserveTeams = teams.filter(t => !newDivision.teams.includes(t.id));
+      next.rounds = CareerLeague.generateSchedule(newDivision.teams);
+      next.currentRound = 1;
+      next.totalRounds = next.rounds.length;
+      CareerEngine.initializeBackground(next);
+    } else {
+      next.userTeam = next.divisionTeams.find(t => t.id === destination.id) || destination;
+    }
+
+    delete next.activeMatch;
+    CareerMarket.expireOffers(next);
+    return next;
+  }
+}
+
+CareerEngine.BoardEngine = BoardEngine;
+CareerEngine.boardExpectation = (state, teamId) => BoardEngine.expectation(state, teamId);
+CareerEngine.boardConfidence = state => BoardEngine.evaluate(state);
+CareerEngine.generateDismissalOffers = state => BoardEngine.generateDismissalOffers(state);
+CareerEngine.applyDismissal = (state, newTeamId) => BoardEngine.applyDismissal(state, newTeamId);
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = CareerEngine;
+  module.exports.BoardEngine = BoardEngine;
+} else {
+  window.CareerEngine = CareerEngine;
+  window.BoardEngine = BoardEngine;
+}

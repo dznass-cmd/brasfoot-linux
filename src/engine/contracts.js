@@ -81,8 +81,8 @@ class ContractsEngine {
       if ((Number(team.balance) || 0) < fee) throw new Error('Caixa insuficiente para pagar a rescisão.');
       ContractEconomy.checkSpending(next, fee);
       ContractFinance.post(team, context, { kind: 'contract', source, description: `Rescisão: ${player.name}`, lines: [{ category: 'termination', amount: -fee }] });
-      team.players.splice(team.players.indexOf(player), 1); this.addFreeAgent(next, team, player, next.seasonYear);
-      ContractSquad.autoSelectStarters(team, team.formation || '4-4-2');
+      this.addFreeAgent(next, team, player, next.seasonYear);
+      ContractSquad.preserveUserLineupAfterChange(team, player, null);
       return { state: next, message: `Contrato de ${player.name} rescindido. O atleta está sem clube.` };
     }
     if (!['renew', 'sign'].includes(action.type)) throw new Error('Operação de contrato inválida.');
@@ -98,7 +98,10 @@ class ContractsEngine {
     const loan = player.loan;
     this.assign(player, team, next.seasonYear, terms);
     if (loan) player.wage = loan.wage; // Borrower keeps the salary agreed for the current loan.
-    if (action.type === 'sign') { next.freeAgents.splice(next.freeAgents.indexOf(player), 1); player.isStarter = false; team.players.push(player); }
+    if (action.type === 'sign') {
+      next.freeAgents.splice(next.freeAgents.indexOf(player), 1);
+      ContractSquad.preserveUserLineupAfterChange(team, null, player);
+    }
     return { state: next, message: `${player.name}: contrato até ${player.contract.endYear}, salário de R$ ${terms.wage.toLocaleString('pt-BR')} por rodada.` };
   }
 }

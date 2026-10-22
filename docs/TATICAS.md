@@ -42,6 +42,18 @@ Escolha os cobradores de **pênaltis**, **faltas diretas** e **escanteios**, ou 
 
 A finalização influencia pênaltis e faltas diretas. A criação e as características de cruzamento influenciam a qualidade dos escanteios. O cobrador de um cruzamento não pode ser o próprio cabeceador.
 
+## Gráfico durante a partida
+
+Na tela do jogo, **Análise tática** amplia o painel **Efeito das táticas**. Em janelas maiores ele também aparece em **Geral**, acima do Placar da Rodada. O seletor permite acompanhar posse de bola, gols esperados (xG), finalizações, passes certos ou energia dos dois times. As linhas verde contínua e azul tracejada correspondem ao mandante e ao visitante; a legenda informa nomes e valores atuais.
+
+Os dados são registrados a cada minuto. Posse, xG, finalizações e precisão dos passes mostram uma janela móvel dos últimos cinco minutos, reduzida no começo do registro; energia mostra a média dos jogadores em campo. Sem passes no período, a precisão aparece como **—**. Os minutos futuros ficam vazios. Passe o mouse sobre um ponto para consultar os valores daquele minuto.
+
+Cada **T** marca uma mudança de formação, estilo, instruções ou cobradores, incluindo ajustes do adversário. **Comparar mudança** seleciona a última do seu time ou qualquer alteração registrada. A tabela mostra os números dos dois clubes antes/depois e a variação; **p.p.** significa pontos percentuais.
+
+A comparação usa períodos de mesma duração, de até cinco minutos de cada lado. Por exemplo, após dois minutos com uma nova tática, compara dois minutos anteriores com dois posteriores. Outra mudança de qualquer técnico encerra o período observado; uma alteração substituída no mesmo minuto não tem minutos próprios para avaliar. Uma mudança no início do registro não tem período anterior. Energia compara o nível médio em campo ao fim de cada período. Esses números mostram o que aconteceu na simulação: placar, qualidade dos atletas, adversário, substituições e expulsões também interferem.
+
+O histórico acompanha os checkpoints, o save completo e a exportação JSON da partida ativa. Ao carregar uma partida antiga, o registro começa no minuto recuperado, sem inventar dados anteriores. Jogos automáticos das outras equipes não guardam estas amostras. O gráfico permanece consultável ao apito final, antes de **Continuar**. Reabra o aplicativo para carregar a atualização; não é necessário iniciar uma nova carreira.
+
 ## Adversários e saves
 
 Os técnicos automáticos também usam as novas formações e instruções. A partir das avaliações táticas habituais, buscam pressão alta quando estão perdendo e com energia suficiente, abrem as jogadas quando cansados e reduzem o ritmo para proteger uma vantagem nos minutos finais.
@@ -53,6 +65,7 @@ Partidas antigas recebem instruções neutras ao carregar, preservando minuto, p
 ```bash
 node scripts/test-tactics.cjs
 node scripts/test-live-match.cjs
+node scripts/test-tactical-analysis.cjs
 node scripts/test-engine-v2.cjs
 node scripts/test-market-performance.cjs
 node scripts/test-manager-profile.cjs
@@ -61,3 +74,5 @@ python3 scripts/check-offline.py
 ```
 
 Os testes específicos verificam as 11 formações no motor e no campo, passes, desgaste, faltas e cartões, ataque por lado, contra-ataques, os três tipos de cobrador, alteração durante o jogo, retomada de save, migração e falha de gravação. São utilizados clubes copiados e armazenamento isolado.
+
+A análise tem oito grupos próprios, incluindo equivalência com a simulação sem registro, janelas estatísticas, alterações de ambos os técnicos, períodos iguais, migração e retomada determinística. `scripts/test-tactical-analysis-ui.js` acrescenta um teste opcional com Playwright instalado, usando um perfil novo e capturas temporárias. Execute com `node scripts/test-tactical-analysis-ui.js`; `BRASFOOT_PLAYWRIGHT_MODULE` pode indicar uma instalação existente e `BRASFOOT_TEST_BROWSER` pode indicar o executável Chromium. O teste cobre os cinco indicadores, os controles reais, recuperação do save, Placar da Rodada, apito final e larguras de 1260, 1024, 800 e 460 pixels.

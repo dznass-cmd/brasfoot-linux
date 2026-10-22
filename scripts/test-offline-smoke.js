@@ -54,6 +54,13 @@
       document.getElementById('confirm-match-sub-btn').click();
       document.getElementById('match-formation').value='4-3-3';document.getElementById('match-style').value='Ofensivo';app.applyLiveTactics();
       assert(app.currentSimMatch.substitutions[app.currentSimMatch.userSide]===1,'Offline substitution failed.');
+      assert(app.currentSimMatch.tacticalAnalysis.samples.length===4,'Live statistical history is incomplete.');
+      assert(app.currentSimMatch.tacticalAnalysis.changes.some(change=>change.side===app.currentSimMatch.userSide),'Tactical change was not recorded.');
+      document.querySelector('[data-match-tab="analysis"]').click();
+      const analysisMetric=document.getElementById('match-analysis-metric');analysisMetric.value='energy';analysisMetric.dispatchEvent(new Event('change'));
+      assert(document.querySelector('#match-analysis-chart svg'),'Offline tactical chart did not render.');
+      assert(!/NaN|Infinity/.test(document.getElementById('match-analysis-chart').innerHTML),'Offline tactical chart has invalid values.');
+      document.querySelector('[data-match-tab="all"]').click();
       assert(document.getElementById('match-opponent-tactics').textContent.includes(app.currentSimMatch.formations[1-app.currentSimMatch.userSide]),'Opponent tactics are missing from the coach panel.');
       assert(document.getElementById('match-effective-power').textContent.includes('Ataque'),'Effective sector power is missing from the coach panel.');
       assert([...document.querySelectorAll('#match-on-field button')].every(button=>button.title.includes('adaptação')),'Player role adaptation is missing.');
@@ -71,6 +78,8 @@
       assert(app.currentSimMatch.minute===3&&app.matchPaused,'Offline progress did not resume.');
       assert(app.currentSimMatch.formations[app.currentSimMatch.userSide]==='4-3-3','Offline tactics were not saved.');
       assert(app.currentSimMatch.substitutions[app.currentSimMatch.userSide]===1,'Offline substitution was not saved.');
+      assert(app.currentSimMatch.tacticalAnalysis.samples.length===4,'Offline tactical observations were not saved.');
+      assert(document.querySelector('#match-analysis-chart svg'),'Restored tactical chart is missing.');
       assert(app.allTeams.find(t=>t.id===255).stadium==='Estádio offline','Local editor data did not persist.');
       const saved=JSON.stringify(app.gameState);
       app.skipMatchSimulation();

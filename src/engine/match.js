@@ -2,8 +2,10 @@
 const MatchSquad = typeof module !== 'undefined' && module.exports ? require('./squad.js') : window.SquadEngine;
 const MatchPerformance = typeof module !== 'undefined' && module.exports ? require('./performance.js') : window.PerformanceEngine;
 const MatchTactics = typeof module !== 'undefined' && module.exports ? require('./tactics.js') : window.TacticsEngine;
+const MatchAnalysis = typeof module !== 'undefined' && module.exports ? require('./tactical-analysis.js') : window.TacticalAnalysis;
 
 class MatchEngine {
+  static Analysis = MatchAnalysis;
   static VERSION = 2;
   // Derived data stays out of saves and is released with the player/team objects.
   static traitCache = new WeakMap();
@@ -57,7 +59,7 @@ class MatchEngine {
       }
     });
     const lineups = teams.map(team => MatchSquad.starters(team).filter(p => MatchSquad.isAvailable(p)));
-    return {
+    const state = {
       engineVersion: this.VERSION,
       homeId: homeTeam.id, awayId: awayTeam.id,
       minute: 0, scores: [0, 0], phase: 'first-half', finished: false,
@@ -78,12 +80,18 @@ class MatchEngine {
       events: [], possessionTotal: 0,
       stats: { possession: [50, 50], shots: [0, 0], shotsOnTarget: [0, 0], fouls: [0, 0], yellowCards: [0, 0], redCards: [0, 0], tackles: [0, 0], corners: [0, 0], xG: [0, 0], passes: [0, 0], completedPasses: [0, 0] }
     };
+    MatchAnalysis.ensure(state, teams);
+    return state;
   }
 
   // Upgrade an in-progress old save once, without replaying events or changing its score.
   static ensureState(state, homeTeam, awayTeam) {
     const teams = [homeTeam, awayTeam];
-    if (state.engineVersion === this.VERSION) { this.ensureInstructions(state, teams); return state; }
+    if (state.engineVersion === this.VERSION) {
+      this.ensureInstructions(state, teams);
+      MatchAnalysis.ensure(state, teams);
+      return state;
+    }
     state.assignments = teams.map((team, side) => MatchSquad.assignPositions(this.playersFor(state, team, side), state.formations[side]));
     state.aiControlled = teams.map((_, side) => Number.isInteger(state.userSide) && side !== state.userSide);
     state.lastAiTacticsAt = [state.minute, state.minute];
@@ -100,6 +108,7 @@ class MatchEngine {
     state.statsSinceMinute = state.minute;
     state.engineVersion = this.VERSION;
     this.ensureInstructions(state, teams);
+    MatchAnalysis.ensure(state, teams);
     return state;
   }
 
@@ -176,6 +185,7 @@ class MatchEngine {
     if (random() < tempo) this.simulateAttack(state, teams, currentPower, possession, random);
     this.simulateInjury(state, teams, random);
     if (this.checkAbandonment(state, teams, random)) return state.events.slice(eventStart);
+    MatchAnalysis.record(state, teams);
     if (state.minute < 90) teams.forEach((_, side) => { if (state.aiControlled[side]) this.manageOpponent(state, teams, side); });
     if (state.minute === 45) {
       state.phase = 'halftime';
@@ -404,6 +414,7 @@ class MatchEngine {
     state.styles[side] = team.tacticStyle = style;
     state.instructions[side] = nextInstructions; team.tactics = { ...nextInstructions };
     state.setPieces[side] = nextSetPieces; team.setPieces = { ...nextSetPieces };
+    MatchAnalysis.change(state, side);
     this.emit(state, { type: 'TATICA', teamIndex: side, icon: 'tactics.png', text: `${team.name} mudou para ${formation}, estilo ${style.toLowerCase()}. ${MatchTactics.summary(nextInstructions)}.` });
     return { success: true, message: 'Tática aplicada aos próximos minutos.' };
   }
@@ -480,6 +491,7 @@ class MatchEngine {
   static finishMatch(state, homeTeam, awayTeam, random = Math.random) {
     this.ensureState(state, homeTeam, awayTeam);
     if (state.finished) return;
+    MatchAnalysis.record(state, [homeTeam, awayTeam]);
     state.finished = true;
     state.phase = 'finished';
     state.finalEnergy = [homeTeam, awayTeam].map(team => Object.fromEntries(team.players.map(player => [player.id, player.energy ?? 100])));

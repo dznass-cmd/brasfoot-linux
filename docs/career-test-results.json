@@ -4,20 +4,20 @@
     {
       "year": 2026,
       "playedDivision": "BRA_A",
-      "nextDivision": "BRA_B",
+      "nextDivision": "BRA_A",
       "matches": 1520,
-      "position": 17,
-      "saveBeforeTransitionBytes": 4263120,
-      "saveAfterTransitionBytes": 3488877
+      "position": 9,
+      "saveBeforeTransitionBytes": 4282321,
+      "saveAfterTransitionBytes": 3502791
     },
     {
       "year": 2027,
-      "playedDivision": "BRA_B",
+      "playedDivision": "BRA_A",
       "nextDivision": "BRA_A",
       "matches": 1520,
-      "position": 2,
-      "saveBeforeTransitionBytes": 5235273,
-      "saveAfterTransitionBytes": 3627872
+      "position": 9,
+      "saveBeforeTransitionBytes": 5239224,
+      "saveAfterTransitionBytes": 3643442
     }
   ],
   "syntheticTransitions": 10

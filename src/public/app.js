@@ -245,6 +245,15 @@ const app = {
     this.updateFinanceSummary();
   },
 
+  playerHumor(player) {
+    const morale = Math.max(40, Math.min(110, Math.round(player?.morale ?? 100)));
+    if (morale >= 105) return { level: 'radiant', label: 'Radiante', emoji: '😄', value: morale, desc: 'Em excelente fase e com moral nas alturas' };
+    if (morale >= 95) return { level: 'happy', label: 'Feliz', emoji: '😊', value: morale, desc: 'Confiante e satisfeito com o momento' };
+    if (morale >= 80) return { level: 'neutral', label: 'Normal', emoji: '😐', value: morale, desc: 'Tranquilo e focado nos treinamentos' };
+    if (morale >= 65) return { level: 'unhappy', label: 'Descontente', emoji: '🙁', value: morale, desc: 'Insatisfeito com resultados ou poucos minutos' };
+    return { level: 'furious', label: 'Abatido', emoji: '😡', value: morale, desc: 'Muito insatisfeito e com moral em baixa' };
+  },
+
   renderSquad() {
     const tbody = document.getElementById('squad-tbody');
     tbody.innerHTML = '';
@@ -256,13 +265,15 @@ const app = {
       tr.className = isStarter ? 'squad-starter' : 'squad-bench';
       if (this.selectedPlayerIdx === idx) tr.classList.add('squad-selected');
 
-      const starIcon = p.isStar ? '⭐' : (p.isTopWorld ? '🌍' : '');
+      const starIcon = p.isTopWorld ? '⭐' : (p.isStar ? '★' : '');
       const energyColor = p.energy > 80 ? '#22c55e' : (p.energy > 55 ? '#f59e0b' : '#ef4444');
+      const humor = this.playerHumor(p);
+      tr.title = `${p.name} (${p.position}) · Humor: ${humor.emoji} ${humor.label} (${humor.value}) — ${humor.desc}`;
 
       tr.innerHTML = `
         <td><strong>${idx + 1}</strong></td>
         <td><span class="pos-badge pos-${p.position}">${p.position}</span></td>
-        <td><strong>${p.name}</strong> ${starIcon}</td>
+        <td><strong>${p.name}</strong> ${starIcon} <span class="player-humor-badge" title="Humor: ${humor.label} (${humor.value}) — ${humor.desc}">${humor.emoji}</span></td>
         <td>${p.age}</td>
         <td><strong>${p.strength}</strong></td>
         <td>${p.cr1 || '-'}</td>
@@ -533,7 +544,7 @@ const app = {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><span class="pos-badge pos-${p.position}">${p.position}</span></td>
-        <td><strong>${p.name}</strong> ${p.isStar ? '⭐' : ''}</td>
+        <td><strong>${p.name}</strong> ${p.isTopWorld ? '⭐' : (p.isStar ? '★' : '')}</td>
         <td>${p.age}</td>
         <td><strong>${p.strength}</strong></td>
         <td>${p.cr1 || '-'}</td>

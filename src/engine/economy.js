@@ -53,11 +53,23 @@ class EconomyEngine {
       wageRoom: Math.max(0, economy.board.wageLimit - committedWages) };
   }
 
-  static checkSpending(state, amount, wageDelta = 0) {
-    const budget = this.budget(state);
+  static checkSpending(state, amount, wageDelta = 0, team = state.userTeam) {
+    const budget = this.budget(state, team);
     if (!Number.isFinite(amount) || amount < 0 || !Number.isFinite(wageDelta)) throw new Error('Valores do orçamento inválidos.');
-    if (amount > budget.available) throw new Error('O negócio ultrapassa o orçamento de contratações da diretoria. Venda jogadores ou solicite uma revisão em Finanças.');
-    if (budget.committedWages + wageDelta > budget.wageLimit && wageDelta > 0) throw new Error('O salário ultrapassa o limite da folha definido pela diretoria.');
+    if (amount > budget.available) {
+      if (team.id === state.userTeamId) {
+        throw new Error('O negócio ultrapassa o orçamento de contratações da diretoria. Venda jogadores ou solicite uma revisão em Finanças.');
+      } else {
+        throw new Error(`O ${team.name} não possui orçamento de transferências suficiente (disponível: R$ ${Math.max(0, budget.available).toLocaleString('pt-BR')}).`);
+      }
+    }
+    if (budget.committedWages + wageDelta > budget.wageLimit && wageDelta > 0) {
+      if (team.id === state.userTeamId) {
+        throw new Error('O salário ultrapassa o limite da folha definido pela diretoria.');
+      } else {
+        throw new Error(`O ${team.name} atingiu o limite de folha salarial da diretoria para novas contratações.`);
+      }
+    }
   }
 
   static transact(state, action) {

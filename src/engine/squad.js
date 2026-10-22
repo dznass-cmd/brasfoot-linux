@@ -112,6 +112,60 @@ class SquadEngine {
     return (team.players || []).slice(0, team.starterCount ?? 11);
   }
 
+  static preserveUserLineupAfterChange(team, removedPlayer = null, addedPlayer = null) {
+    if (!team || !team.players) return team;
+    const formation = this.FORMATIONS[team.formation] ? team.formation : '4-4-2';
+    team.formation = formation;
+    const slots = this.formationSlots(formation);
+    const count = team.starterCount ?? Math.min(11, team.players.length);
+
+    if (removedPlayer) {
+      const idx = team.players.findIndex(p => String(p.id) === String(removedPlayer.id));
+      if (idx !== -1) {
+        const wasStarter = idx < count;
+        team.players.splice(idx, 1);
+        if (wasStarter) {
+          const starters = team.players.slice(0, count - 1);
+          const reserves = team.players.slice(count - 1);
+          const vacantSlot = slots[idx] || { role: removedPlayer.position, side: 'C' };
+
+          let bestReserve = null;
+          let bestRating = -1;
+          for (const res of reserves) {
+            if (!this.isAvailable(res)) continue;
+            const rating = this.lineupRating(res, vacantSlot);
+            if (rating > bestRating) {
+              bestRating = rating;
+              bestReserve = res;
+            }
+          }
+
+          if (bestReserve) {
+            reserves.splice(reserves.indexOf(bestReserve), 1);
+            starters.splice(idx, 0, bestReserve);
+            team.players = [...starters, ...reserves];
+            team.starterCount = starters.length;
+          } else {
+            team.players = [...starters, ...reserves];
+            team.starterCount = starters.length;
+          }
+        }
+      }
+    }
+
+    if (addedPlayer) {
+      if (!team.players.some(p => String(p.id) === String(addedPlayer.id))) {
+        team.players.push(addedPlayer);
+      }
+      addedPlayer.isStarter = false;
+    }
+
+    const finalCount = team.starterCount ?? Math.min(11, team.players.length);
+    team.starterCount = finalCount;
+    team.players.forEach((p, i) => { p.isStarter = i < finalCount; });
+    return team;
+  }
+
   static recoverEnergy(team, { played = true } = {}) {
     for (const player of team.players || []) {
       const minutes = played ? (player.lastMatchMinutes || 0) : 0;

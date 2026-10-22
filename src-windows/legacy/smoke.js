@@ -13,6 +13,8 @@
           app.onGameLoaded();
           assert(app.currentSimMatch && app.currentSimMatch.minute === 3, 'restored match');
           assert(app.matchPaused, 'resumed match stays paused');
+          assert(app.currentSimMatch.tacticalAnalysis.samples.length === 4, 'tactical chart history restored');
+          assert(document.querySelector('#match-analysis-chart svg'), 'restored tactical chart');
           BrasfootDesktop.report('PASS: saved career and live match restored in another process');
           setTimeout(function () { BrasfootDesktop.capture(function () { BrasfootDesktop.finish(true); }); }, 1500);
           return;
@@ -33,6 +35,13 @@
         for (var i = 0; i < 3; i++) { app.matchPaused = false; app.advanceLiveMinute(); }
         app.pauseLiveMatch();
         assert(app.gameState.activeMatch.minute === 3, 'three match minutes');
+        assert(app.currentSimMatch.tacticalAnalysis.samples.length === 4, 'tactical samples');
+        document.querySelector('[data-match-tab="analysis"]').click();
+        var metric = document.getElementById('match-analysis-metric');
+        metric.value = 'energy'; metric.dispatchEvent(new Event('change'));
+        assert(document.querySelector('#match-analysis-chart svg'), 'live tactical chart');
+        assert(!/NaN|Infinity/.test(document.getElementById('match-analysis-chart').innerHTML), 'finite tactical chart values');
+        document.querySelector('[data-match-tab="all"]').click();
         assert(app.persistMatchProgress(), 'save checkpoint');
         var saved = app.getSaveStore().load();
         assert(saved && saved.activeMatch.minute === 3, 'read checkpoint');

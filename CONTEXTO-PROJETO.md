@@ -1,6 +1,6 @@
 # Contexto do projeto Brasfoot Revenge
 
-Registro atualizado em **21/10/2026**, após a implementação de TV, patrocínios, orçamento da diretoria, contratos, textura aprimorada e Placar da Rodada em tempo real.
+Registro atualizado em **22/10/2026**, após acrescentar a análise estatística das táticas durante as partidas.
 
 Pasta do projeto: `.` (raiz do repositório).
 
@@ -24,6 +24,7 @@ As funcionalidades implementadas incluem:
 - **Finanças:** caixa, receitas, despesas, extrato por temporada e tipo, gráfico, folha salarial e projeção do ingresso e do caixa. O histórico pertence ao clube e começa a partir do saldo preservado na atualização. [Regras e próximas sugestões](docs/FINANCAS.md).
 - **Economia e contratos:** TV automática, três patrocínios anuais, limites de salário/negociações e revisão da diretoria; prazos, renovação por desempenho, luvas e rescisão. Mercado tem **Contratos** e **Sem clube**. Expirados saem antes da formação de jovens; a migração mantém dinheiro e salários. [Regras completas](docs/ECONOMIA-CONTRATOS.md).
 - **Táticas:** 11 formações, sete grupos de instruções, seis planos rápidos e escolha dos cobradores de pênaltis, faltas e escanteios.
+- **Análise tática ao vivo:** gráfico de posse, xG, finalizações, passes certos e energia, com mudanças dos dois técnicos e comparação antes/depois em períodos iguais de até cinco minutos. Disponível no botão **Análise tática** e em **Geral** nas janelas maiores; histórico preservado na partida ativa. [Uso e limites](docs/TATICAS.md#gráfico-durante-a-partida).
 - Abertura pelo inicializador e atalhos com o processo separado do terminal.
 - Motor com caches derivados fora dos saves; abas atualizadas sob demanda; catálogo de clubes reutilizado e busca limitada aos melhores 100 resultados.
 - Salvamento completo nas operações de carreira e checkpoints menores durante a partida. Encerramento em etapas de uma partida, com retomada de rodadas incompletas.
@@ -44,6 +45,7 @@ As funcionalidades implementadas incluem:
 | `index.html`, `style.css`, `app.js` | Interface e integração do aplicativo offline |
 | `src/engine/squad.js` | Formações, escalação, adaptação, disponibilidade e recuperação |
 | `src/engine/tactics.js` | Instruções, planos rápidos, efeitos e cobradores |
+| `src/engine/tactical-analysis.js` | Amostras por minuto, séries recentes e comparação das mudanças táticas |
 | `src/engine/match.js` | Simulação ao vivo e automática |
 | `src/engine/performance.js` | Notas e relatórios das atuações |
 | `src/engine/market.js` | Negócios, propostas e contratos de empréstimo |
@@ -70,6 +72,7 @@ Os arquivos de `src/public/` e `src/server.js` pertencem à implementação anti
 - `team.economy` mantém cotas, patrocínio e orçamento por clube/ano. `state.freeAgents` conserva os atletas liberados; não podem reaparecer no clube estático da base. Migrações não cobram luvas ou reajustam salários nem creditam receitas passadas.
 - `player.performance` guarda avaliações da temporada. `playerRatings` nos jogos guarda as atuações; `performanceArchive` conserva duas temporadas anteriores.
 - As instruções e os cobradores ficam no clube e no estado da partida. Saves anteriores recebem valores padrão quando necessário.
+- `activeMatch.tacticalAnalysis` guarda as amostras e alterações táticas somente do jogo acompanhado pelo usuário; partidas automáticas não acumulam este histórico. Partidas antigas começam a registrar no minuto recuperado, sem reconstrução retroativa. A coleta não consome números aleatórios nem altera entradas do motor.
 - Trocas de clube, transições anuais, novas instruções antes do jogo e negociações só substituem a carreira aberta após a gravação funcionar.
 - `team.finances` guarda até cinco temporadas de registros financeiros, com saldo inicial e movimentações por rodada, negócios, obras e premiações. O registro não reconstrói receitas antigas. O ingresso fica em Finanças; sua alteração e as obras só são confirmadas após salvar. A projeção é estimada e não inclui receitas futuras ainda não contratadas nem premiação.
 - O encerramento pode guardar `backgroundSeasons[divisionId].nextMatch` durante uma rodada incompleta. A recuperação de energia acontece uma vez, no fim da rodada; calendários e índices são derivados, não são acrescentados ao save.
@@ -85,6 +88,8 @@ A aba Finanças acrescentou `scripts/test-finance.cjs` (12 grupos) e [relatório
 A etapa de economia e contratos acrescentou `scripts/test-economy-contracts.cjs` (15 grupos) e [relatório](docs/economy-contracts-test-results.json). As suítes anteriores e as completas de motor/carreira passaram após a integração. TV mais patrocínio fixo reduziram o diagnóstico inicial de caixa negativo de 71/80 clubes para 4/80, sem bônus, prêmios ou negócios futuros. Backup: `.backups/before-sponsors-budgets-contracts-20261021-135744/`. Parcelamento segue como sugestão futura. O tamanho dos estados simulados está nos relatórios; a quota efetiva do WebKit não foi medida.
 
 As verificações desta conversa usaram clubes copiados e armazenamento isolado. A execução visual do GTK/WebKit ficou bloqueada pelo acesso ao display; a tentativa com navegador também foi bloqueada pelas restrições do ambiente. Não registrar as novas telas como visualmente aprovadas sem uma conferência real na sessão gráfica.
+
+Na etapa de **22/10/2026**, o novo gráfico tático foi conferido visualmente em GTK4/WebKit e Chromium, com armazenamento isolado. O teste nativo offline completo também passou em dois processos, incluindo o gráfico, retomada, áudio e importação/exportação sem rede. O teste específico de análise tem oito grupos; a interface foi verificada em quatro larguras, de 460 a 1260 pixels. Motor completo (3.072 partidas), táticas, otimizações, Placar da Rodada e carreira rápida passaram. As restrições gráficas descritas no parágrafo anterior pertencem à etapa histórica de 21/10; não impedem esta verificação específica. [Registro detalhado](docs/HISTORICO-ALTERACOES.md#22102026--análise-tática-durante-as-partidas).
 
 As cópias anteriores dos arquivos modificados ficam em `.backups/`. São cópias das etapas de desenvolvimento, não exportações dos saves do jogador.
 

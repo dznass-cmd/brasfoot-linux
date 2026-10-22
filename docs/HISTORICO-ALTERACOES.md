@@ -1,10 +1,145 @@
 # Histórico consolidado das modificações
 
-Registro salvo em **21/10/2026**. Consolida a base documentada do projeto e as alterações concluídas nesta conversa até TV, patrocínios, orçamento e contratos dos jogadores.
+Registro atualizado em **22/10/2026**. Consolida a base documentada e as etapas de desenvolvimento, incluindo a correção das brechas de mercado, escalação e negociações.
 
 Projeto: Brasfoot Revenge.
 
-[Contexto para retomar o desenvolvimento](../CONTEXTO-PROJETO.md) · [Guia principal](../README.md)
+[Contexto para retomar o desenvolvimento](../CONTEXTO-PROJETO.md) · [Guia principal](../README.md) · [Revisão de Negociações](REVISAO-NEGOCIACOES.md)
+
+## 22/10/2026 — Desempenho com a Diretoria, Confiança em Tempo Real e Sistema de Demissão
+
+Solicitação: colocar status do meu desempenho com a diretoria e caso muito baixa podemos ser demitidos.
+
+- **Motor de Avaliação da Diretoria (`BoardEngine`)**:
+  - **Cálculo de metas realistas da temporada** (`expectation`):
+    - Baseia-se na força do elenco do usuário em relação aos rivais da mesma divisão.
+    - Na Série A: G4/Título (elencos top 2), Vaga Continental/G6 (top 3 a 6), Campanha Estável/Sul-Americana (7 a 13) e Permanência/Fora do Z4 (14 a 20).
+    - Nas divisões de acesso: Acesso à divisão superior (G4), primeira metade da tabela ou permanência.
+  - **Índice de confiança em tempo real (0 a 100%)** (`evaluate`):
+    - Impacto da posição atual versus meta estabelecida (bônus por estar acima da meta, penalidade por estar abaixo).
+    - Penalidade severa por estar na zona de rebaixamento (Z4).
+    - Avaliação de momento recente com base nos últimos 5 jogos (vitórias, empates, derrotas).
+    - Penalidade progressiva por sequência de derrotas consecutivas (2 a 5+ derrotas).
+    - Penalidade por déficit financeiro crônico (saldo negativo abaixo de -R$ 500 mil e -R$ 2 milhões).
+    - Período de carência nas primeiras 4 rodadas (score mínimo de 45% para evitar demissões precipitadas).
+    - Classificação em 6 níveis de estabilidade: *Inabalável* (>= 85%), *Muito Boa* (70–84%), *Estável* (50–69%), *Sob Pressão* (35–49%), *Ameaçado* (20–34%) e *Demissão Iminente* (< 20%).
+- **Interface e Feedback Visual**:
+  - **Painel de Confiança na Barra Lateral** (`#board-confidence-panel`):
+    - Barra de progresso colorida dinâmica (verde, amarelo, laranja, vermelho escuro).
+    - Indicação da meta da temporada, percentual exato e status da diretoria.
+    - Animação de pulso em alerta vermelho (`threatened`) quando a confiança cai abaixo de 35%.
+  - **Seção de Avaliação no Perfil do Treinador** (`manager-board-section`):
+    - Grid com: Objetivo da temporada, Posição atual, Aproveitamento (%), Saldo financeiro, Segurança no cargo, Confiança geral (pontuação / 100) e parecer detalhado da diretoria.
+- **Mecânica de Demissão e Continuidade da Carreira**:
+  - **Gatilho de demissão justa**:
+    - Disparado se a confiança cair abaixo de 20% após a 5ª rodada e o último resultado **não** for uma vitória (protegendo o técnico em caso de vitória de reação).
+  - **Modal de Comunicado Oficial** (`#dismissal-modal`):
+    - Comunicado oficial da diretoria com escudo do clube, motivos detalhados da rescisão e estatísticas da passagem (jogos, vitórias, empates e derrotas).
+    - Geração de até 3 propostas de emprego de clubes interessados para continuar a carreira imediatamente sem perder o progresso.
+    - Opção de reiniciar escolhendo outro clube da base de dados.
+  - **Transição de Carreira Limpa**:
+    - Passagem anterior registrada no histórico com status `dismissed` e motivo de rescisão.
+    - Nova passagem iniciada com o novo clube; comissão técnica interina assume o clube anterior.
+    - Salva persistido no LocalStorage de forma segura e 100% offline.
+- **Testes automatizados**:
+  - Criado `scripts/test-board-dismissal.cjs` com 8 grupos de testes automatizados cobrindo metas, carência, sequências de vitórias/derrotas, proteção contra demissão após vitória, geração de propostas e transição de carreira no motor e na interface.
+
+## 22/10/2026 — Organização de funções/posições com cores e sistema visual de humor dos jogadores
+
+Solicitação: organizar a função dos jogadores no menu com cores específicas para cada posição (G, L, Z, M, A) e exibir o humor do jogador ao clicar nele.
+
+- **Cores específicas por posição no menu e tabelas**:
+  - **G** (Goleiro): Amarelo / Âmbar (`#d97706`), com borda e contraste legível.
+  - **L** (Lateral): Azul Claro / Ciano (`#0284c7`).
+  - **Z** (Zagueiro): Azul Escuro / Real (`#2563eb`).
+  - **M** (Meio-campo): Verde clássico (`#16a34a`).
+  - **A** (Atacante): Vermelho vivo (`#dc2626`).
+  - **D** (Defensor genérico): Índigo / Violeta (`#6366f1`).
+  - Emblemas em formato `.pos-badge` aplicados no elenco (`squad-table`), na tela de táticas (`lineup-roster`), no navegador de clubes (`browser-roster`), no mercado de transferências, nos contratos e nos jogadores livres.
+  - Legenda de cores e funções adicionada na barra de status inferior do elenco.
+- **Organização estruturada do elenco**:
+  - Jogadores organizados com **Titulares** primeiro (Goleiro, Laterais, Zagueiros, Meias, Atacantes) e **Reservas** em seguida (Goleiro, Laterais, Zagueiros, Meias, Atacantes), desempatando por força.
+  - Linha divisória visual clara (`RESERVAS`) separando os titulares dos suplentes no elenco e na tela de escalação.
+- **Sistema de humor ao clicar nos jogadores**:
+  - Exibição de humor com 5 faixas baseadas em `player.morale` (40 a 110):
+    - **Radiante (105–110)**: 😄 Em excelente fase e com moral nas alturas (`#16a34a`).
+    - **Feliz (95–104)**: 😊 Confiante e satisfeito com o momento (`#22c55e`).
+    - **Normal (80–94)**: 😐 Tranquilo e focado nos treinamentos (`#eab308`).
+    - **Descontente (65–79)**: 🙁 Insatisfeito com resultados ou poucos minutos (`#f97316`).
+    - **Abatido (40–64)**: 😡 Muito insatisfeito e com moral em baixa (`#ef4444`).
+  - **Card de Humor no Perfil Lateral** (`#profile-humor-card`):
+    - Apresenta o emoji do humor em destaque, o status textual, o valor exato, a barra colorida proporcional e a descrição do estado de ânimo do atleta.
+    - Efeito de pulso suave (`pulse-highlight`) acionado a cada clique para destacar visualmente a reação emocional do atleta.
+    - Linha de detalhamento no extrato de dados (`Humor / Moral`) com valor e rótulo.
+  - **Feedback no rodapé e na tela tática**:
+    - Barra de status inferior (`#roster-selection-status`) detalha o nome, posição e humor completo ao selecionar um jogador.
+    - Na tela tática (`#lineup-help`), a seleção do jogador indica o humor atual para apoiar decisões de substituição e desgaste.
+    - Ícone e tooltip de humor exibidos diretamente na lista de jogadores e no banco de reservas.
+
+Arquivos principais: `index.html`, `style.css`, `app.js`, `src/public/app.js`, `src/public/style.css`.
+Testes: validação da suíte completa de táticas, otimizações, mercado e offline em `python3 scripts/check-offline.py`.
+
+## 22/10/2026 — Correção de valores, forças e dados de jogadores famosos e estrelas
+
+Solicitação: corrigir valores de jogadores importantes e famosos no mercado e na base de dados offline (`data/teams.json` e `data/teams_data.js`).
+
+- **Cura e padronização de craques mundiais e ídolos nacionais**:
+  - Superestrelas mundiais (Vinícius Jr, Mbappé, Haaland, Rodri, Bellingham, Salah, Messi, Cristiano Ronaldo, Kane, De Bruyne, Yamal, Musiala, Palmer, etc.) configurados com força de elite (63–65), `isStar: true`, `isTopWorld: true`, valores de mercado autênticos (R$ 8M a R$ 19M+) e salários semanais condizentes.
+  - Ídolos e destaques do futebol brasileiro (Pedro, Arrascaeta, Memphis Depay, Estêvão, Hulk, Lucas Moura, Thiago Silva, Rodrigo Garro, Gustavo Gómez, Raphael Veiga, etc.) com forças de 56 a 60, `isStar: true`, valores de R$ 5M a R$ 15M e salários ajustados.
+- **Relocação e restauração de lendas**:
+  - Correção de 34 atletas de ponta que estavam em clubes incorretos devido a raspagens antigas ou ambíguas (Hulk no Atlético-MG, Estêvão e Veiga no Palmeiras, Matheus Pereira e Cássio no Cruzeiro, Vegetti e Coutinho no Vasco, Luiz Henrique e Almada no Botafogo, De Bruyne e Rodri no Man City, Modric no Real Madrid, Gerson no Flamengo, Arias no Fluminense, etc.).
+  - Adição de lendas e reforços ausentes (Messi, Lewandowski, Salah, Griezmann, Payet, Igor Jesus, Benzema, De Paul, Son, etc.) em seus clubes adequados com IDs únicos.
+- **Emblemas e identificação visual no jogo**:
+  - Superestrelas mundiais recebem a estrela dourada `⭐` (`isTopWorld`).
+  - Craques nacionais e destaques da liga recebem a clássica estrela prateada `★` (`isStar`).
+  - Exibição consistente em todas as telas: navegação de clubes, perfil do atleta, escalação do elenco, mercado e simulação da partida.
+- **Integração com scripts de atualização**:
+  - Script autônomo `scripts/fix-famous-players.py` integrado à rotina `scripts/update-rosters.py`, garantindo que futuras atualizações de elencos preservem os atributos e estrelas curados.
+
+Arquivos principais: `scripts/fix-famous-players.py`, `scripts/update-rosters.py`, `data/teams.json`, `data/teams_data.js`, `app.js`, `src/public/app.js`.
+Testes: validação da fórmula de passe, integridade dos IDs e verificação de offline em `python3 scripts/check-offline.py`.
+
+## 22/10/2026 — Correção do mercado, escalação, empréstimos e negociações
+
+Solicitação: corrigir as 5 falhas reproduzíveis e 2 limitações identificadas no mercado (lucro com venda/recompra imediata, empréstimos sem jogos, desfazimento da escalação, mercado externo congelado, busca sensível a acentos, orçamento/folha da IA e passe estático).
+
+- **Anti-arbitragem e proteção de revenda**: alinhamento bid/ask onde o valor máximo pago pela IA é menor ou igual ao valor mínimo exigido para venda. Bloqueio estrito de recompra imediata na mesma rodada e piso de revenda baseado no valor pago na aquisição recente, eliminando ciclos de lucro sem passagem de tempo.
+- **Empréstimos com duração e vigência real**: bloqueio de novos empréstimos com o campeonato encerrado. Cálculo de taxa proporcional aos jogos restantes da temporada e exibição da estimativa de jogos e prazo antes da confirmação.
+- **Preservação da escalação manual**: contratações entram no banco de reservas sem mexer nos titulares. Vendas e rescisões de reservas preservam exatamente os 11 titulares e suas posições. A saída de um titular preenche exclusivamente a vaga desocupada pelo melhor reserva disponível, mantendo intactos os outros 10 titulares e táticas.
+- **Envelhecimento determinístico de clubes externos**: clubes ainda não materializados no save são avançados ano a ano de forma determinística até o ano atual da carreira (`simulatedYear`), refletindo idades, evolução e aposentadorias tanto na busca quanto na negociação, sem inflar o save com os 703 clubes da base.
+- **Busca sem acentos**: normalização Unicode (`NFD` sem marcas diacríticas) tanto na consulta quanto nos nomes dos atletas, permitindo localizar "José" digitando "Jose", "João" com "joao", independente de maiúsculas/minúsculas.
+- **Passe de referência dinâmico**: recálculo automático de `player.value` durante a evolução anual da carreira acompanhando o ganho de força e o impacto da idade.
+- **Orçamento e folha salarial da IA**: a IA respeita os mesmos limites de caixa, verba de transferências da diretoria e limite de folha salarial antes de aceitar compras manuais do usuário, além de avaliar necessidade por posição e nível do elenco.
+- **Contrapropostas e recusa fundamentada**: propostas fora da faixa aceitável recebem contraproposta clara com valor sugerido (com botão para aplicação imediata) ou recusa fundamentada, sem revelar valores mágicos garantidos.
+- **Filtros avançados de mercado**: novos filtros por preço máximo, salário máximo, idade máxima e situação contratual (disponíveis, jovens emprestáveis, contrato no fim).
+- **Resumo financeiro completo**: modal de transferência com projeção de impacto no caixa, compromisso com a folha salarial, espaço restante no teto da diretoria, prazo e avisos preventivos de impedimentos.
+
+Arquivos principais: `src/engine/market.js`, `src/engine/squad.js`, `src/engine/contracts.js`, `src/engine/economy.js`, `src/engine/career.js`, `app.js`, `index.html`, `style.css`.
+Testes: `scripts/test-negotiations-revisao.cjs` (8 grupos de teste específicos cobrindo todos os cenários da revisão) e preservação dos 35 grupos de testes anteriores.
+
+## 22/10/2026 — Análise tática durante as partidas
+
+Solicitação: acompanhar em um gráfico estatístico o efeito das táticas em tempo real.
+
+- Painel **Efeito das táticas**, acima do Placar da Rodada nas janelas maiores, e botão **Análise tática** para ampliar a consulta em qualquer largura.
+- Linhas dos dois clubes para posse, xG, finalizações, precisão dos passes e energia em campo. Estatísticas recentes usam uma janela móvel de até cinco minutos; energia usa o nível médio dos atletas em campo. Pontos do gráfico têm consulta pelo mouse; minutos futuros ficam vazios.
+- Cada alteração de formação, estilo, instruções ou cobradores recebe um **T**, inclusive ajustes automáticos do adversário. O seletor permite consultar cada mudança ou acompanhar a última do próprio time.
+- Tabela com valores anteriores, posteriores e variação para os dois clubes. Usa períodos iguais, de até cinco minutos, delimitados pelas outras mudanças táticas. Alterações sem minutos anteriores ou substituídas no mesmo minuto não recebem uma comparação inventada.
+- Amostras e instruções históricas ficam em `activeMatch.tacticalAnalysis`, acompanhando save completo, checkpoint e exportação da partida ativa. Saves antigos começam a registrar no minuto recuperado; jogos automáticos não acumulam estas amostras.
+- Registro sem consumir aleatoriedade ou mudar os parâmetros da simulação; cores, tipos de linha e legenda distinguem as equipes. O painel informa pausa e apito final, e a consulta permanece disponível antes de continuar a rodada.
+
+Arquivos principais: novo `src/engine/tactical-analysis.js`, `src/engine/match.js`, `app.js`, `index.html`, `style.css` e ajustes da edição legada. [Regras de leitura](TATICAS.md#gráfico-durante-a-partida).
+
+Verificações desta etapa:
+
+- `node scripts/test-tactical-analysis.cjs`: oito grupos, incluindo igualdade de resultados e sorteios com/sem registro, dados recentes, períodos iguais, ambos os técnicos, migração, partidas como visitante, abandono e retomada determinística.
+- `scripts/test-tactical-analysis-ui.js`, com Playwright e Chromium local: cinco indicadores, controles reais, recuperação, mudanças de ambos os técnicos, Placar da Rodada, apito final e larguras de 1260, 1024, 800 e 460 pixels. Capturas conferidas visualmente.
+- Conferência gráfica isolada em GTK4/WebKitGTK: cinco indicadores, aplicação de pressão alta, comparação do desgaste, gravação/recuperação do histórico, ausência de transbordamento horizontal e captura real da tela.
+- `bash scripts/test-offline.sh`: teste nativo completo sem interfaces de rede, agora incluindo o gráfico, recarga, importação/exportação e retomada em outro processo. Dois processos passaram com armazenamento e cache isolados.
+- Motor completo: 12 grupos e 3.072 partidas; táticas: 11 grupos e 24 comparações; otimizações: 13 grupos; carreira rápida: nove grupos e dez transições; partidas ao vivo e Placar da Rodada também passaram.
+- Auditoria offline e compilação dos fontes legados com `node scripts/legacy/build.cjs` passaram. A compilação não representa um novo teste em Windows XP.
+
+Backup dos arquivos iniciais desta etapa: `.backups/before-live-tactical-analysis-20261022-103026/`. Testes usaram clubes e perfis isolados, sem acessar os saves do jogador.
 
 ## Base já documentada ao retomar o projeto
 

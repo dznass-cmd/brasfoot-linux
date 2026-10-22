@@ -20,19 +20,91 @@ class MarketEngine {
         || state.currentRound > offer.expiresRound || !player || player.loan)) offer.status = 'expired';
     }
   }
+  static clubRandom(clubId, year) {
+    let seed = 2166136261;
+    const str = `external:${clubId}:${year}`;
+    for (let i = 0; i < str.length; i++) seed = Math.imul(seed ^ str.charCodeAt(i), 16777619) >>> 0;
+    return function() {
+      seed = (seed + 0x6D2B79F5) >>> 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  static advanceClubToYear(team, targetYear, state = null) {
+    const baseYear = Number(team.simulatedYear || team.rosterData?.seasonYear || 2026);
+    targetYear = Number(targetYear);
+    if (!targetYear || baseYear >= targetYear) {
+      team.simulatedYear = targetYear || baseYear;
+      return team;
+    }
+    const Career = typeof module !== 'undefined' && module.exports ? require('./career.js') : window.CareerEngine;
+    for (let y = baseYear + 1; y <= targetYear; y++) {
+      const rng = this.clubRandom(team.id, y);
+      Career.updateSquadForYear(team, y, rng, state);
+    }
+    team.simulatedYear = targetYear;
+    MarketContracts.ensureTeam(team, targetYear);
+    return team;
+  }
+
+  static prepareExternalClub(state, originalTeam) {
+    if (!originalTeam) return null;
+    const existing = this.worldTeams(state).find(t => t.id === originalTeam.id);
+    if (existing) return existing;
+    const targetYear = Number(state?.seasonYear || 2026);
+    const team = JSON.parse(JSON.stringify(originalTeam));
+    const owned = new Set(this.worldTeams(state).flatMap(entry => entry.players.map(player => player.id)));
+    for (const player of state?.freeAgents || []) owned.add(player.id);
+    team.players = team.players.filter(player => !owned.has(player.id));
+    if (targetYear > Number(team.simulatedYear || team.rosterData?.seasonYear || 2026)) {
+      this.advanceClubToYear(team, targetYear, state);
+    }
+    return team;
+  }
+
   static ensureClub(state, clubId, database) {
     let team = this.worldTeams(state).find(entry => entry.id === Number(clubId));
-    if (team) return team;
+    if (team) {
+      if (state.seasonYear && Number(team.simulatedYear || team.rosterData?.seasonYear || 2026) < Number(state.seasonYear)) {
+        this.advanceClubToYear(team, state.seasonYear, state);
+      }
+      return team;
+    }
     const original = database.find(entry => entry.id === Number(clubId));
     if (!original) throw new Error('Clube não encontrado.');
     team = JSON.parse(JSON.stringify(original));
     const owned = new Set(this.worldTeams(state).flatMap(entry => entry.players.map(player => player.id)));
     for (const player of state.freeAgents || []) owned.add(player.id);
     team.players = team.players.filter(player => !owned.has(player.id));
+    if (state.seasonYear) {
+      this.advanceClubToYear(team, state.seasonYear, state);
+    }
     state.marketClubs.push(team);
     return team;
   }
-  static quote(player, loan = false) { return Math.max(1000, Math.round((Number(player.value) || 100000) * (loan ? .08 : 1))); }
+  static calculateValue(player) {
+    const strength = Number(player.strength) || 30;
+    const age = Number(player.simulationAge ?? player.age ?? 26);
+    const isStar = Boolean(player.isStar);
+    const isTopWorld = Boolean(player.isTopWorld);
+    const ageFactor = age < 23 ? 1.3 : age > 32 ? 0.6 : 1.0;
+    const starFactor = isStar ? 1.4 : 1.0;
+    const topFactor = isTopWorld ? 1.8 : 1.0;
+    const calculated = Math.round((Math.pow(strength, 2.5) * 180 * starFactor * topFactor * ageFactor) / 1000) * 1000;
+    return Math.max(10000, calculated);
+  }
+  static quote(player, loan = false, state = null) {
+    const baseValue = Number(player.value) || this.calculateValue(player);
+    if (!loan) return Math.max(1000, Math.round(baseValue));
+    let ratio = 1;
+    if (state && Number.isFinite(state.totalRounds) && Number.isFinite(state.currentRound)) {
+      const remaining = Math.max(0, state.totalRounds - state.currentRound + 1);
+      ratio = state.totalRounds > 0 ? remaining / state.totalRounds : 0;
+    }
+    return Math.max(1000, Math.round(baseValue * 0.08 * ratio));
+  }
   static formScore(player) {
     const games = Math.max(1, player.matchesPlayed || 0);
     return (MarketPerformance.recentAverage(player) ?? MarketPerformance.average(player) ?? 6)
@@ -69,21 +141,63 @@ class MarketEngine {
     if (!['buy', 'sell', 'loan-in', 'loan-out'].includes(type)) throw new Error('Negociação inválida.');
     if (!Number.isFinite(amount) || amount <= 0 || !Number.isSafeInteger(amount)) throw new Error('Informe um valor inteiro positivo para a negociação.');
     if (Number(clubId) === next.userTeamId) throw new Error('Escolha outro clube para negociar.');
+    const loan = type.startsWith('loan');
+    if (loan && next.totalRounds && next.currentRound > next.totalRounds) {
+      throw new Error('Não é possível realizar empréstimos após o término dos jogos da temporada.');
+    }
     const other = this.ensureClub(next, clubId, database);
-    MarketContracts.ensureState(next); MarketEconomy.ensure(next);
-    const outgoing = ['sell', 'loan-out'].includes(type), loan = type.startsWith('loan');
+    MarketContracts.ensureState(next);
+    MarketEconomy.ensure(next, other);
+    MarketEconomy.ensure(next, next.userTeam);
+    const outgoing = ['sell', 'loan-out'].includes(type);
     const seller = outgoing ? next.userTeam : other, buyer = outgoing ? other : next.userTeam;
     const player = seller.players.find(entry => String(entry.id) === String(playerId));
     if (!player) throw new Error('O jogador não está mais no clube de origem.');
     this.canRelease(seller, player);
-    const quote = this.quote(player, loan);
-    if (!outgoing && amount < Math.round(quote * (loan ? 1 : .95))) throw new Error(`O clube exige pelo menos R$ ${Math.round(quote * (loan ? 1 : .95)).toLocaleString('pt-BR')}.`);
-    const maximum = Math.round(quote * (loan ? 1.5 : 1.15 + Math.max(0, this.formScore(player) - 6) * .1));
-    if (outgoing && !acceptedOffer && amount > maximum) throw new Error(`O clube aceita pagar até R$ ${maximum.toLocaleString('pt-BR')} por este negócio.`);
+
+    const quote = this.quote(player, loan, next);
+    const recentDeal = market.history.slice().reverse().find(entry => entry.playerId === player.id && entry.year === next.seasonYear);
+
+    if (!outgoing) {
+      if (recentDeal && recentDeal.round === next.currentRound && recentDeal.toId === seller.id && recentDeal.fromId === buyer.id) {
+        throw new Error('O jogador acabou de ser transferido nesta rodada e o clube não aceita negociá-lo de imediato.');
+      }
+      const minFromRecent = recentDeal && recentDeal.toId === seller.id ? Math.round(recentDeal.amount * (loan ? 1.0 : 1.05)) : 0;
+      const minAcceptable = Math.max(quote, minFromRecent);
+      if (amount < minAcceptable) {
+        if (amount < Math.round(minAcceptable * 0.75)) {
+          throw new Error(`O ${seller.name} recusou a proposta por considerar o valor de R$ ${amount.toLocaleString('pt-BR')} muito distante da avaliação de ${player.name}.`);
+        }
+        throw new Error(`O ${seller.name} fez uma contraproposta: aceita negociar ${player.name} por R$ ${minAcceptable.toLocaleString('pt-BR')}.`);
+      }
+    } else {
+      if (!acceptedOffer) {
+        const maxCounts = { G: 6, L: 8, Z: 12, M: 16, A: 12 };
+        const currentCount = buyer.players.filter(entry => entry.position === player.position).length;
+        if (currentCount >= (maxCounts[player.position] || 10)) {
+          throw new Error(`O ${buyer.name} já conta com excesso de opções (${currentCount} atletas) para a posição de ${player.position} e não busca reforços.`);
+        }
+        const squadStrength = buyer.players.reduce((sum, p) => sum + (p.strength || 30), 0) / Math.max(1, buyer.players.length);
+        if (player.strength < squadStrength - 8 && currentCount >= 3) {
+          throw new Error(`O ${buyer.name} avalia que o nível técnico de ${player.name} (força ${player.strength}) não atende ao padrão do elenco (média ${Math.round(squadStrength)}).`);
+        }
+        const maximum = quote;
+        if (amount > maximum) {
+          if (amount > Math.round(maximum * 1.30)) {
+            throw new Error(`O ${buyer.name} recusou a proposta: a pedida de R$ ${amount.toLocaleString('pt-BR')} está muito acima da avaliação do atleta para o elenco.`);
+          }
+          throw new Error(`O ${buyer.name} fez uma contraproposta: aceita pagar até R$ ${maximum.toLocaleString('pt-BR')} por ${player.name}.`);
+        }
+      }
+    }
+
     const terms = loan ? null : MarketContracts.terms(player, outgoing ? {} : action.terms || {}, 'buy');
     const bonus = terms?.bonus || 0;
-    if ((Number(buyer.balance) || 0) < amount + bonus) throw new Error('O clube comprador não tem saldo suficiente para o passe e as luvas.');
-    if (!outgoing) MarketEconomy.checkSpending(next, amount + bonus, loan ? MarketFinance.wage(player) : terms.wage);
+    if ((Number(buyer.balance) || 0) < amount + bonus) {
+      throw new Error(outgoing ? `O ${buyer.name} não possui saldo suficiente em caixa para cobrir o valor da negociação.` : 'O clube comprador não tem saldo suficiente para o passe e as luvas.');
+    }
+    MarketEconomy.checkSpending(next, amount + bonus, loan ? MarketFinance.wage(player) : terms.wage, buyer);
+
     const context = { year: next.seasonYear, round: next.currentRound }, source = `deal_${market.nextId}`;
     MarketFinance.post(buyer, context, { kind: 'market', source,
       description: `${loan ? 'Empréstimo recebido' : 'Compra'}: ${player.name} (${seller.name})`,
@@ -92,15 +206,29 @@ class MarketEngine {
     MarketFinance.post(seller, context, { kind: 'market', source,
       description: `${loan ? 'Empréstimo cedido' : 'Venda'}: ${player.name} (${buyer.name})`,
       lines: [{ category: loan ? 'loanIncome' : 'playerSale', amount }] });
-    seller.players.splice(seller.players.indexOf(player), 1);
-    player.isStarter = false; buyer.players.push(player);
+
     const deal = this.recordDeal(next, { type: loan ? 'loan' : 'transfer', playerId: player.id, playerName: player.name,
       fromId: seller.id, fromName: seller.name, toId: buyer.id, toName: buyer.name, amount });
     if (loan) player.loan = { id: deal.id, ownerTeamId: seller.id, borrowerTeamId: buyer.id, startYear: next.seasonYear, endYear: next.seasonYear, fee: amount, wage: MarketFinance.wage(player) };
     else MarketContracts.assign(player, buyer, next.seasonYear, terms);
     if (acceptedOffer) acceptedOffer.status = 'accepted';
     for (const offer of market.offers) if (offer.status === 'pending' && offer.playerId === player.id) offer.status = 'withdrawn';
-    MarketSquad.autoSelectStarters(seller, seller.formation); MarketSquad.autoSelectStarters(buyer, buyer.formation);
+
+    if (seller.id === next.userTeamId) {
+      MarketSquad.preserveUserLineupAfterChange(seller, player, null);
+    } else {
+      seller.players.splice(seller.players.indexOf(player), 1);
+      MarketSquad.autoSelectStarters(seller, seller.formation);
+    }
+
+    if (buyer.id === next.userTeamId) {
+      MarketSquad.preserveUserLineupAfterChange(buyer, null, player);
+    } else {
+      player.isStarter = false;
+      buyer.players.push(player);
+      MarketSquad.autoSelectStarters(buyer, buyer.formation);
+    }
+
     return { state: next, message: loan ? `${player.name} emprestado ao ${buyer.name} até o fim de ${next.seasonYear}.`
       : `${player.name} transferido para o ${buyer.name} por R$ ${amount.toLocaleString('pt-BR')}.` };
   }
@@ -161,27 +289,44 @@ class MarketEngine {
     market.lastGenerated = { year: state.seasonYear, teamId: state.userTeamId, round };
     return offer;
   }
+  static normalizeText(value) {
+    return String(value || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
+  }
+
   /**
    * Searches players across all teams based on filter criteria
    * @param {Array} allTeams - List of all teams
-   * @param {Object} filters - Query filters (name, position, minStrength, maxStrength, maxPrice)
+   * @param {Object} filters - Query filters (name, position, minStrength, maxStrength, maxPrice, maxWage, maxAge, contractStatus)
    * @param {number} userTeamId - Team ID of player (to exclude from buy or mark as own)
    */
   static searchPlayers(allTeams, filters = {}, userTeamId = null) {
     const results = [];
-    const nameQuery = (filters.name || '').toLowerCase().trim();
+    const nameQuery = this.normalizeText(filters.name);
     const posFilter = (filters.position || '').toUpperCase();
     const minStr = parseInt(filters.minStrength, 10) || 0;
     const maxStr = parseInt(filters.maxStrength, 10) || 100;
     const maxPrice = parseInt(filters.maxPrice, 10) || Infinity;
+    const maxWage = parseInt(filters.maxWage, 10) || Infinity;
+    const maxAge = parseInt(filters.maxAge, 10) || Infinity;
+    const contractStatus = filters.contractStatus || 'all';
 
     for (const team of allTeams) {
       for (const p of team.players || []) {
         if (userTeamId && team.id === userTeamId && !filters.includeOwn) continue;
-        if (nameQuery && !p.name.toLowerCase().includes(nameQuery)) continue;
+        if (nameQuery && !this.normalizeText(p.name).includes(nameQuery)) continue;
         if (posFilter && posFilter !== 'TODOS' && p.position !== posFilter) continue;
         if (p.strength < minStr || p.strength > maxStr) continue;
         if (p.value > maxPrice) continue;
+        if (p.wage > maxWage) continue;
+        const playerAge = Number(p.simulationAge ?? p.age ?? 26);
+        if (Number.isFinite(maxAge) && playerAge > maxAge) continue;
+        if (contractStatus === 'available' && p.loan) continue;
+        if (contractStatus === 'loanable' && (p.loan || playerAge > 25)) continue;
+        if (contractStatus === 'expiring' && p.contract && p.contract.endYear > Number(filters.currentYear || 2026)) continue;
 
         // Keep only the best 100 references. Equal strengths retain database
         // order, matching the original stable sort without copying every player.
@@ -215,7 +360,7 @@ class MarketEngine {
 
     const player = sellerTeam.players[pIdx];
     try { this.canRelease(sellerTeam, player); } catch (error) { return { success: false, message: error.message }; }
-    const minAcceptable = Math.round(player.value * 0.95);
+    const minAcceptable = Math.max(1000, Math.round(player.value));
 
     if (offerPrice < minAcceptable) {
       return {

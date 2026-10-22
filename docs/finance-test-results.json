@@ -18,7 +18,7 @@
   "visualWebKitTest": false,
   "economyScan": {
     "freshDatabaseClubs": 80,
-    "negativeProjectedCash": 71,
+    "negativeProjectedCash": 75,
     "assumptions": "Full unplayed calendar; existing cash, wages, stadium and ticket price; central attendance; excludes prizes and future deals. No player save."
   }
 }

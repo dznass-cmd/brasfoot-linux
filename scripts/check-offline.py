@@ -40,7 +40,7 @@ for path in html.paths:
     if re.match(r'^(?:[a-z]+:)?//', path, re.I): errors.append(f'External resource: {path}')
     elif not (ROOT/path).is_file():errors.append(f'Missing resource: {path}')
 if "connect-src 'none'" not in html.csp:errors.append('Missing offline connection policy.')
-for relative in ('app.js','src/engine/match.js','src/engine/league.js','src/engine/career.js','src/engine/squad.js','src/engine/market.js','src/engine/finance.js','src/engine/economy.js','src/engine/contracts.js'):
+for relative in ('app.js', *(str(p.relative_to(ROOT)) for p in sorted((ROOT/'src/engine').glob('*.js')))):
     if re.search(r'\b(?:fetch\s*\(|XMLHttpRequest\b|WebSocket\b|EventSource\b)',(ROOT/relative).read_text()):errors.append(f'Network API in runtime: {relative}')
 for resource in re.findall(r'url\([\'"]?([^\)\'\"]+)',(ROOT/'style.css').read_text()):
     if not (ROOT/resource).is_file():errors.append(f'Nonlocal/missing CSS resource: {resource}')

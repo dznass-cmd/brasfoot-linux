@@ -107,6 +107,19 @@
         <span id="user-division">Série A</span>
         <span id="user-club-stadium">Estádio</span>
         <div class="club-metrics"><span>Condição física<strong id="squad-fitness">100%</strong></span><span>Força média<strong id="squad-strength">0</strong></span></div>
+        <div class="board-confidence-panel" id="board-confidence-panel" title="Avaliação de desempenho da diretoria">
+          <div class="board-confidence-header">
+            <span>Diretoria</span>
+            <strong id="board-confidence-status">Muito Boa</strong>
+          </div>
+          <div class="board-confidence-bar">
+            <div class="board-confidence-fill" id="board-confidence-fill" style="width: 75%; background: #22c55e;"></div>
+          </div>
+          <div class="board-confidence-meta">
+            <span id="board-target-label">Meta: Vaga no G4</span>
+            <strong id="board-confidence-pct">75%</strong>
+          </div>
+        </div>
       </div>
       <section class="next-match-panel" aria-label="Próximo jogo">
         <h2 id="next-match-label">Próximo jogo</h2>
@@ -120,7 +133,18 @@
         <div class="profile-position" id="profile-position"></div>
         <div class="profile-characteristics" id="profile-characteristics"></div>
         <p class="profile-availability" id="profile-availability"></p>
-        <dl class="profile-data"><div><dt>Valor do passe</dt><dd id="profile-value">—</dd></div><div><dt>Salário</dt><dd id="profile-wage">—</dd></div><div><dt>Idade</dt><dd id="profile-age">—</dd></div><div><dt>Lado</dt><dd id="profile-side">—</dd></div><div><dt>Jogos</dt><dd id="profile-matches">—</dd></div><div><dt>Gols</dt><dd id="profile-goals">—</dd></div><div><dt>Assistências</dt><dd id="profile-assists">—</dd></div></dl>
+        <div class="profile-humor-card" id="profile-humor-card" title="Humor e motivação do atleta">
+          <div class="profile-humor-main">
+            <span class="profile-humor-emoji" id="profile-humor-emoji">😊</span>
+            <div class="profile-humor-text">
+              <strong id="profile-humor-title">Humor: Feliz</strong>
+              <span id="profile-humor-desc" class="profile-humor-desc">Confiante e satisfeito</span>
+            </div>
+            <span id="profile-humor-val" class="profile-humor-val">100</span>
+          </div>
+          <div class="profile-humor-bar"><div class="profile-humor-fill" id="profile-humor-fill"></div></div>
+        </div>
+        <dl class="profile-data"><div><dt>Valor do passe</dt><dd id="profile-value">—</dd></div><div><dt>Salário</dt><dd id="profile-wage">—</dd></div><div><dt>Idade</dt><dd id="profile-age">—</dd></div><div><dt>Lado</dt><dd id="profile-side">—</dd></div><div><dt>Jogos</dt><dd id="profile-matches">—</dd></div><div><dt>Gols</dt><dd id="profile-goals">—</dd></div><div><dt>Assistências</dt><dd id="profile-assists">—</dd></div><div><dt>Humor / Moral</dt><dd id="profile-morale-detail">—</dd></div></dl>
       </section>
       <div class="sidebar-footer"><img src="assets/icons/player_shirt_green.png" alt=""><span id="squad-count"></span><button class="sidebar-link" data-action="options">Opções</button></div>
     </aside>
@@ -136,6 +160,18 @@
           </form>
         </header>
         <dl id="manager-profile-stats" class="manager-profile-stats"></dl>
+        <section class="manager-profile-section manager-board-section" aria-labelledby="manager-board-title">
+          <h3 id="manager-board-title"><img src="assets/icons/iconcoach16.png" alt="">Avaliação de Desempenho pela Diretoria</h3>
+          <div class="manager-board-grid">
+            <div><dt>Objetivo da temporada</dt><dd id="manager-board-target">—</dd></div>
+            <div><dt>Posição atual</dt><dd id="manager-board-position">—</dd></div>
+            <div><dt>Aproveitamento</dt><dd id="manager-board-efficiency">—</dd></div>
+            <div><dt>Saldo financeiro</dt><dd id="manager-board-finance">—</dd></div>
+            <div><dt>Segurança no cargo</dt><dd id="manager-board-security">—</dd></div>
+            <div><dt>Confiança geral</dt><dd id="manager-board-rating">—</dd></div>
+          </div>
+          <p id="manager-board-feedback" class="manager-board-feedback"></p>
+        </section>
         <div class="manager-profile-layout">
           <div>
             <section class="manager-profile-section" aria-labelledby="manager-clubs-title">
@@ -168,7 +204,19 @@
             <tbody id="squad-tbody"></tbody>
           </table>
         </div>
-        <div class="roster-status"><span id="roster-selection-status">Selecione um jogador para consultar seus dados.</span><span>Titulares <img src="assets/icons/player_shirt_greensmall.png" alt=""> · Reservas <img src="assets/icons/player_shirt_graysmall.png" alt=""></span></div>
+        <div class="roster-status">
+          <span id="roster-selection-status">Selecione um jogador para consultar seus dados e humor.</span>
+          <div class="roster-legend">
+            <span class="roster-shirts-legend">Titulares <img src="assets/icons/player_shirt_greensmall.png" alt=""> · Reservas <img src="assets/icons/player_shirt_graysmall.png" alt=""></span>
+            <span class="roster-pos-legend">
+              <span class="pos-badge pos-G">G</span> Goleiro
+              <span class="pos-badge pos-L">L</span> Lateral
+              <span class="pos-badge pos-Z">Z</span> Zagueiro
+              <span class="pos-badge pos-M">M</span> Meio
+              <span class="pos-badge pos-A">A</span> Ataque
+            </span>
+          </div>
+        </div>
       </section>
 
       <section id="teams-tab" class="tab-content" aria-label="Consultar times das ligas">
@@ -423,7 +471,7 @@
         <div class="market-panel" data-market-panel="search">
         <div class="market-filters">
           <input type="text" id="market-search-name" placeholder="Nome do jogador..." class="input-search">
-          <select id="market-pos-filter">
+          <select id="market-pos-filter" aria-label="Posição">
             <option value="TODOS">Todas as Posições</option>
             <option value="G">Goleiro (G)</option>
             <option value="L">Lateral (L)</option>
@@ -431,7 +479,16 @@
             <option value="M">Meia (M)</option>
             <option value="A">Atacante (A)</option>
           </select>
-          <input type="number" id="market-min-str" placeholder="Força mínima" min="0" max="100" class="input-number" aria-label="Força mínima">
+          <input type="number" id="market-min-str" placeholder="Força mín." min="0" max="100" class="input-number" aria-label="Força mínima">
+          <input type="number" id="market-max-price" placeholder="Preço máx. (R$)" min="0" step="10000" class="input-number" aria-label="Preço máximo">
+          <input type="number" id="market-max-wage" placeholder="Salário máx. (R$)" min="0" step="1000" class="input-number" aria-label="Salário máximo">
+          <input type="number" id="market-max-age" placeholder="Idade máx." min="15" max="50" class="input-number" aria-label="Idade máxima">
+          <select id="market-contract-filter" aria-label="Situação contratual">
+            <option value="all">Todas as situações</option>
+            <option value="available">Disponíveis (sem empréstimo)</option>
+            <option value="loanable">Jovens emprestáveis (≤ 25 anos)</option>
+            <option value="expiring">Contrato no fim</option>
+          </select>
           <button id="market-search-btn" class="btn btn-primary">Buscar</button>
         </div>
 
@@ -502,7 +559,10 @@
           <label>Prazo (temporadas, incluindo a atual)<input id="transfer-contract-years" type="number" min="1" max="5" step="1"></label>
           <label>Salário por rodada (R$)<input id="transfer-contract-wage" type="number" min="1" max="100000000" step="1"></label>
           <label>Luvas à vista (R$)<input id="transfer-contract-bonus" type="number" min="0" max="1000000000" step="1"></label>
-        </fieldset><p id="transfer-terms" class="market-help"></p><p id="transfer-error" class="transfer-error" role="alert"></p></div>
+        </fieldset><p id="transfer-terms" class="market-help"></p>
+        <div id="transfer-summary-box" class="transfer-summary-box"></div>
+        <div id="transfer-impediment" class="transfer-impediment" hidden></div>
+        <p id="transfer-error" class="transfer-error" role="alert"></p></div>
       <footer class="modal-footer"><button type="button" class="btn" data-close="transfer-modal">Cancelar</button><button type="submit" class="btn btn-primary">Confirmar negociação</button></footer>
     </form>
   </div>
@@ -534,6 +594,7 @@
           <button type="button" class="btn btn-small match-tab-btn active" data-match-tab="all" role="tab" aria-selected="true">Geral</button>
           <button type="button" class="btn btn-small match-tab-btn" data-match-tab="lances" role="tab" aria-selected="false">Lances</button>
           <button type="button" class="btn btn-small match-tab-btn" data-match-tab="coach" role="tab" aria-selected="false">Comando</button>
+          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="analysis" role="tab" aria-selected="false">Análise tática</button>
           <button type="button" class="btn btn-small match-tab-btn" data-match-tab="round" role="tab" aria-selected="false">Placar (<span id="match-round-count">0</span>)</button>
         </div>
         <span id="match-status" class="match-status" role="status">Bola rolando</span>
@@ -568,6 +629,17 @@
           <div class="match-substitution"><p id="match-change-message" role="status">Escolha quem sai e quem entra para fazer uma substituição.</p><button id="confirm-match-sub-btn" class="btn btn-primary" disabled>Confirmar substituição</button></div>
         </section>
         <section class="match-round-panel" id="match-round-panel" aria-label="Outros jogos da rodada">
+          <section class="match-analysis" aria-labelledby="match-analysis-title">
+            <div class="match-analysis-heading"><h3 id="match-analysis-title">Efeito das táticas</h3><span id="match-analysis-status">AO VIVO</span></div>
+            <label class="match-analysis-metric">Indicador<select id="match-analysis-metric"><option value="possession">Posse de bola</option><option value="xG">Gols esperados (xG)</option><option value="shots">Finalizações</option><option value="accuracy">Passes certos</option><option value="energy">Energia em campo</option></select></label>
+            <div id="match-analysis-legend" class="match-analysis-legend"></div>
+            <div id="match-analysis-chart" class="match-analysis-chart"></div>
+            <p id="match-analysis-window" class="match-analysis-window"></p>
+            <label class="match-analysis-change">Comparar mudança<select id="match-analysis-change"><option value="latest">Última do meu time</option></select></label>
+            <p id="match-analysis-plan" class="match-analysis-plan"></p>
+            <div id="match-analysis-comparison" class="match-analysis-comparison" aria-live="off"></div>
+            <p id="match-analysis-note" class="match-analysis-note"></p>
+          </section>
           <div class="match-section-title match-round-title">
             <span>Placar da Rodada</span>
             <span id="match-round-badge" class="match-round-badge">Rodada 1</span>
@@ -592,6 +664,34 @@
     </section>
   </div>
 
+  <div id="dismissal-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="dismissal-title">
+    <div class="dismissal-card">
+      <div class="dismissal-header">
+        <img id="dismissal-club-shield" src="assets/icons/escudo.png" alt="" width="36" height="36">
+        <div>
+          <h3 id="dismissal-title">COMUNICADO OFICIAL DA DIRETORIA</h3>
+          <span id="dismissal-subtitle">Rescisão de Contrato do Treinador</span>
+        </div>
+      </div>
+      <div class="dismissal-body">
+        <p id="dismissal-statement" class="dismissal-statement"></p>
+        <div id="dismissal-reasons" class="dismissal-reasons"></div>
+        <div class="dismissal-stats-grid">
+          <div><span>Partidas</span><strong id="dismissal-stat-played">0</strong></div>
+          <div><span>Vitórias</span><strong id="dismissal-stat-won">0</strong></div>
+          <div><span>Empates</span><strong id="dismissal-stat-drawn">0</strong></div>
+          <div><span>Derrotas</span><strong id="dismissal-stat-lost">0</strong></div>
+        </div>
+        <h4 style="margin: 12px 0 4px; font-size: 12px; color: #172c1c;">Clubes interessados em você:</h4>
+        <p class="dismissal-help-text" style="margin: 0 0 10px; font-size: 11px; color: #4b6351;">Você pode assumir um novo clube imediatamente e dar sequência à sua carreira, ou escolher outro time.</p>
+        <div id="dismissal-offers-list" class="dismissal-offers-list"></div>
+        <div class="dismissal-actions">
+          <button id="dismissal-restart-btn" class="btn btn-secondary">Escolher outro clube da base</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Notification Toast -->
   <div id="toast" class="toast">Mensagem</div>
 
@@ -612,6 +712,7 @@
   <script src="src/engine/squad.js"></script>
   <script src="src/engine/tactics.js"></script>
   <script src="src/engine/performance.js"></script>
+  <script src="src/engine/tactical-analysis.js"></script>
   <script src="src/engine/match.js"></script>
   <script src="src/engine/league.js"></script>
   <script src="src/engine/finance.js"></script>

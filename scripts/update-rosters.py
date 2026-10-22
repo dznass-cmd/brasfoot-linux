@@ -344,6 +344,14 @@ def apply_snapshot(snapshot, snapshot_path):
     metadata['divisionCoverage'] = [{'id': division['id'], 'name': division['name'], 'total': len(division['teams']), 'updated': sum(i in updated_ids for i in division['teams'])} for country in leagues.values() for division in country.get('divisions', [])]
     write_json(ROOT / 'data/teams.json', teams)
     atomic_write(ROOT / 'data/teams_data.js', 'window.BRASFOOT_TEAMS = ' + json.dumps(teams, ensure_ascii=False, separators=(',', ':')) + ';\n')
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("fix_famous_players", str(ROOT / 'scripts/fix-famous-players.py'))
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        mod.fix_famous_players()
+    except Exception as error:
+        print(f'Aviso ao sincronizar craques e estrelas: {error}')
     write_json(ROOT / 'data/roster-update.json', {**metadata, 'clubs': report, 'conflictingSourcePlayers': [{'provider': key[0], 'id': key[1], 'clubs': sorted(ids)} for key, ids in conflicts.items()]})
     countries = json.loads((ROOT / 'data/countries.json').read_text())
     csv_text = io.StringIO()
