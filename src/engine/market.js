@@ -289,6 +289,200 @@ class MarketEngine {
     market.lastGenerated = { year: state.seasonYear, teamId: state.userTeamId, round };
     return offer;
   }
+
+  static getClubDivisionName(club, state) {
+    if (club?.divisionName) return club.divisionName;
+    if (state?.divisionTeams?.some(t => t.id === club.id)) return state.divisionName || 'Série A';
+    if (state?.careerDivisions) {
+      const div = state.careerDivisions.find(d => d.teams?.includes(club.id));
+      if (div?.name) return div.name;
+    }
+    const tier = Number(club?.tier) || 1;
+    if (tier >= 17) return 'Série A';
+    if (tier >= 13) return 'Série B';
+    if (tier >= 8) return 'Série C';
+    return 'Série D';
+  }
+
+  /**
+   * Calculates dynamic transfer and loan offers from interested clubs based on
+   * buyer budget, vacancy/urgency at the player's position, squad quality, and player form.
+   * @param {Object} player - The player to receive transfer offers for
+   * @param {Object} state - Current game state
+   * @param {Array} database - Full club database
+   * @returns {Array} List of calculated pending offers
+   */
+  static calculateTransferOffers(player, state, database = []) {
+    if (!player || !state?.userTeam) return [];
+    const market = this.ensureState(state);
+    this.expireOffers(state);
+
+    if (player.loan) return [];
+    if (state.userTeam.players.length <= 15) return [];
+    if (player.position === 'G' && state.userTeam.players.filter(p => p.position === 'G').length <= 1) return [];
+
+    const existingPending = market.offers.filter(o => o.playerId === player.id && o.status === 'pending');
+
+    const world = this.worldTeams(state);
+    const clubsMap = new Map();
+    for (const c of database || []) clubsMap.set(c.id, c);
+    for (const c of world) clubsMap.set(c.id, c);
+
+    const candidates = [...clubsMap.values()].filter(c => c.id !== state.userTeamId && !(c.players || []).some(p => p.id === player.id));
+    const baseQuote = this.quote(player, false, state);
+    const loanQuote = this.quote(player, true, state);
+    const remainingRounds = Math.max(0, (state.totalRounds || 38) - (state.currentRound || 1) + 1);
+    const formScore = this.formScore(player);
+    const recentAvg = MarketPerformance.recentAverage(player);
+
+    const maxPositions = { G: 6, L: 8, Z: 12, M: 16, A: 12 };
+    const idealCounts = { G: 2, L: 4, Z: 5, M: 6, A: 5 };
+
+    const evaluated = [];
+
+    for (const club of candidates) {
+      if (existingPending.some(o => o.clubId === club.id)) continue;
+
+      MarketContracts.ensureTeam(club, state.seasonYear);
+      MarketEconomy.ensure(state, club);
+      const budget = MarketEconomy.budget(state, club);
+      const balance = Number(club.balance) || 0;
+
+      const posPlayers = (club.players || []).filter(p => p.position === player.position);
+      const count = posPlayers.length;
+      if (count >= (maxPositions[player.position] || 10)) continue;
+
+      const squadAvg = (club.players || []).reduce((sum, p) => sum + (p.strength || 30), 0) / Math.max(1, (club.players || []).length);
+      const posAvg = posPlayers.length ? posPlayers.reduce((sum, p) => sum + (p.strength || 30), 0) / posPlayers.length : squadAvg;
+
+      if (player.strength < squadAvg - 7 && count >= 3) continue;
+
+      const urgency = Math.max(0, (idealCounts[player.position] || 4) - count);
+      const delta = player.strength - posAvg;
+
+      const terms = MarketContracts.terms(player, {}, 'buy');
+      const wageDelta = Number(terms.wage) || Number(player.wage) || 5000;
+      const loanWage = MarketFinance.wage(player);
+
+      const canAffordWage = budget.committedWages + wageDelta <= budget.wageLimit;
+      const canAffordLoanWage = budget.committedWages + loanWage <= budget.wageLimit;
+
+      const canBuy = balance >= baseQuote * 0.88 && budget.available >= baseQuote * 0.85 && canAffordWage;
+      const canLoan = remainingRounds > 0 && balance >= loanQuote && budget.available >= loanQuote && canAffordLoanWage;
+
+      if (!canBuy && !canLoan) continue;
+
+      let score = (player.strength * 1.5) + (delta * 3.2) + (urgency * 6.5) + (player.isTopWorld ? 10 : player.isStar ? 5 : 0) + Math.max(0, formScore - 6) * 3;
+      const hashJitter = this.hash(`${state.seasonYear}:${state.currentRound}:${club.id}:${player.id}`);
+      score += hashJitter * 8;
+
+      const divisionName = this.getClubDivisionName(club, state);
+
+      let offerType = 'transfer';
+      let offerAmount = 0;
+      let reason = '';
+
+      if (canBuy && (delta >= -1 || urgency >= 1 || balance >= baseQuote * 1.4)) {
+        offerType = 'transfer';
+        score += 20; // Prioritize purchase offers when club is able to buy
+        let mult = 1.0;
+        if (delta >= 3) mult += 0.08;
+        else if (delta >= 1) mult += 0.04;
+        if (urgency >= 2) mult += 0.06;
+        else if (urgency === 1) mult += 0.03;
+        if (recentAvg != null && recentAvg >= 7.0) mult += 0.05;
+        if (player.age <= 23) mult += 0.04;
+        if (player.age >= 32) mult -= 0.08;
+        if (balance >= 50_000_000) mult += 0.04;
+        mult = Math.max(0.92, Math.min(1.20, mult));
+
+        offerAmount = Math.round((baseQuote * mult) / 50000) * 50000;
+        if (offerAmount <= 0) offerAmount = Math.max(10000, baseQuote);
+        const maxSpend = Math.min(budget.available, Math.floor(balance * 0.85));
+        offerAmount = Math.min(offerAmount, maxSpend);
+
+        if (offerAmount < baseQuote * 0.80 && canLoan) {
+          offerType = 'loan';
+          score -= 15;
+        } else {
+          if (delta >= 3) {
+            reason = `O ${club.name} busca um titular absoluto para a posição (força ${player.strength} supera a média do setor) e formalizou proposta de compra definitiva.`;
+          } else if (urgency >= 1) {
+            reason = `O ${club.name} detectou carência urgente de opções no elenco para ${player.position} (${count} atletas no setor) e busca reforço imediato.`;
+          } else if (recentAvg != null && recentAvg >= 7.0) {
+            reason = `O ${club.name} acompanha o ótimo momento recente do atleta (nota média ${recentAvg.toFixed(1)}) e fez proposta oficial de compra.`;
+          } else if (player.age <= 23) {
+            reason = `O departamento de futebol do ${club.name} vê ${player.name} (${player.age} anos) como aposta de alto potencial de evolução no elenco.`;
+          } else {
+            reason = `O ${club.name} formalizou proposta de compra definitiva de R$ ${offerAmount.toLocaleString('pt-BR')} para reforçar o plantel nesta temporada.`;
+          }
+        }
+      } else if (canLoan) {
+        offerType = 'loan';
+      }
+
+      if (offerType === 'loan') {
+        const loanMult = 1.0 + Math.min(0.25, urgency * 0.08);
+        offerAmount = Math.round((loanQuote * loanMult) / 10000) * 10000;
+        if (offerAmount <= 0) offerAmount = Math.max(5000, loanQuote);
+        const maxSpend = Math.min(budget.available, Math.floor(balance * 0.5));
+        offerAmount = Math.min(offerAmount, maxSpend);
+        reason = `O ${club.name} propõe empréstimo até o fim de ${state.seasonYear} (${remainingRounds} jogos restantes), cobrindo 100% dos salários do jogador.`;
+      }
+
+      evaluated.push({
+        club,
+        divisionName,
+        balance,
+        score,
+        offerType,
+        offerAmount,
+        reason
+      });
+    }
+
+    const transfers = evaluated.filter(e => e.offerType === 'transfer');
+    const loans = evaluated.filter(e => e.offerType === 'loan');
+
+    transfers.sort((a, b) => (b.offerAmount - a.offerAmount) || (b.score - a.score));
+    loans.sort((a, b) => (b.offerAmount - a.offerAmount) || (b.score - a.score));
+
+    const needed = Math.max(0, 3 - existingPending.length);
+    const selected = [];
+    if (transfers.length > 0) {
+      selected.push(...transfers.slice(0, Math.min(2, needed)));
+      if (loans.length > 0 && selected.length < needed) selected.push(loans[0]);
+      if (transfers.length > 2 && selected.length < needed) selected.push(transfers[2]);
+    } else {
+      selected.push(...loans.slice(0, needed));
+    }
+
+    for (const item of selected) {
+      const offer = {
+        id: `calc_offer_${market.nextId++}`,
+        type: item.offerType,
+        status: 'pending',
+        playerId: player.id,
+        playerName: player.name,
+        forTeamId: state.userTeamId,
+        clubId: item.club.id,
+        clubName: item.club.name,
+        shield: item.club.shield,
+        division: item.divisionName,
+        clubBalance: item.balance,
+        amount: item.offerAmount,
+        seasonYear: state.seasonYear,
+        round: state.currentRound,
+        expiresRound: Math.min(state.totalRounds + 1, state.currentRound + 3),
+        reason: item.reason,
+        isCalculated: true
+      };
+      market.offers.push(offer);
+      existingPending.push(offer);
+    }
+
+    return existingPending;
+  }
   static normalizeText(value) {
     return String(value || '')
       .normalize('NFD')

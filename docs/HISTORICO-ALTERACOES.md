@@ -6,6 +6,35 @@ Projeto: Brasfoot Revenge.
 
 [Contexto para retomar o desenvolvimento](../CONTEXTO-PROJETO.md) · [Guia principal](../README.md) · [Revisão de Negociações](REVISAO-NEGOCIACOES.md)
 
+## 22/10/2026 — Ofertas de Transferência Calculadas por Clubes Interessados (Não-Genéricas)
+
+Solicitação: quero que quando clicar apareça ofertas calculadas nao seja generico.
+
+- **Motor de Cálculo Dinâmico de Propostas (`MarketEngine.calculateTransferOffers`)**:
+  - Em vez de uma tela genérica com lista estática de clubes e valores fixos, o sistema calcula propostas personalizadas e dinâmicas de clubes que possuem interesse real no jogador.
+  - **Critérios de IA para os clubes interessados**:
+    - **Capacidade financeira real**: o clube comprador deve possuir saldo em caixa e limite orçamentário suficiente (`availableBudget >= offerAmount`) para honrar a compra ou empréstimo.
+    - **Teto salarial**: verificação rigorosa de que o salário do atleta cabe na folha autorizada do clube comprador.
+    - **Carência e urgência por posição**: analisa o número de atletas inscritos no setor (G, L, Z, M, A) e dá preferência a posições com defasagem no elenco.
+    - **Qualidade técnica**: compara a força do jogador à média do elenco e dos titulares do clube comprador, pagando ágio (105% a 120% do valor) por atletas que chegam para ser titulares absolutos.
+    - **Desempenho e momento**: notas médias recentes, gols, assistências, idade jovem (promessa) ou veterano são ponderados no cálculo.
+    - **Variedade de propostas**: combina propostas de compra definitiva de clubes com alto poderio financeiro e opções de empréstimo (cobrindo 100% dos salários + taxa proporcional) para jogadores que buscam rodagem.
+    - **Justificativas personalizadas em português**: cada proposta exibe um motivo claro e detalhado formulado pela IA (ex: "O Palmeiras busca um titular absoluto para a zaga...", "O Coritiba detectou carência urgente no setor ofensivo...", etc.).
+- **Interface e Modal de Transferência (`#transfer-modal`)**:
+  - Nova seção no topo: **"💼 Ofertas Calculadas & Clubes Interessados"** (`#transfer-calculated-section`).
+  - Cards visuais completos com:
+    - Escudo oficial do clube comprador e divisão (Série A, Série B, etc.).
+    - Saldo em caixa do clube interessado.
+    - Badge de identificação: `[Compra Definitiva]` (verde) ou `[Empréstimo]` (azul).
+    - Valor da proposta em destaque verde (`R$ 7.600.000` ou taxa + salários).
+    - Justificativa técnica formulada pela IA.
+    - Botão **"⚡ Aceitar Proposta"**: transação instantânea em 1 clique via `commitMarketAction({ type: 'accept', offerId })`.
+    - Botão **"📝 Contraproposta"**: seleciona o clube e valor no formulário abaixo para ajuste manual.
+  - Seção sanfonada inferior (`#transfer-manual-details`): permite oferecer o jogador diretamente a qualquer outro clube ou fazer contrapropostas manuais mantendo flexibilidade total.
+  - No menu de contexto de clique direito, o botão de transferir informa a quantidade de propostas calculadas disponíveis.
+- **Testes Automatizados**:
+  - Criado `scripts/test-calculated-transfer-offers.cjs` com 6 testes validando geração de ofertas calculadas, checagem financeira de caixa e teto salarial, idempotência, bloqueios de regras, aceite instantâneo e integração com a interface DOM.
+
 ## 22/10/2026 — Menu de contexto ao clicar com botão direito no jogador para transferir e negociar
 
 Solicitação: quero que no painel possa clicar com botao direito no nome do jogador e abrar opçao de transferir.

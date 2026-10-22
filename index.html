@@ -559,16 +559,39 @@
   <div id="transfer-modal" class="modal-overlay" style="display:none">
     <form id="transfer-form" class="modal-card transfer-card" role="dialog" aria-modal="true" aria-labelledby="transfer-title">
       <header class="modal-header"><h2 id="transfer-title">Negociar jogador</h2><button type="button" class="window-close" data-close="transfer-modal" aria-label="Cancelar negociação">×</button></header>
-      <div class="transfer-body"><p id="transfer-player-summary"></p><label id="transfer-club-label" for="transfer-club">Clube de destino<select id="transfer-club"></select></label><label for="transfer-amount">Valor da negociação (R$)<input id="transfer-amount" type="number" min="1" step="1" required></label>
-        <fieldset id="transfer-contract-fields" class="contract-fields" hidden><legend>Contrato com o jogador</legend>
-          <label>Prazo (temporadas, incluindo a atual)<input id="transfer-contract-years" type="number" min="1" max="5" step="1"></label>
-          <label>Salário por rodada (R$)<input id="transfer-contract-wage" type="number" min="1" max="100000000" step="1"></label>
-          <label>Luvas à vista (R$)<input id="transfer-contract-bonus" type="number" min="0" max="1000000000" step="1"></label>
-        </fieldset><p id="transfer-terms" class="market-help"></p>
-        <div id="transfer-summary-box" class="transfer-summary-box"></div>
-        <div id="transfer-impediment" class="transfer-impediment" hidden></div>
-        <p id="transfer-error" class="transfer-error" role="alert"></p></div>
-      <footer class="modal-footer"><button type="button" class="btn" data-close="transfer-modal">Cancelar</button><button type="submit" class="btn btn-primary">Confirmar negociação</button></footer>
+      <div class="transfer-body">
+        <p id="transfer-player-summary"></p>
+
+        <!-- Calculated Transfer Offers Section (Rendered for outgoing player transfers) -->
+        <div id="transfer-calculated-section" class="transfer-calculated-section" hidden>
+          <div class="transfer-calculated-header">
+            <h3>💼 Ofertas Calculadas & Clubes Interessados</h3>
+            <span class="calculated-sub">Propostas reais formuladas pela IA de acordo com as carências e o caixa dos clubes:</span>
+          </div>
+          <div id="transfer-calculated-list" class="transfer-calculated-list"></div>
+        </div>
+
+        <!-- Manual Negotiation Section (Direct bid or counter-proposal) -->
+        <div id="transfer-manual-section" class="transfer-manual-section">
+          <details id="transfer-manual-details" class="transfer-manual-details" open>
+            <summary id="transfer-manual-summary">Negociação direta / Escolher outro clube</summary>
+            <div class="transfer-manual-body">
+              <label id="transfer-club-label" for="transfer-club">Clube de destino<select id="transfer-club"></select></label>
+              <label for="transfer-amount">Valor da negociação (R$)<input id="transfer-amount" type="number" min="1" step="1" required></label>
+              <fieldset id="transfer-contract-fields" class="contract-fields" hidden><legend>Contrato com o jogador</legend>
+                <label>Prazo (temporadas, incluindo a atual)<input id="transfer-contract-years" type="number" min="1" max="5" step="1"></label>
+                <label>Salário por rodada (R$)<input id="transfer-contract-wage" type="number" min="1" max="100000000" step="1"></label>
+                <label>Luvas à vista (R$)<input id="transfer-contract-bonus" type="number" min="0" max="1000000000" step="1"></label>
+              </fieldset>
+              <p id="transfer-terms" class="market-help"></p>
+              <div id="transfer-summary-box" class="transfer-summary-box"></div>
+              <div id="transfer-impediment" class="transfer-impediment" hidden></div>
+              <p id="transfer-error" class="transfer-error" role="alert"></p>
+            </div>
+          </details>
+        </div>
+      </div>
+      <footer class="modal-footer"><button type="button" class="btn" data-close="transfer-modal">Cancelar</button><button id="transfer-submit-btn" type="submit" class="btn btn-primary">Confirmar negociação</button></footer>
     </form>
   </div>
 

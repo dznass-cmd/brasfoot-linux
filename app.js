@@ -1761,6 +1761,16 @@ const app = {
       actionsEl.replaceChildren();
 
       if (isOwnClub) {
+        let calculatedOffers = [];
+        if (!player.loan && !this.gameState.activeMatch) {
+          try {
+            calculatedOffers = MarketEngine.calculateTransferOffers(player, this.gameState, this.allTeams);
+          } catch (e) {
+            calculatedOffers = [];
+          }
+        }
+        const canRelease = this.gameState.userTeam.players.length > 15 && (player.position !== 'G' || this.gameState.userTeam.players.filter(p => p.position === 'G').length > 1);
+
         // Option 1: Transfer / Sell (Highlighted as requested by user)
         const btnSell = document.createElement('button');
         btnSell.type = 'button';
@@ -1769,10 +1779,10 @@ const app = {
           <span class="player-context-icon">💼</span>
           <div class="player-context-text">
             <strong>Transferir jogador...</strong>
-            <span>Negociar venda para outro clube</span>
+            <span>${calculatedOffers.length > 0 ? `Ver propostas de ${calculatedOffers.length} clubes interessados` : 'Negociar venda para outro clube'}</span>
           </div>
         `;
-        btnSell.disabled = Boolean(player.loan) || Boolean(this.gameState.activeMatch);
+        btnSell.disabled = Boolean(player.loan) || Boolean(this.gameState.activeMatch) || !canRelease;
         btnSell.addEventListener('click', () => {
           this.closePlayerContextMenu();
           this.openTransfer('sell', player.id);
@@ -1791,7 +1801,7 @@ const app = {
             <span>Ceder a outro clube na temporada</span>
           </div>
         `;
-        btnLoan.disabled = Boolean(player.loan) || remainingRounds === 0 || Boolean(this.gameState.activeMatch);
+        btnLoan.disabled = Boolean(player.loan) || remainingRounds === 0 || Boolean(this.gameState.activeMatch) || !canRelease;
         btnLoan.addEventListener('click', () => {
           this.closePlayerContextMenu();
           this.openTransfer('loan-out', player.id);
@@ -1917,9 +1927,90 @@ const app = {
       for (const [key, value] of Object.entries(quote)) document.getElementById(`transfer-contract-${key}`).value = value;
       document.getElementById('transfer-contract-wage').min = quote.wage;
     }
+
+    // Calculated Offers Section Handling
+    const calcSection = document.getElementById('transfer-calculated-section');
+    const calcList = document.getElementById('transfer-calculated-list');
+    const manualDetails = document.getElementById('transfer-manual-details');
+    const manualSummary = document.getElementById('transfer-manual-summary');
+    const submitBtn = document.getElementById('transfer-submit-btn');
+
+    if (outgoing && !offer) {
+      const calculatedOffers = MarketEngine.calculateTransferOffers(player, this.gameState, this.allTeams);
+      if (calcSection) calcSection.hidden = false;
+      if (calcList) {
+        if (calculatedOffers && calculatedOffers.length > 0) {
+          calcList.innerHTML = calculatedOffers.map(o => `
+            <div class="transfer-calculated-card ${o.type === 'loan' ? 'card-loan' : ''}">
+              <div class="calc-card-top">
+                <div class="calc-club-info">
+                  <img src="${this.assetPath('escudos', o.shield)}" alt="" onerror="this.onerror=null;this.src='assets/icons/escudo.png'" class="calc-club-shield">
+                  <div class="calc-club-meta">
+                    <span class="calc-club-name">${this.escapeHTML(o.clubName)}</span>
+                    <span class="calc-club-division">${this.escapeHTML(o.division || 'Série A')} · Caixa: R$ ${this.shortMoney(o.clubBalance || 0)}</span>
+                  </div>
+                </div>
+                <div class="calc-card-tags">
+                  <span class="calc-badge calc-badge-${o.type}">${o.type === 'loan' ? 'Empréstimo' : 'Compra Definitiva'}</span>
+                </div>
+              </div>
+              <div class="calc-amount-row">
+                <span class="calc-amount-label">${o.type === 'loan' ? 'Taxa de empréstimo (100% salários pagos):' : 'Proposta formal de transferência:'}</span>
+                <strong class="calc-amount-val">R$ ${o.amount.toLocaleString('pt-BR')}</strong>
+              </div>
+              <p class="calc-reason-text">${this.escapeHTML(o.reason)}</p>
+              <div class="calc-card-actions">
+                <button type="button" class="btn btn-calc-accept" data-calc-accept="${o.id}">⚡ Aceitar Proposta</button>
+                <button type="button" class="btn btn-calc-select" data-calc-select="${o.id}">📝 Contraproposta</button>
+              </div>
+            </div>
+          `).join('');
+
+          calcList.querySelectorAll('[data-calc-accept]').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const offerId = btn.dataset.calcAccept;
+              if (this.commitMarketAction({ type: 'accept', offerId })) {
+                document.getElementById('transfer-modal').style.display = 'none';
+                this.transferRequest = null;
+              }
+            });
+          });
+
+          calcList.querySelectorAll('[data-calc-select]').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const offerId = btn.dataset.calcSelect;
+              const o = calculatedOffers.find(entry => entry.id === offerId);
+              if (o) {
+                select.value = o.clubId;
+                amount.value = o.amount;
+                if (manualDetails) manualDetails.open = true;
+                this.updateTransferTerms();
+                amount.focus();
+                amount.select();
+              }
+            });
+          });
+
+          if (manualDetails) manualDetails.open = false;
+          if (manualSummary) manualSummary.textContent = 'Ou negociar diretamente com outro clube...';
+        } else {
+          calcList.innerHTML = `<p class="calc-empty-note">Nenhum clube apresentou proposta de compra calculada no momento para as características deste atleta. Você ainda pode oferecer o atleta a qualquer clube manualmente abaixo.</p>`;
+          if (manualDetails) manualDetails.open = true;
+          if (manualSummary) manualSummary.textContent = 'Negociação direta com o clube de destino';
+        }
+      }
+    } else {
+      if (calcSection) calcSection.hidden = true;
+      if (calcList) calcList.replaceChildren();
+      if (manualDetails) manualDetails.open = true;
+      if (manualSummary) manualSummary.textContent = offer ? 'Detalhes da proposta recebida' : 'Condições da negociação';
+    }
+
+    if (submitBtn) submitBtn.textContent = offer ? 'Aceitar proposta' : 'Confirmar negociação';
     document.getElementById('transfer-error').textContent = '';
     this.updateTransferTerms();
-    document.getElementById('transfer-modal').style.display = 'flex'; amount.focus();
+    document.getElementById('transfer-modal').style.display = 'flex';
+    if (!outgoing || offer) amount.focus();
   },
 
   updateTransferTerms() {
