@@ -6,6 +6,31 @@ Projeto: Brasfoot Revenge.
 
 [Contexto para retomar o desenvolvimento](../CONTEXTO-PROJETO.md) · [Guia principal](../README.md) · [Revisão de Negociações](REVISAO-NEGOCIACOES.md)
 
+## 22/10/2026 — Campo 2D Dinâmico e Fluido Estilo Football Manager
+
+Solicitação: quero que o campo 2d sega dinamico igual no football manager.
+
+- **Motor de Movimentação Tática em Bloco (Estilo Football Manager 2D)**:
+  - **Compactação e Avanço de Linhas (`attackShiftHome`)**:
+    - Os 22 jogadores não ficam mais estáticos na formação base.
+    - Quando o time ataca, os defensores sobem até o meio-campo formando linha alta de impedimento (+16%), os meio-campistas avançam para a intermediária de ataque (+20%) e os atacantes pressionam a grande área adversária (+18%).
+    - O time defensor recua suas linhas em bloco para proteger a área (-8% a -12%), mantendo apenas atacantes de velocidade no círculo central prontos para o contragolpe.
+  - **Basculamento Lateral (`flankShift`)**:
+    - Quando a bola se desloca para uma das pontas/laterais, o bloco tático bascula naturalmente em direção ao flanco ativo para dar opção de passe e fechar espaços defensivos.
+  - **Oscilação Orgânica ("Respiração" Tática)**:
+    - Micro-passos individuais contínuos (`Math.sin(...)`) para que os atletas façam ajustes reais de posicionamento e desmarcação em campo.
+- **Destaques de Jogadas e Ações Especiais**:
+  - **Aura do Dono da Bola (`.has-ball`)**: o jogador que detém a posse no minuto atual recebe um anel pulsante luminoso em volta do seu disco (`@keyframes possessionPulse`) e atrai a bola para seus pés.
+  - **Comemoração de Gol (`.celebrating`)**: o artilheiro do gol corre em direção à bandeirinha de escanteio ou lateral saltando e comemorando (`@keyframes playerCelebrate`) enquanto os companheiros se aproximam.
+  - **Mergulho do Goleiro (`.diving`)**: em defesas difíceis (`DEFESA`), o goleiro salta em direção à trajetória da bola.
+  - **Cobranças de Escanteio**: cobrador vai até a quina da bandeirinha enquanto zagueiros altos e centroavantes se aglomeram na pequena área adversária.
+  - **Cores Oficiais dos Clubes nos Discos**: os discos circulares utilizam as cores primárias e secundárias reais de cada clube (`team.color1` e `team.color2`), com goleiros vestidos em tons especiais de contraste (âmbar/esmeralda).
+- **Animações Fluidas a 60fps sem Recriação de DOM**:
+  - Elementos DOM persistentes atualizados diretamente em `style.left` e `style.top` com curvas de transição suaves `cubic-bezier(0.25, 0.9, 0.35, 1)`, fazendo com que os atletas e a bola deslizem organicamente pelo gramado.
+  - Bola com sombra realista no gramado (`.ball-shadow`), rotação contínua e rastro iluminado em finalizações rápidas (`.shot-trail`).
+- **Testes Automatizados (`scripts/test-fm-dynamic-pitch.cjs`)**:
+  - 5 testes cobrindo avanço de linhas no ataque, basculamento lateral em jogadas de ponta, salto do goleiro em defesas, comemoração de gol e circulação de bola em posse normal.
+
 ## 22/10/2026 — Menu e Controles Unificados da Partida ao Vivo (Campo 2D, Narração e Velocidade)
 
 Solicitação: tem muita coisa nesse menu deixe mais organizado mostre um exemplo. Escolha: Menu da Partida ao Vivo (unificar os controles de velocidade, alternância do Campo 2D e narração).

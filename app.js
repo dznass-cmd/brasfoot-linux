@@ -3100,104 +3100,312 @@ const app = {
     if (clockDisplay) clockDisplay.textContent = state.finished ? '90\'' : `${state.minute || 0}'`;
     if (scoreDisplay) scoreDisplay.textContent = `${state.scores?.[0] ?? 0} × ${state.scores?.[1] ?? 0}`;
 
-    // 2. Compute Player Coordinates
-    const getFormationCoords = (formation, isHome) => {
+    // 2. Base formation slots generator
+    const getBaseFormationSlots = (formation) => {
       const counts = SquadEngine.FORMATIONS[formation] || SquadEngine.FORMATIONS['4-4-2'];
       const slots = [];
       // Goalkeeper
-      slots.push({ role: 'G', x: 6, y: 50 });
+      slots.push({ role: 'G', line: 'gk', x: 6, y: 50 });
 
       // Defenders
       const defCount = (counts.L || 0) + (counts.Z || 0);
       if (defCount === 3) {
-        slots.push({ role: 'Z', x: 18, y: 24 });
-        slots.push({ role: 'Z', x: 16, y: 50 });
-        slots.push({ role: 'Z', x: 18, y: 76 });
+        slots.push({ role: 'Z', line: 'def', x: 18, y: 24 });
+        slots.push({ role: 'Z', line: 'def', x: 16, y: 50 });
+        slots.push({ role: 'Z', line: 'def', x: 18, y: 76 });
       } else if (defCount === 5) {
-        slots.push({ role: 'L', x: 20, y: 12 });
-        slots.push({ role: 'Z', x: 17, y: 31 });
-        slots.push({ role: 'Z', x: 16, y: 50 });
-        slots.push({ role: 'Z', x: 17, y: 69 });
-        slots.push({ role: 'L', x: 20, y: 88 });
+        slots.push({ role: 'L', line: 'def', x: 20, y: 12 });
+        slots.push({ role: 'Z', line: 'def', x: 17, y: 31 });
+        slots.push({ role: 'Z', line: 'def', x: 16, y: 50 });
+        slots.push({ role: 'Z', line: 'def', x: 17, y: 69 });
+        slots.push({ role: 'L', line: 'def', x: 20, y: 88 });
       } else {
-        slots.push({ role: 'L', x: 19, y: 15 });
-        slots.push({ role: 'Z', x: 16, y: 38 });
-        slots.push({ role: 'Z', x: 16, y: 62 });
-        slots.push({ role: 'L', x: 19, y: 85 });
+        slots.push({ role: 'L', line: 'def', x: 19, y: 15 });
+        slots.push({ role: 'Z', line: 'def', x: 16, y: 38 });
+        slots.push({ role: 'Z', line: 'def', x: 16, y: 62 });
+        slots.push({ role: 'L', line: 'def', x: 19, y: 85 });
       }
 
       // Midfielders
       const midCount = counts.M || 4;
       if (midCount === 3) {
-        slots.push({ role: 'M', x: 33, y: 26 });
-        slots.push({ role: 'M', x: 30, y: 50 });
-        slots.push({ role: 'M', x: 33, y: 74 });
+        slots.push({ role: 'M', line: 'mid', x: 33, y: 26 });
+        slots.push({ role: 'M', line: 'mid', x: 30, y: 50 });
+        slots.push({ role: 'M', line: 'mid', x: 33, y: 74 });
       } else if (midCount === 5) {
-        slots.push({ role: 'M', x: 36, y: 15 });
-        slots.push({ role: 'M', x: 30, y: 32 });
-        slots.push({ role: 'M', x: 29, y: 50 });
-        slots.push({ role: 'M', x: 30, y: 68 });
-        slots.push({ role: 'M', x: 36, y: 85 });
+        slots.push({ role: 'M', line: 'mid', x: 36, y: 15 });
+        slots.push({ role: 'M', line: 'mid', x: 30, y: 32 });
+        slots.push({ role: 'M', line: 'mid', x: 29, y: 50 });
+        slots.push({ role: 'M', line: 'mid', x: 30, y: 68 });
+        slots.push({ role: 'M', line: 'mid', x: 36, y: 85 });
       } else {
-        slots.push({ role: 'M', x: 34, y: 18 });
-        slots.push({ role: 'M', x: 31, y: 39 });
-        slots.push({ role: 'M', x: 31, y: 61 });
-        slots.push({ role: 'M', x: 34, y: 82 });
+        slots.push({ role: 'M', line: 'mid', x: 34, y: 18 });
+        slots.push({ role: 'M', line: 'mid', x: 31, y: 39 });
+        slots.push({ role: 'M', line: 'mid', x: 31, y: 61 });
+        slots.push({ role: 'M', line: 'mid', x: 34, y: 82 });
       }
 
       // Attackers
       const attCount = counts.A || 2;
       if (attCount === 1) {
-        slots.push({ role: 'A', x: 45, y: 50 });
+        slots.push({ role: 'A', line: 'att', x: 45, y: 50 });
       } else if (attCount === 3) {
-        slots.push({ role: 'A', x: 46, y: 20 });
-        slots.push({ role: 'A', x: 47, y: 50 });
-        slots.push({ role: 'A', x: 46, y: 80 });
+        slots.push({ role: 'A', line: 'att', x: 46, y: 20 });
+        slots.push({ role: 'A', line: 'att', x: 47, y: 50 });
+        slots.push({ role: 'A', line: 'att', x: 46, y: 80 });
       } else {
-        slots.push({ role: 'A', x: 45, y: 36 });
-        slots.push({ role: 'A', x: 45, y: 64 });
+        slots.push({ role: 'A', line: 'att', x: 45, y: 36 });
+        slots.push({ role: 'A', line: 'att', x: 45, y: 64 });
       }
 
-      return slots.map(s => ({
-        role: s.role,
-        x: isHome ? s.x : (100 - s.x),
-        y: s.y
-      }));
+      return slots;
+    };
+
+    // 3. Dynamic Ball Positioning & Action Context
+    const lastEvent = state.events?.[state.events.length - 1];
+    const isCurrentEvent = Boolean(lastEvent && lastEvent.minute === state.minute);
+    const eventType = isCurrentEvent ? lastEvent.type : null;
+    const eventSide = isCurrentEvent ? (lastEvent.teamIndex ?? 0) : null;
+
+    let bx = 50, by = 50;
+    let isGoal = false;
+    let isShot = false;
+    let isCorner = false;
+    let isSave = false;
+    let ballOwnerId = null;
+    let passerId = null;
+    let showBanner = false;
+    let bannerContent = '';
+
+    if (isCurrentEvent && eventType) {
+      if (eventType === 'GOL' || eventType === 'GOL_PENALTI') {
+        isGoal = true;
+        isShot = true;
+        showBanner = true;
+        bx = eventSide === 0 ? 99 : 1;
+        by = 50;
+        bannerContent = `⚽ GOOOL! ${lastEvent.player} (${eventSide === 0 ? homeTeam.name : awayTeam.name})!`;
+        ballOwnerId = lastEvent.playerId;
+        passerId = lastEvent.assistId;
+      } else if (eventType === 'DEFESA') {
+        isSave = true;
+        isShot = true;
+        showBanner = true;
+        bx = eventSide === 0 ? 89 : 11;
+        by = 50 + (Math.sin((state.minute || 1) * 1.5) * 12);
+        bannerContent = `🧤 Defesa difícil do goleiro!`;
+        ballOwnerId = lastEvent.playerId;
+      } else if (eventType === 'FINALIZACAO_FORA') {
+        isShot = true;
+        showBanner = true;
+        bx = eventSide === 0 ? 93 : 7;
+        by = 24 + (Math.cos((state.minute || 1) * 1.3) * 16);
+        bannerContent = `❌ Chute com perigo para fora!`;
+        ballOwnerId = lastEvent.playerId;
+      } else if (eventType === 'ESCANTEIO') {
+        isCorner = true;
+        showBanner = true;
+        bx = eventSide === 0 ? 98.5 : 1.5;
+        by = ((state.minute || 1) % 2 === 0) ? 6 : 94;
+        bannerContent = `🚩 Escanteio para o ${eventSide === 0 ? homeTeam.name : awayTeam.name}`;
+      } else if (eventType === 'CONTRA_ATAQUE') {
+        showBanner = true;
+        bx = eventSide === 0 ? 66 : 34;
+        by = 50 + (Math.sin((state.minute || 1) * 1.8) * 18);
+        bannerContent = `⚡ Contra-ataque em velocidade!`;
+        ballOwnerId = lastEvent.playerId;
+      } else if (eventType === 'DESARME') {
+        bx = 50 + (Math.sin((state.minute || 1) * 2.2) * 12);
+        by = 50 + (Math.cos((state.minute || 1) * 2.2) * 20);
+        ballOwnerId = lastEvent.playerId;
+      } else if (['CARTAO_AMARELO', 'CARTAO_VERMELHO', 'SEGUNDO_AMARELO'].includes(eventType)) {
+        showBanner = true;
+        bx = eventSide === 0 ? 32 : 68;
+        by = 48;
+        bannerContent = eventType === 'CARTAO_AMARELO' ? `🟨 Cartão amarelo` : `🟥 EXPULSÃO!`;
+        ballOwnerId = lastEvent.playerId;
+      } else if (eventType === 'INTERVALO') {
+        showBanner = true;
+        bx = 50; by = 50;
+        bannerContent = `⏸️ Intervalo`;
+      } else if (eventType === 'FIM_JOGO') {
+        showBanner = true;
+        bx = 50; by = 50;
+        bannerContent = `🏁 Fim de Jogo!`;
+      }
+    } else {
+      // Normal possession: tactical ball circulation
+      const homePoss = state.stats?.possession?.[0] || 50;
+      const inHomePoss = (((state.minute || 1) * 17 + 11) % 100) < homePoss;
+      const possSide = inHomePoss ? 0 : 1;
+      const minutePhase = (state.minute || 1) % 3; // 0: build-up, 1: progression, 2: attack
+      if (possSide === 0) {
+        const baseX = minutePhase === 0 ? 30 : minutePhase === 1 ? 48 : 66;
+        bx = baseX + (Math.sin((state.minute || 1) * 1.4) * 8);
+        by = 50 + (Math.cos((state.minute || 1) * 1.1) * 26);
+      } else {
+        const baseX = minutePhase === 0 ? 70 : minutePhase === 1 ? 52 : 34;
+        bx = baseX - (Math.sin((state.minute || 1) * 1.4) * 8);
+        by = 50 + (Math.cos((state.minute || 1) * 1.1) * 26);
+      }
+      const activeIds = state.activeIds?.[possSide] || [];
+      if (activeIds.length > 1) {
+        ballOwnerId = activeIds[((state.minute || 1) % (activeIds.length - 1)) + 1];
+      }
+    }
+
+    // 4. Tactical Block Shift (Football Manager Dynamic Movement)
+    // Normalized push factor: -1 (all the way in home half) to +1 (all the way in away half)
+    const attackShiftHome = Math.max(-1, Math.min(1, (bx - 50) / 45));
+    // Lateral shift towards active flank
+    const flankShift = Math.max(-8, Math.min(8, (by - 50) * 0.16));
+
+    const computeDynamicCoords = (slots, isHome, teamPlayers, teamSide) => {
+      return slots.map((s, idx) => {
+        const player = teamPlayers[idx];
+        const isGk = s.role === 'G' || idx === 0;
+        let x = isHome ? s.x : (100 - s.x);
+        let y = s.y;
+
+        // Individual organic breathing micro-jitter
+        const jitter = Math.sin(((state.minute || 1) * 1.6) + idx) * 1.2;
+        y += jitter;
+
+        // Flank basculamento
+        if (!isGk) {
+          y += flankShift;
+        }
+
+        // Tactical forward / backward compactation
+        if (isHome) {
+          if (attackShiftHome > 0) {
+            // Home is attacking towards right (away goal)
+            if (s.line === 'gk') x += attackShiftHome * 4;
+            else if (s.line === 'def') x += attackShiftHome * 16;
+            else if (s.line === 'mid') x += attackShiftHome * 20;
+            else if (s.line === 'att') x += attackShiftHome * 18;
+          } else {
+            // Home is defending deep against away attack
+            if (s.line === 'def') x += attackShiftHome * 6;
+            else if (s.line === 'mid') x += attackShiftHome * 10;
+            else if (s.line === 'att') x += attackShiftHome * 8;
+          }
+        } else {
+          // Away team
+          if (attackShiftHome < 0) {
+            // Away is attacking towards left (home goal)
+            const awayPush = Math.abs(attackShiftHome);
+            if (s.line === 'gk') x -= awayPush * 4;
+            else if (s.line === 'def') x -= awayPush * 16;
+            else if (s.line === 'mid') x -= awayPush * 20;
+            else if (s.line === 'att') x -= awayPush * 18;
+          } else {
+            // Away is defending deep
+            if (s.line === 'def') x += attackShiftHome * 6;
+            else if (s.line === 'mid') x += attackShiftHome * 10;
+            else if (s.line === 'att') x += attackShiftHome * 8;
+          }
+        }
+
+        // Special Context Adjustments
+        if (player) {
+          // Ball carrier moves right to ball
+          if (player.id === ballOwnerId && !isGoal) {
+            x = bx + (isHome ? -1.8 : 1.8);
+            y = by;
+          } else if (player.id === passerId && !isGoal) {
+            x = bx + (isHome ? -9 : 9);
+            y = by + (y > 50 ? -6 : 6);
+          } else if (isGoal && player.id === ballOwnerId) {
+            // Scorer celebration run towards corner flag!
+            x = isHome ? 92 : 8;
+            y = 16;
+          } else if (isSave && isGk && ((isHome && eventSide === 1) || (!isHome && eventSide === 0))) {
+            // Goalkeeper diving towards ball intercept
+            x = isHome ? 8 : 92;
+            y = by;
+          } else if (isCorner) {
+            if (isHome && eventSide === 0) {
+              // Home corner: corner taker to corner flag, attackers to box
+              if (idx === slots.length - 1) { x = 98.5; y = by; }
+              else if (s.line === 'att' || s.role === 'Z') { x = 90 + (idx % 2) * 3; y = 42 + (idx * 4); }
+            } else if (!isHome && eventSide === 1) {
+              // Away corner
+              if (idx === slots.length - 1) { x = 1.5; y = by; }
+              else if (s.line === 'att' || s.role === 'Z') { x = 10 - (idx % 2) * 3; y = 42 + (idx * 4); }
+            }
+          }
+        }
+
+        // Clamping to ensure players remain on the pitch
+        if (isGk) {
+          x = isHome ? Math.max(3.5, Math.min(15, x)) : Math.max(85, Math.min(96.5, x));
+          y = Math.max(36, Math.min(64, y));
+        } else {
+          x = Math.max(5, Math.min(95, x));
+          y = Math.max(6, Math.min(94, y));
+        }
+
+        return {
+          role: s.role,
+          line: s.line,
+          x: Math.round(x * 10) / 10,
+          y: Math.round(y * 10) / 10
+        };
+      });
     };
 
     const container = document.getElementById('pitch-players-container');
     if (!container) return;
 
-    // Latest event for highlights
-    const lastEvent = state.events?.[state.events.length - 1];
     const highlightedPlayerId = lastEvent?.playerId || null;
-
     const playersHtml = [];
+    const nodesData = [];
+
     const teamsData = [
-      { team: homeTeam, side: 0, isHome: true, form: state.formations?.[0] || '4-4-2' },
-      { team: awayTeam, side: 1, isHome: false, form: state.formations?.[1] || '4-4-2' }
+      { team: homeTeam, side: 0, isHome: true, form: state.formations?.[0] || '4-4-2', kitColor: homeTeam.color1 || '#e11d48', kitBorder: homeTeam.color2 || '#ffffff' },
+      { team: awayTeam, side: 1, isHome: false, form: state.formations?.[1] || '4-4-2', kitColor: awayTeam.color1 || '#2563eb', kitBorder: awayTeam.color2 || '#ffffff' }
     ];
 
-    teamsData.forEach(({ team, side, isHome, form }) => {
+    teamsData.forEach(({ team, side, isHome, form, kitColor, kitBorder }) => {
       const activeIds = state.activeIds?.[side] || [];
       const players = activeIds.map(id => team.players.find(p => p.id === id)).filter(Boolean);
-      const coords = getFormationCoords(form, isHome);
+      const baseSlots = getBaseFormationSlots(form);
+      const dynamicCoords = computeDynamicCoords(baseSlots, isHome, players, side);
 
       players.forEach((player, idx) => {
-        const coord = coords[idx] || { x: isHome ? 25 : 75, y: 50 };
+        const coord = dynamicCoords[idx] || { x: isHome ? 25 : 75, y: 50 };
         const isGk = player.position === 'G' || idx === 0;
+        const isBallOwner = player.id === ballOwnerId;
         const isHighlighted = player.id === highlightedPlayerId;
+        const isCelebrating = isGoal && player.id === ballOwnerId;
+        const isDiving = isSave && isGk && ((isHome && eventSide === 1) || (!isHome && eventSide === 0));
         const hasYellow = (state.yellows?.[player.id] || 0) > 0;
         const isInjured = (state.injuredIds?.[side] || []).includes(player.id);
         const posCode = this.playerPositionCode ? this.playerPositionCode(player) : player.position;
         const surname = (player.name || '').trim().split(' ').pop();
+        const jerseyNum = isGk ? '1' : String(idx + 1);
+
+        const nodeClass = `pitch-player-node ${isHome ? 'home' : 'away'} ${isGk ? 'is-gk' : ''} ${isBallOwner ? 'has-ball' : ''} ${isHighlighted ? 'highlighted' : ''} ${isCelebrating ? 'celebrating' : ''} ${isDiving ? 'diving' : ''}`.trim();
+
+        nodesData.push({
+          id: player.id,
+          x: coord.x,
+          y: coord.y,
+          className: nodeClass
+        });
+
+        // Disc background color: club primary color for outfield, amber/emerald for GK
+        const discBg = isGk ? (isHome ? '#f59e0b' : '#10b981') : kitColor;
+        const discColor = isGk ? '#000000' : '#ffffff';
 
         playersHtml.push(`
-          <div class="pitch-player-node ${isHome ? 'home' : 'away'} ${isGk ? 'is-gk' : ''} ${isHighlighted ? 'highlighted' : ''}"
+          <div class="${nodeClass}"
+               data-player-id="${player.id}"
                style="left: ${coord.x}%; top: ${coord.y}%;"
                title="${this.escapeHTML(player.name)} (${posCode}) · Força ${player.strength}">
-            <div class="player-dot">
-              <span>${posCode[0]}</span>
+            <div class="player-dot" style="background-color: ${discBg}; border-color: ${kitBorder}; color: ${discColor};">
+              <span>${isGk ? 'G' : posCode[0]}</span>
             </div>
             <span class="player-mini-name">${this.escapeHTML(surname)}</span>
             ${hasYellow ? '<span class="status-icon">🟨</span>' : ''}
@@ -3207,75 +3415,33 @@ const app = {
       });
     });
 
-    container.innerHTML = playersHtml.join('');
+    // In browser with 22 existing nodes: update coordinates in-place to trigger 60fps CSS transitions!
+    const existingNodes = container.querySelectorAll ? container.querySelectorAll('.pitch-player-node') : [];
+    if (existingNodes && existingNodes.length === 22 && !this._resetPitchNodes) {
+      nodesData.forEach(data => {
+        const el = container.querySelector(`[data-player-id="${data.id}"]`);
+        if (el) {
+          el.style.left = `${data.x}%`;
+          el.style.top = `${data.y}%`;
+          el.className = data.className;
+        }
+      });
+    } else {
+      container.innerHTML = playersHtml.join('');
+      this._resetPitchNodes = false;
+    }
 
-    // 3. Dynamic Ball Positioning
+    // 5. Dynamic Ball Positioning & Animations
     const ball = document.getElementById('pitch-ball');
     const banner = document.getElementById('pitch-event-banner');
     const bannerText = document.getElementById('pitch-event-text');
     const tickerMsg = document.getElementById('pitch-ticker-msg');
 
     if (ball) {
-      let bx = 50, by = 50;
-      let showBanner = false;
-      let bannerContent = '';
-      let isGoal = false;
-
-      if (lastEvent && lastEvent.minute === state.minute) {
-        if (lastEvent.type === 'GOL' || lastEvent.type === 'GOL_PENALTI') {
-          isGoal = true;
-          showBanner = true;
-          bx = lastEvent.teamIndex === 0 ? 99 : 1;
-          by = 50;
-          bannerContent = `⚽ GOOOL! ${lastEvent.player} (${teamsData[lastEvent.teamIndex]?.team?.name || ''})!`;
-        } else if (lastEvent.type === 'DEFESA') {
-          showBanner = true;
-          bx = lastEvent.teamIndex === 0 ? 89 : 11;
-          by = 50;
-          bannerContent = `🧤 Defesa do goleiro!`;
-        } else if (lastEvent.type === 'FINALIZACAO_FORA') {
-          showBanner = true;
-          bx = lastEvent.teamIndex === 0 ? 92 : 8;
-          by = 28;
-          bannerContent = `❌ Chute para fora!`;
-        } else if (lastEvent.type === 'ESCANTEIO') {
-          showBanner = true;
-          bx = lastEvent.teamIndex === 0 ? 98 : 2;
-          by = 6;
-          bannerContent = `🚩 Escanteio para o ${teamsData[lastEvent.teamIndex]?.team?.name || ''}`;
-        } else if (lastEvent.type === 'CONTRA_ATAQUE') {
-          showBanner = true;
-          bx = lastEvent.teamIndex === 0 ? 65 : 35;
-          by = 50;
-          bannerContent = `⚡ Contra-ataque rápido!`;
-        } else if (['CARTAO_AMARELO', 'CARTAO_VERMELHO', 'SEGUNDO_AMARELO'].includes(lastEvent.type)) {
-          showBanner = true;
-          bx = lastEvent.teamIndex === 0 ? 30 : 70;
-          by = 45;
-          bannerContent = lastEvent.type === 'CARTAO_AMARELO' ? `🟨 Cartão amarelo` : `🟥 EXPULSÃO!`;
-        } else if (lastEvent.type === 'INTERVALO') {
-          showBanner = true;
-          bx = 50; by = 50;
-          bannerContent = `⏸️ Intervalo`;
-        } else if (lastEvent.type === 'FIM_JOGO') {
-          showBanner = true;
-          bx = 50; by = 50;
-          bannerContent = `🏁 Fim de Jogo!`;
-        }
-      } else {
-        const homePoss = state.stats?.possession?.[0] || 50;
-        const inHomeHalf = (state.minute % 2 === 0) ? (homePoss >= 50) : (homePoss >= 50);
-        if (inHomeHalf) {
-          bx = 30 + (Math.sin((state.minute || 1) * 0.8) * 12);
-          by = 38 + (Math.cos((state.minute || 1) * 0.8) * 22);
-        } else {
-          bx = 70 + (Math.sin((state.minute || 1) * 0.8) * 12);
-          by = 38 + (Math.cos((state.minute || 1) * 0.8) * 22);
-        }
-      }
-
       ball.style.left = `${Math.round(bx)}%`;
       ball.style.top = `${Math.round(by)}%`;
+      ball.classList.toggle('shot-trail', isShot);
+      ball.classList.toggle('in-net', isGoal);
 
       if (banner && bannerText) {
         if (showBanner && bannerContent) {
