@@ -319,7 +319,36 @@ const app = {
     for (const id of ['match-analysis-metric', 'match-analysis-change']) {
       document.getElementById(id).addEventListener('change', () => this.renderLiveTacticalAnalysis());
     }
-    window.addEventListener('resize', () => { if (this.currentSimMatch) this.renderLiveTacticalAnalysis(); });
+    window.addEventListener('resize', () => {
+      if (this.currentSimMatch) {
+        this.renderLive2DPitch();
+        this.renderLiveTacticalAnalysis();
+      }
+    });
+
+    // Match 2D Pitch vs Stats Chart View Toggle
+    const btnPitch2D = document.getElementById('btn-show-pitch-2d');
+    const btnChart = document.getElementById('btn-show-chart-analysis');
+    const pitchWrapper = document.getElementById('match-2d-pitch-wrapper');
+    const chartWrapper = document.getElementById('match-analysis-chart-wrapper');
+
+    if (btnPitch2D && btnChart) {
+      btnPitch2D.addEventListener('click', () => {
+        btnPitch2D.classList.add('active');
+        btnChart.classList.remove('active');
+        if (pitchWrapper) pitchWrapper.hidden = false;
+        if (chartWrapper) chartWrapper.hidden = true;
+        this.renderLive2DPitch();
+      });
+
+      btnChart.addEventListener('click', () => {
+        btnChart.classList.add('active');
+        btnPitch2D.classList.remove('active');
+        if (pitchWrapper) pitchWrapper.hidden = true;
+        if (chartWrapper) chartWrapper.hidden = false;
+        this.renderLiveTacticalAnalysis();
+      });
+    }
 
     document.querySelectorAll('.match-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -2944,7 +2973,228 @@ const app = {
     document.getElementById('match-stats-note').textContent = state.statsSinceMinute ? `xG e passes contabilizados a partir dos ${state.statsSinceMinute}' (partida de save antigo).` : '';
     this.renderLiveCoach();
     this.renderConcurrentMatches(state);
+    this.renderLive2DPitch();
     this.renderLiveTacticalAnalysis();
+  },
+
+  renderLive2DPitch() {
+    const state = this.currentSimMatch;
+    if (!state) return;
+    const [homeTeam, awayTeam] = this.getLiveTeams();
+    if (!homeTeam || !awayTeam) return;
+
+    // 1. Update header bar
+    const homeShield = document.getElementById('pitch-home-shield');
+    const awayShield = document.getElementById('pitch-away-shield');
+    if (homeShield) homeShield.src = this.assetPath('escudos', homeTeam.shield);
+    if (awayShield) awayShield.src = this.assetPath('escudos', awayTeam.shield);
+
+    const homeName = document.getElementById('pitch-home-name');
+    const awayName = document.getElementById('pitch-away-name');
+    if (homeName) homeName.textContent = homeTeam.name;
+    if (awayName) awayName.textContent = awayTeam.name;
+
+    const homeForm = document.getElementById('pitch-home-form');
+    const awayForm = document.getElementById('pitch-away-form');
+    if (homeForm) homeForm.textContent = state.formations?.[0] || '4-4-2';
+    if (awayForm) awayForm.textContent = state.formations?.[1] || '4-4-2';
+
+    const clockDisplay = document.getElementById('pitch-clock-display');
+    const scoreDisplay = document.getElementById('pitch-score-display');
+    if (clockDisplay) clockDisplay.textContent = state.finished ? '90\'' : `${state.minute || 0}'`;
+    if (scoreDisplay) scoreDisplay.textContent = `${state.scores?.[0] ?? 0} × ${state.scores?.[1] ?? 0}`;
+
+    // 2. Compute Player Coordinates
+    const getFormationCoords = (formation, isHome) => {
+      const counts = SquadEngine.FORMATIONS[formation] || SquadEngine.FORMATIONS['4-4-2'];
+      const slots = [];
+      // Goalkeeper
+      slots.push({ role: 'G', x: 6, y: 50 });
+
+      // Defenders
+      const defCount = (counts.L || 0) + (counts.Z || 0);
+      if (defCount === 3) {
+        slots.push({ role: 'Z', x: 18, y: 24 });
+        slots.push({ role: 'Z', x: 16, y: 50 });
+        slots.push({ role: 'Z', x: 18, y: 76 });
+      } else if (defCount === 5) {
+        slots.push({ role: 'L', x: 20, y: 12 });
+        slots.push({ role: 'Z', x: 17, y: 31 });
+        slots.push({ role: 'Z', x: 16, y: 50 });
+        slots.push({ role: 'Z', x: 17, y: 69 });
+        slots.push({ role: 'L', x: 20, y: 88 });
+      } else {
+        slots.push({ role: 'L', x: 19, y: 15 });
+        slots.push({ role: 'Z', x: 16, y: 38 });
+        slots.push({ role: 'Z', x: 16, y: 62 });
+        slots.push({ role: 'L', x: 19, y: 85 });
+      }
+
+      // Midfielders
+      const midCount = counts.M || 4;
+      if (midCount === 3) {
+        slots.push({ role: 'M', x: 33, y: 26 });
+        slots.push({ role: 'M', x: 30, y: 50 });
+        slots.push({ role: 'M', x: 33, y: 74 });
+      } else if (midCount === 5) {
+        slots.push({ role: 'M', x: 36, y: 15 });
+        slots.push({ role: 'M', x: 30, y: 32 });
+        slots.push({ role: 'M', x: 29, y: 50 });
+        slots.push({ role: 'M', x: 30, y: 68 });
+        slots.push({ role: 'M', x: 36, y: 85 });
+      } else {
+        slots.push({ role: 'M', x: 34, y: 18 });
+        slots.push({ role: 'M', x: 31, y: 39 });
+        slots.push({ role: 'M', x: 31, y: 61 });
+        slots.push({ role: 'M', x: 34, y: 82 });
+      }
+
+      // Attackers
+      const attCount = counts.A || 2;
+      if (attCount === 1) {
+        slots.push({ role: 'A', x: 45, y: 50 });
+      } else if (attCount === 3) {
+        slots.push({ role: 'A', x: 46, y: 20 });
+        slots.push({ role: 'A', x: 47, y: 50 });
+        slots.push({ role: 'A', x: 46, y: 80 });
+      } else {
+        slots.push({ role: 'A', x: 45, y: 36 });
+        slots.push({ role: 'A', x: 45, y: 64 });
+      }
+
+      return slots.map(s => ({
+        role: s.role,
+        x: isHome ? s.x : (100 - s.x),
+        y: s.y
+      }));
+    };
+
+    const container = document.getElementById('pitch-players-container');
+    if (!container) return;
+
+    // Latest event for highlights
+    const lastEvent = state.events?.[state.events.length - 1];
+    const highlightedPlayerId = lastEvent?.playerId || null;
+
+    const playersHtml = [];
+    const teamsData = [
+      { team: homeTeam, side: 0, isHome: true, form: state.formations?.[0] || '4-4-2' },
+      { team: awayTeam, side: 1, isHome: false, form: state.formations?.[1] || '4-4-2' }
+    ];
+
+    teamsData.forEach(({ team, side, isHome, form }) => {
+      const activeIds = state.activeIds?.[side] || [];
+      const players = activeIds.map(id => team.players.find(p => p.id === id)).filter(Boolean);
+      const coords = getFormationCoords(form, isHome);
+
+      players.forEach((player, idx) => {
+        const coord = coords[idx] || { x: isHome ? 25 : 75, y: 50 };
+        const isGk = player.position === 'G' || idx === 0;
+        const isHighlighted = player.id === highlightedPlayerId;
+        const hasYellow = (state.yellows?.[player.id] || 0) > 0;
+        const isInjured = (state.injuredIds?.[side] || []).includes(player.id);
+        const posCode = this.playerPositionCode ? this.playerPositionCode(player) : player.position;
+        const surname = (player.name || '').trim().split(' ').pop();
+
+        playersHtml.push(`
+          <div class="pitch-player-node ${isHome ? 'home' : 'away'} ${isGk ? 'is-gk' : ''} ${isHighlighted ? 'highlighted' : ''}"
+               style="left: ${coord.x}%; top: ${coord.y}%;"
+               title="${this.escapeHTML(player.name)} (${posCode}) · Força ${player.strength}">
+            <div class="player-dot">
+              <span>${posCode[0]}</span>
+            </div>
+            <span class="player-mini-name">${this.escapeHTML(surname)}</span>
+            ${hasYellow ? '<span class="status-icon">🟨</span>' : ''}
+            ${isInjured ? '<span class="status-icon">🚑</span>' : ''}
+          </div>
+        `);
+      });
+    });
+
+    container.innerHTML = playersHtml.join('');
+
+    // 3. Dynamic Ball Positioning
+    const ball = document.getElementById('pitch-ball');
+    const banner = document.getElementById('pitch-event-banner');
+    const bannerText = document.getElementById('pitch-event-text');
+    const tickerMsg = document.getElementById('pitch-ticker-msg');
+
+    if (ball) {
+      let bx = 50, by = 50;
+      let showBanner = false;
+      let bannerContent = '';
+      let isGoal = false;
+
+      if (lastEvent && lastEvent.minute === state.minute) {
+        if (lastEvent.type === 'GOL' || lastEvent.type === 'GOL_PENALTI') {
+          isGoal = true;
+          showBanner = true;
+          bx = lastEvent.teamIndex === 0 ? 99 : 1;
+          by = 50;
+          bannerContent = `⚽ GOOOL! ${lastEvent.player} (${teamsData[lastEvent.teamIndex]?.team?.name || ''})!`;
+        } else if (lastEvent.type === 'DEFESA') {
+          showBanner = true;
+          bx = lastEvent.teamIndex === 0 ? 89 : 11;
+          by = 50;
+          bannerContent = `🧤 Defesa do goleiro!`;
+        } else if (lastEvent.type === 'FINALIZACAO_FORA') {
+          showBanner = true;
+          bx = lastEvent.teamIndex === 0 ? 92 : 8;
+          by = 28;
+          bannerContent = `❌ Chute para fora!`;
+        } else if (lastEvent.type === 'ESCANTEIO') {
+          showBanner = true;
+          bx = lastEvent.teamIndex === 0 ? 98 : 2;
+          by = 6;
+          bannerContent = `🚩 Escanteio para o ${teamsData[lastEvent.teamIndex]?.team?.name || ''}`;
+        } else if (lastEvent.type === 'CONTRA_ATAQUE') {
+          showBanner = true;
+          bx = lastEvent.teamIndex === 0 ? 65 : 35;
+          by = 50;
+          bannerContent = `⚡ Contra-ataque rápido!`;
+        } else if (['CARTAO_AMARELO', 'CARTAO_VERMELHO', 'SEGUNDO_AMARELO'].includes(lastEvent.type)) {
+          showBanner = true;
+          bx = lastEvent.teamIndex === 0 ? 30 : 70;
+          by = 45;
+          bannerContent = lastEvent.type === 'CARTAO_AMARELO' ? `🟨 Cartão amarelo` : `🟥 EXPULSÃO!`;
+        } else if (lastEvent.type === 'INTERVALO') {
+          showBanner = true;
+          bx = 50; by = 50;
+          bannerContent = `⏸️ Intervalo`;
+        } else if (lastEvent.type === 'FIM_JOGO') {
+          showBanner = true;
+          bx = 50; by = 50;
+          bannerContent = `🏁 Fim de Jogo!`;
+        }
+      } else {
+        const homePoss = state.stats?.possession?.[0] || 50;
+        const inHomeHalf = (state.minute % 2 === 0) ? (homePoss >= 50) : (homePoss >= 50);
+        if (inHomeHalf) {
+          bx = 30 + (Math.sin((state.minute || 1) * 0.8) * 12);
+          by = 38 + (Math.cos((state.minute || 1) * 0.8) * 22);
+        } else {
+          bx = 70 + (Math.sin((state.minute || 1) * 0.8) * 12);
+          by = 38 + (Math.cos((state.minute || 1) * 0.8) * 22);
+        }
+      }
+
+      ball.style.left = `${Math.round(bx)}%`;
+      ball.style.top = `${Math.round(by)}%`;
+
+      if (banner && bannerText) {
+        if (showBanner && bannerContent) {
+          bannerText.textContent = bannerContent;
+          banner.hidden = false;
+          banner.className = `pitch-event-banner ${isGoal ? 'goal-banner' : ''}`;
+        } else {
+          banner.hidden = true;
+        }
+      }
+    }
+
+    if (tickerMsg) {
+      tickerMsg.textContent = lastEvent?.text || `Bola rolando: ${state.stats?.possession?.[0] || 50}% × ${state.stats?.possession?.[1] || 50}% de posse de bola.`;
+    }
   },
 
   renderLiveTacticalAnalysis() {

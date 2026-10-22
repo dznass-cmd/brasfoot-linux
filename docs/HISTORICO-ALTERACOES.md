@@ -6,6 +6,31 @@ Projeto: Brasfoot Revenge.
 
 [Contexto para retomar o desenvolvimento](../CONTEXTO-PROJETO.md) · [Guia principal](../README.md) · [Revisão de Negociações](REVISAO-NEGOCIACOES.md)
 
+## 22/10/2026 — Campo 2D Interativo em Tempo Real na Partida (Substituindo o Gráfico Simples)
+
+Solicitação: quero um campo 2d no lugar daquele grafico simples.
+
+- **Novo Campo 2D da Partida (`#match-2d-pitch-wrapper`)**:
+  - Substitui por padrão o gráfico estático simples no painel lateral direito da tela de partida ao vivo (`#match-modal`), mantendo a opção de alternância (`[⚽ Campo 2D]` e `[📊 Gráfico]`) para permitir análises estatísticas sem quebrar testes anteriores.
+  - **Visual do Gramado em Proporção Oficial (SVG)**:
+    - Gramado com listras verticais em tons de verde alternados.
+    - Demarcações oficiais: linhas laterais e de fundo, grande e pequena área, círculo central e ponto central, semicírculos da grande área e redes de gol em ambas as extremidades.
+  - **Posicionamento Tático 2D dos 22 Jogadores**:
+    - Distribuição matemática de coordenadas `(x, y)` calculada dinamicamente conforme a formação ativa de cada equipe (4-4-2, 4-3-3, 3-5-2, 4-2-3-1, 5-4-1, etc.).
+    - Time mandante ataca da esquerda para a direita (nós vermelhos com borda branca); time visitante ataca da direita para a esquerda (nós azuis com borda branca).
+    - Goleiros destacados com cores especiais (âmbar para o mandante, esmeralda para o visitante) posicionados dentro de suas pequenas áreas.
+    - Cada nó de jogador exibe a sigla da posição (G, Z, L, M, A) e o sobrenome do atleta abaixo do nó.
+  - **Rastreamento Dinâmico da Bola (`#pitch-ball`)**:
+    - A bola se move fluidamente pelo campo refletindo os lances do motor de jogo minuto a minuto:
+      - **Gols**: a bola se projeta diretamente para o fundo da rede adversária (99% ou 1%), disparando animação com faixa de comemoração (`⚽ GOOOL!`) e destaque do autor do gol.
+      - **Chutes e Defesas**: a bola vai em direção à meta e destaca o goleiro ou finalizador.
+      - **Escanteios**: a bola se posiciona na bandeirinha de escanteio correspondente antes do cruzamento.
+      - **Posse de bola e circulação**: a bola transita entre os setores defensivo, meio-campo e ataque conforme a equipe com a posse no minuto atual.
+  - **Ticker de Eventos em Tempo Real (`#pitch-ticker`)**:
+    - Barra de status ao vivo logo abaixo do campo exibindo o último acontecimento e contexto tático.
+  - **Testes Automatizados (`scripts/test-2d-match-pitch.cjs`)**:
+    - 4 testes cobrindo marcação DOM, estilos e animações CSS, posicionamento dos 22 atletas com base nas formações, movimentação da bola no gol e comutação suave entre as abas 2D e gráfico.
+
 ## 22/10/2026 — Ofertas de Transferência Calculadas por Clubes Interessados (Não-Genéricas)
 
 Solicitação: quero que quando clicar apareça ofertas calculadas nao seja generico.

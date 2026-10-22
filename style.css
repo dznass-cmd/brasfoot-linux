@@ -1426,6 +1426,249 @@ p.market-help { margin: 8px 0 12px; }
 .match-analysis-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
 .match-analysis-heading h3 { font-size: 12px; color: #24452a; }
 .match-analysis-heading > span { font-size: 8px; letter-spacing: .7px; color: #2c6533; border: 1px solid #a9c69d; padding: 2px 4px; background: #e1edda; }
+
+/* Match 2D Live Pitch */
+.match-pitch-heading-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.match-pitch-view-toggle {
+  display: inline-flex;
+  gap: 2px;
+}
+.match-pitch-view-toggle .btn {
+  padding: 1px 6px;
+  font-size: 9px;
+  min-height: 19px;
+  line-height: 1.2;
+}
+.match-pitch-view-toggle .btn.active {
+  background: linear-gradient(180deg, #2b6d39 0%, #194a24 100%);
+  color: #ffffff;
+  border-color: #12381b;
+  font-weight: 700;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+.match-2d-pitch-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.match-2d-pitch-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  background: linear-gradient(180deg, #1b3823 0%, #0d2215 100%);
+  color: #ffffff;
+  border-radius: 3px;
+  border: 1px solid #2f5638;
+  font-size: 10px;
+}
+.pitch-team-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  max-width: 42%;
+}
+.pitch-team-badge.away {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.pitch-shield {
+  width: 17px;
+  height: 17px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+}
+.pitch-team-badge span:first-of-type {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.pitch-team-form {
+  font-size: 8.5px;
+  background: rgba(255,255,255,0.18);
+  padding: 1px 4px;
+  border-radius: 2px;
+  color: #bbf7d0;
+  flex-shrink: 0;
+}
+.pitch-live-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+#pitch-clock-display {
+  font-size: 10px;
+  font-weight: 700;
+  color: #86efac;
+}
+.pitch-score-display {
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.match-2d-pitch {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 105 / 68;
+  max-height: 220px;
+  background: #256a2b;
+  border: 2px solid #143d1a;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.2);
+  user-select: none;
+}
+.pitch-svg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.pitch-players-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.pitch-player-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+  cursor: default;
+  transition: left 0.4s cubic-bezier(0.2, 0.8, 0.3, 1), top 0.4s cubic-bezier(0.2, 0.8, 0.3, 1);
+  z-index: 10;
+}
+.pitch-player-node .player-dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1.5px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7.5px;
+  font-weight: 800;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.pitch-player-node.home .player-dot {
+  background: #e11d48; /* Red/Carmine for Home */
+}
+.pitch-player-node.home.is-gk .player-dot {
+  background: #f59e0b; /* Gold/Amber for GK */
+  color: #000;
+}
+.pitch-player-node.away .player-dot {
+  background: #2563eb; /* Blue for Away */
+}
+.pitch-player-node.away.is-gk .player-dot {
+  background: #10b981; /* Emerald for Away GK */
+  color: #000;
+}
+.pitch-player-node.highlighted .player-dot {
+  transform: scale(1.35);
+  box-shadow: 0 0 8px 3px #fef08a, 0 2px 4px rgba(0,0,0,0.8);
+  border-color: #fef08a;
+  z-index: 25;
+}
+.pitch-player-node .player-mini-name {
+  font-size: 7.5px;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 1px 2px #000, 0 0 2px #000;
+  white-space: nowrap;
+  max-width: 44px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+  line-height: 1;
+}
+.pitch-player-node .status-icon {
+  position: absolute;
+  top: -6px;
+  right: -5px;
+  font-size: 8px;
+  line-height: 1;
+}
+.pitch-ball {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  z-index: 30;
+  transition: left 0.45s cubic-bezier(0.25, 0.1, 0.25, 1), top 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.7));
+  pointer-events: none;
+}
+.pitch-ball .ball-icon {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.pitch-event-banner {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(7, 24, 12, 0.92);
+  border: 1px solid #4ade80;
+  color: #f0fdf4;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 9.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  z-index: 40;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.pitch-event-banner.goal-banner {
+  background: linear-gradient(180deg, #166534 0%, #14532d 100%);
+  border-color: #facc15;
+  color: #fef08a;
+  font-size: 11px;
+  padding: 4px 14px;
+}
+.pitch-ticker {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  background: #ffffff;
+  border: 1px solid #c2cfbd;
+  border-radius: 3px;
+  font-size: 10px;
+  color: #274728;
+}
+.pitch-ticker-icon {
+  font-size: 11px;
+}
+.pitch-ticker-msg {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
 .match-analysis-metric, .match-analysis-change { display: flex; align-items: center; gap: 6px; }
 .match-analysis-metric select, .match-analysis-change select { flex: 1; width: 0; min-width: 0; font-size: 10px; padding: 2px 3px; }
 .match-analysis-legend { display: flex; justify-content: space-between; gap: 10px; margin: 7px 0 1px; }

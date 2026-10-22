@@ -658,15 +658,90 @@
         </section>
         <section class="match-round-panel" id="match-round-panel" aria-label="Outros jogos da rodada">
           <section class="match-analysis" aria-labelledby="match-analysis-title">
-            <div class="match-analysis-heading"><h3 id="match-analysis-title">Efeito das táticas</h3><span id="match-analysis-status">AO VIVO</span></div>
-            <label class="match-analysis-metric">Indicador<select id="match-analysis-metric"><option value="possession">Posse de bola</option><option value="xG">Gols esperados (xG)</option><option value="shots">Finalizações</option><option value="accuracy">Passes certos</option><option value="energy">Energia em campo</option></select></label>
-            <div id="match-analysis-legend" class="match-analysis-legend"></div>
-            <div id="match-analysis-chart" class="match-analysis-chart"></div>
-            <p id="match-analysis-window" class="match-analysis-window"></p>
-            <label class="match-analysis-change">Comparar mudança<select id="match-analysis-change"><option value="latest">Última do meu time</option></select></label>
-            <p id="match-analysis-plan" class="match-analysis-plan"></p>
-            <div id="match-analysis-comparison" class="match-analysis-comparison" aria-live="off"></div>
-            <p id="match-analysis-note" class="match-analysis-note"></p>
+            <div class="match-analysis-heading">
+              <div class="match-pitch-heading-left">
+                <h3 id="match-analysis-title">Campo 2D da Partida</h3>
+                <div class="match-pitch-view-toggle">
+                  <button type="button" class="btn btn-small active" id="btn-show-pitch-2d" title="Exibir campo 2D da partida">⚽ Campo 2D</button>
+                  <button type="button" class="btn btn-small" id="btn-show-chart-analysis" title="Exibir gráfico estatístico">📊 Gráfico</button>
+                </div>
+              </div>
+              <span id="match-analysis-status">AO VIVO</span>
+            </div>
+
+            <!-- 2D PITCH VIEW (Default) -->
+            <div id="match-2d-pitch-wrapper" class="match-2d-pitch-wrapper">
+              <div class="match-2d-pitch-header">
+                <div class="pitch-team-badge home">
+                  <img id="pitch-home-shield" src="assets/icons/escudo.png" alt="" class="pitch-shield">
+                  <span id="pitch-home-name">Mandante</span>
+                  <span id="pitch-home-form" class="pitch-team-form">4-4-2</span>
+                </div>
+                <div class="pitch-live-clock">
+                  <span id="pitch-clock-display">0'</span>
+                  <span id="pitch-score-display" class="pitch-score-display">0 × 0</span>
+                </div>
+                <div class="pitch-team-badge away">
+                  <span id="pitch-away-form" class="pitch-team-form">4-4-2</span>
+                  <span id="pitch-away-name">Visitante</span>
+                  <img id="pitch-away-shield" src="assets/icons/escudo.png" alt="" class="pitch-shield">
+                </div>
+              </div>
+
+              <!-- The Interactive 2D Field -->
+              <div id="match-2d-pitch" class="match-2d-pitch" aria-label="Visualização 2D da partida em tempo real">
+                <svg class="pitch-svg-canvas" viewBox="0 0 105 68" preserveAspectRatio="none">
+                  <defs>
+                    <pattern id="lawn-stripes" width="15" height="68" patternUnits="userSpaceOnUse">
+                      <rect x="0" y="0" width="7.5" height="68" fill="#2d7734"/>
+                      <rect x="7.5" y="0" width="7.5" height="68" fill="#25682c"/>
+                    </pattern>
+                  </defs>
+                  <rect x="0" y="0" width="105" height="68" fill="url(#lawn-stripes)"/>
+                  <rect x="4" y="3" width="97" height="62" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="0.8"/>
+                  <line x1="52.5" y1="3" x2="52.5" y2="65" stroke="rgba(255,255,255,0.75)" stroke-width="0.8"/>
+                  <circle cx="52.5" cy="34" r="9.15" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="0.8"/>
+                  <circle cx="52.5" cy="34" r="0.8" fill="rgba(255,255,255,0.9)"/>
+                  <rect x="4" y="14.5" width="16.5" height="35" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="0.8"/>
+                  <rect x="4" y="24.5" width="5.5" height="19" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="0.8"/>
+                  <circle cx="15" cy="34" r="0.7" fill="rgba(255,255,255,0.9)"/>
+                  <path d="M 20.5 28.5 A 9.15 9.15 0 0 1 20.5 39.5" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="0.8"/>
+                  <rect x="1.5" y="29" width="2.5" height="10" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" stroke-width="0.8"/>
+                  <rect x="84.5" y="14.5" width="16.5" height="35" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="0.8"/>
+                  <rect x="95.5" y="24.5" width="5.5" height="19" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="0.8"/>
+                  <circle cx="90" cy="34" r="0.7" fill="rgba(255,255,255,0.9)"/>
+                  <path d="M 84.5 28.5 A 9.15 9.15 0 0 0 84.5 39.5" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="0.8"/>
+                  <rect x="101" y="29" width="2.5" height="10" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" stroke-width="0.8"/>
+                </svg>
+
+                <div id="pitch-players-container" class="pitch-players-container"></div>
+
+                <div id="pitch-ball" class="pitch-ball" style="left: 50%; top: 50%;">
+                  <img src="assets/icons/ball.png" alt="Bola" class="ball-icon">
+                </div>
+
+                <div id="pitch-event-banner" class="pitch-event-banner" hidden>
+                  <span id="pitch-event-text"></span>
+                </div>
+              </div>
+
+              <div id="pitch-ticker" class="pitch-ticker">
+                <span class="pitch-ticker-icon">⏱️</span>
+                <span id="pitch-ticker-msg" class="pitch-ticker-msg">Início de jogo</span>
+              </div>
+            </div>
+
+            <!-- CHART / ANALYSIS VIEW (Toggled when user clicks Gráfico) -->
+            <div id="match-analysis-chart-wrapper" class="match-analysis-chart-wrapper" hidden>
+              <label class="match-analysis-metric">Indicador<select id="match-analysis-metric"><option value="possession">Posse de bola</option><option value="xG">Gols esperados (xG)</option><option value="shots">Finalizações</option><option value="accuracy">Passes certos</option><option value="energy">Energia em campo</option></select></label>
+              <div id="match-analysis-legend" class="match-analysis-legend"></div>
+              <div id="match-analysis-chart" class="match-analysis-chart"></div>
+              <p id="match-analysis-window" class="match-analysis-window"></p>
+              <label class="match-analysis-change">Comparar mudança<select id="match-analysis-change"><option value="latest">Última do meu time</option></select></label>
+              <p id="match-analysis-plan" class="match-analysis-plan"></p>
+              <div id="match-analysis-comparison" class="match-analysis-comparison" aria-live="off"></div>
+              <p id="match-analysis-note" class="match-analysis-note"></p>
+            </div>
           </section>
           <div class="match-section-title match-round-title">
             <span>Placar da Rodada</span>
