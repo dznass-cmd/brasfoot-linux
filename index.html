@@ -615,17 +615,57 @@
         <div class="match-scoreboard"><span id="match-home-score" class="score">0</span><span class="score-divider">×</span><span id="match-away-score" class="score">0</span><div id="match-timer" class="match-clock">0'</div><span id="match-phase" class="match-phase">1º tempo</span></div>
         <div class="match-team away"><img id="match-away-shield" src="assets/icons/escudo.png" alt="" class="match-shield"><span id="match-away-name" class="team-name">Visitante</span></div>
       </header>
-      <div class="match-playback">
-        <button id="pause-match-btn" class="btn" aria-pressed="false">Pausar jogo</button>
-        <label for="match-speed">Velocidade <select id="match-speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select></label>
-        <div class="match-view-toggle" id="match-view-toggle" role="tablist" aria-label="Visualização da partida">
-          <button type="button" class="btn btn-small match-tab-btn active" data-match-tab="all" role="tab" aria-selected="true">Geral</button>
-          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="lances" role="tab" aria-selected="false">Lances</button>
-          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="coach" role="tab" aria-selected="false">Comando</button>
-          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="analysis" role="tab" aria-selected="false">Análise tática</button>
-          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="round" role="tab" aria-selected="false">Placar (<span id="match-round-count">0</span>)</button>
+      <div class="match-playback" id="match-playback">
+        <!-- 1. Controles da Partida (Pausa, Velocidade em Pílulas, Status) -->
+        <div class="match-playback-controls">
+          <button id="pause-match-btn" class="btn btn-playback-pause" aria-pressed="false" title="Pausar ou continuar o andamento da partida">
+            <span class="playback-icon" id="pause-btn-icon">⏸</span>
+            <span class="playback-text" id="pause-btn-text">Pausar</span>
+          </button>
+
+          <div class="match-speed-selector" role="group" aria-label="Velocidade da partida">
+            <span class="match-speed-caption">Velocidade:</span>
+            <div class="speed-pill-group">
+              <button type="button" class="speed-pill-btn active" data-speed="1" title="Velocidade normal (1×)">1×</button>
+              <button type="button" class="speed-pill-btn" data-speed="2" title="Velocidade rápida (2×)">2×</button>
+              <button type="button" class="speed-pill-btn" data-speed="4" title="Velocidade máxima (4×)">4×</button>
+            </div>
+            <!-- Select mantido para compatibilidade total com testes e scripts -->
+            <label for="match-speed" class="sr-only" style="display:none">Velocidade</label>
+            <select id="match-speed" class="match-speed-hidden" style="display:none" aria-label="Velocidade da simulação">
+              <option value="1">1×</option>
+              <option value="2">2×</option>
+              <option value="4">4×</option>
+            </select>
+          </div>
+
+          <div class="match-live-status-badge">
+            <span class="live-pulse-dot" id="match-live-dot"></span>
+            <span id="match-status" class="match-status" role="status">Bola rolando</span>
+          </div>
         </div>
-        <span id="match-status" class="match-status" role="status">Bola rolando</span>
+
+        <!-- 2. Modos de Visualização Unificados da Partida -->
+        <div class="match-view-toggle" id="match-view-toggle" role="tablist" aria-label="Visualização da partida">
+          <button type="button" class="btn btn-small match-tab-btn active" data-match-tab="pitch" role="tab" aria-selected="true" title="Campo 2D com movimentação dos atletas e bola em tempo real">
+            <span class="tab-icon">⚽</span> <span>Campo 2D</span>
+          </button>
+          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="lances" role="tab" aria-selected="false" title="Feed completo de lances narrados e estatísticas">
+            <span class="tab-icon">📝</span> <span>Narração</span>
+          </button>
+          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="coach" role="tab" aria-selected="false" title="Substituições e comando tático do time">
+            <span class="tab-icon">👔</span> <span>Banco & Tática</span>
+          </button>
+          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="analysis" role="tab" aria-selected="false" title="Gráficos de posse de bola, xG e finalizações">
+            <span class="tab-icon">📊</span> <span>Gráficos</span>
+          </button>
+          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="round" role="tab" aria-selected="false" title="Acompanhar outros jogos simultâneos da rodada">
+            <span class="tab-icon">🏆</span> <span>Rodada (<span id="match-round-count">0</span>)</span>
+          </button>
+          <button type="button" class="btn btn-small match-tab-btn" data-match-tab="all" role="tab" aria-selected="false" title="Visão panorâmica com todas as 3 colunas">
+            <span class="tab-icon">🖥️</span> <span>Geral</span>
+          </button>
+        </div>
       </div>
       <div class="match-workspace">
         <section class="match-commentary" aria-label="Lances e estatísticas">

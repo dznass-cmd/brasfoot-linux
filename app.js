@@ -304,12 +304,36 @@ const app = {
     document.getElementById('pause-match-btn').addEventListener('click', () => {
       if (this.matchPaused) this.resumeLiveMatch(); else this.pauseLiveMatch('Pausa do treinador');
     });
-    document.getElementById('match-speed').addEventListener('change', e => {
-      this.matchSpeed = Number(e.target.value);
-      if (this.currentSimMatch) this.currentSimMatch.speed = this.matchSpeed;
-      if (!this.matchPaused) this.scheduleLiveMatch();
-      this.persistMatchProgress();
+
+    // Speed Pills & Hidden Select sync
+    document.querySelectorAll('.speed-pill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const speed = Number(btn.dataset.speed);
+        this.matchSpeed = speed;
+        const select = document.getElementById('match-speed');
+        if (select) select.value = String(speed);
+        document.querySelectorAll('.speed-pill-btn').forEach(b => {
+          b.classList.toggle('active', b === btn);
+        });
+        if (this.currentSimMatch) this.currentSimMatch.speed = this.matchSpeed;
+        if (!this.matchPaused) this.scheduleLiveMatch();
+        this.persistMatchProgress();
+      });
     });
+
+    const matchSpeedSelect = document.getElementById('match-speed');
+    if (matchSpeedSelect) {
+      matchSpeedSelect.addEventListener('change', e => {
+        this.matchSpeed = Number(e.target.value);
+        document.querySelectorAll('.speed-pill-btn').forEach(b => {
+          b.classList.toggle('active', Number(b.dataset.speed) === this.matchSpeed);
+        });
+        if (this.currentSimMatch) this.currentSimMatch.speed = this.matchSpeed;
+        if (!this.matchPaused) this.scheduleLiveMatch();
+        this.persistMatchProgress();
+      });
+    }
+
     ['match-formation', 'match-style', ...Object.keys(TacticsEngine.OPTIONS).map(key => `match-${key}`), ...Object.keys(TacticsEngine.SET_PIECES).map(key => `match-taker-${key}`)].forEach(id => {
       document.getElementById(id).addEventListener('focus', () => this.pauseLiveMatch('Ajustes táticos'));
       document.getElementById(id).addEventListener('change', () => { this.matchTacticsDirty = true; });
@@ -338,6 +362,17 @@ const app = {
         btnChart.classList.remove('active');
         if (pitchWrapper) pitchWrapper.hidden = false;
         if (chartWrapper) chartWrapper.hidden = true;
+        // Sync active tab if currently on analysis tab
+        const tabPitch = document.querySelector('.match-tab-btn[data-match-tab="pitch"]');
+        const tabAnalysis = document.querySelector('.match-tab-btn[data-match-tab="analysis"]');
+        if (tabAnalysis?.classList.contains('active') && tabPitch) {
+          tabAnalysis.classList.remove('active');
+          tabAnalysis.setAttribute('aria-selected', 'false');
+          tabPitch.classList.add('active');
+          tabPitch.setAttribute('aria-selected', 'true');
+          const workspace = document.querySelector('.match-workspace');
+          if (workspace) workspace.dataset.view = 'pitch';
+        }
         this.renderLive2DPitch();
       });
 
@@ -346,6 +381,17 @@ const app = {
         btnPitch2D.classList.remove('active');
         if (pitchWrapper) pitchWrapper.hidden = true;
         if (chartWrapper) chartWrapper.hidden = false;
+        // Sync active tab if currently on pitch tab
+        const tabPitch = document.querySelector('.match-tab-btn[data-match-tab="pitch"]');
+        const tabAnalysis = document.querySelector('.match-tab-btn[data-match-tab="analysis"]');
+        if (tabPitch?.classList.contains('active') && tabAnalysis) {
+          tabPitch.classList.remove('active');
+          tabPitch.setAttribute('aria-selected', 'false');
+          tabAnalysis.classList.add('active');
+          tabAnalysis.setAttribute('aria-selected', 'true');
+          const workspace = document.querySelector('.match-workspace');
+          if (workspace) workspace.dataset.view = 'analysis';
+        }
         this.renderLiveTacticalAnalysis();
       });
     }
@@ -361,7 +407,30 @@ const app = {
         const view = btn.dataset.matchTab;
         const workspace = document.querySelector('.match-workspace');
         if (workspace) workspace.dataset.view = view;
-        this.renderLiveTacticalAnalysis();
+
+        const pWrapper = document.getElementById('match-2d-pitch-wrapper');
+        const cWrapper = document.getElementById('match-analysis-chart-wrapper');
+        const bPitch = document.getElementById('btn-show-pitch-2d');
+        const bChart = document.getElementById('btn-show-chart-analysis');
+
+        if (view === 'pitch') {
+          if (pWrapper) pWrapper.hidden = false;
+          if (cWrapper) cWrapper.hidden = true;
+          if (bPitch) bPitch.classList.add('active');
+          if (bChart) bChart.classList.remove('active');
+          this.renderLive2DPitch();
+        } else if (view === 'analysis') {
+          if (pWrapper) pWrapper.hidden = true;
+          if (cWrapper) cWrapper.hidden = false;
+          if (bChart) bChart.classList.add('active');
+          if (bPitch) bPitch.classList.remove('active');
+          this.renderLiveTacticalAnalysis();
+        } else {
+          this.renderLiveTacticalAnalysis();
+          if (view === 'all') {
+            this.renderLive2DPitch();
+          }
+        }
       });
     });
 
@@ -2833,6 +2902,18 @@ const app = {
     document.getElementById('match-formation').value = state.formations[state.userSide];
     document.getElementById('match-style').value = state.styles[state.userSide];
     document.getElementById('match-speed').value = String(this.matchSpeed);
+    document.querySelectorAll('.speed-pill-btn').forEach(b => {
+      b.classList.toggle('active', Number(b.dataset.speed) === Number(this.matchSpeed));
+    });
+    const workspace = document.querySelector('.match-workspace');
+    if (workspace && (!workspace.dataset.view || workspace.dataset.view === 'all')) {
+      workspace.dataset.view = 'pitch';
+      document.querySelectorAll('.match-tab-btn').forEach(b => {
+        const isPitch = b.dataset.matchTab === 'pitch';
+        b.classList.toggle('active', isPitch);
+        b.setAttribute('aria-selected', String(isPitch));
+      });
+    }
     document.getElementById('match-events-feed').innerHTML = '';
     this.renderedMatchEventCount = 0;
     this.appendPendingMatchEvents(false);
@@ -2937,11 +3018,26 @@ const app = {
     document.getElementById('match-phase').textContent = state.finished ? 'Encerrado' : state.phase === 'halftime' ? 'Intervalo' : state.phase === 'second-half' ? '2º tempo' : '1º tempo';
     const pauseButton = document.getElementById('pause-match-btn');
     pauseButton.disabled = state.finished;
-    pauseButton.textContent = state.finished ? 'Jogo encerrado' : this.matchPaused ? 'Continuar jogo' : 'Pausar jogo';
+    const pauseIcon = document.getElementById('pause-btn-icon');
+    const pauseText = document.getElementById('pause-btn-text');
+    if (pauseIcon && pauseText) {
+      pauseIcon.textContent = state.finished ? '🏁' : this.matchPaused ? '▶' : '⏸';
+      pauseText.textContent = state.finished ? 'Encerrado' : this.matchPaused ? 'Continuar jogo' : 'Pausar jogo';
+    } else {
+      pauseButton.textContent = state.finished ? 'Jogo encerrado' : this.matchPaused ? 'Continuar jogo' : 'Pausar jogo';
+    }
     pauseButton.setAttribute('aria-pressed', String(this.matchPaused));
     const status = document.getElementById('match-status');
     status.textContent = state.finished ? 'Resultado final' : this.matchPaused ? `${this.matchPauseReason || 'Jogo pausado'} · pausado` : 'Bola rolando';
     status.classList.toggle('paused', this.matchPaused && !state.finished);
+    const liveDot = document.getElementById('match-live-dot');
+    if (liveDot) {
+      liveDot.className = 'live-pulse-dot ' + (state.finished ? 'finished' : this.matchPaused ? 'paused' : 'live');
+    }
+    document.querySelectorAll('.speed-pill-btn').forEach(b => {
+      b.disabled = state.finished;
+      b.classList.toggle('active', Number(b.dataset.speed) === Number(this.matchSpeed));
+    });
     document.getElementById('match-analysis-status').textContent = state.finished ? 'FINAL' : this.matchPaused ? 'PAUSADO' : 'AO VIVO';
     for (const id of ['match-speed', 'match-formation', 'match-style', 'apply-match-tactics-btn']) document.getElementById(id).disabled = state.finished;
     document.querySelectorAll('#match-instructions select, #match-set-pieces select, #match-preset-select, #match-preset-btn').forEach(control => { control.disabled = state.finished; });

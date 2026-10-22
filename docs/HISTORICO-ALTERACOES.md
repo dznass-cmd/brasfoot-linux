@@ -6,6 +6,28 @@ Projeto: Brasfoot Revenge.
 
 [Contexto para retomar o desenvolvimento](../CONTEXTO-PROJETO.md) · [Guia principal](../README.md) · [Revisão de Negociações](REVISAO-NEGOCIACOES.md)
 
+## 22/10/2026 — Menu e Controles Unificados da Partida ao Vivo (Campo 2D, Narração e Velocidade)
+
+Solicitação: tem muita coisa nesse menu deixe mais organizado mostre um exemplo. Escolha: Menu da Partida ao Vivo (unificar os controles de velocidade, alternância do Campo 2D e narração).
+
+- **Menu Unificado da Partida (`#match-playback`)**:
+  - Eliminada a fragmentação entre controles de reprodução e botões de alternância de tela, reunindo tudo em uma barra premium coesa e moderna:
+  - **Controles de Partida Agrupados (`.match-playback-controls`)**:
+    - **Botão Play/Pausa Moderno (`#pause-match-btn`)**: ícone dinâmico (`⏸` / `▶` / `🏁`) com texto claro e estado pulsante quando pausado.
+    - **Pílulas de Velocidade de 1 Clique (`.speed-pill-group`)**: substitui o antigo `<select>` retrô por botões compactos `[ 1× ] [ 2× ] [ 4× ]`, mantendo o elemento `#match-speed` sincronizado para compatibilidade 100% retroativa.
+    - **Badge com Indicador Pulsante (`#match-live-dot`)**: ponto verde luminoso com animação CSS `@keyframes liveDotPulse` durante o jogo, âmbar quando pausado e cinza ao encerrar.
+  - **Abas de Visualização Unificadas com Ícones (`#match-view-toggle`)**:
+    - `[⚽ Campo 2D]` (padrão): exibe o novo Campo 2D com a bola e os 22 atletas em tempo real, acompanhado lado a lado pela narração completa dos lances.
+    - `[📝 Narração]`: foco exclusivo no feed detalhado de lances minuto a minuto e estatísticas.
+    - `[👔 Banco & Tática]`: área dedicada para substituições de atletas e ajustes táticos com conforto sem sobrecarregar a tela.
+    - `[📊 Gráficos]`: análise tática de posse de bola, xG e finalizações.
+    - `[🏆 Rodada]`: placar em tempo real de todas as outras partidas da divisão.
+    - `[🖥️ Geral]`: visualização panorâmica das 3 colunas simultâneas.
+- **Visualização Otimizada `[data-view="pitch"]`**:
+  - Integra Campo 2D e Narração lado a lado em proporção equilibrada (sem a poluição do painel de substituições até o treinador querer utilizá-lo).
+- **Testes Automatizados (`scripts/test-unified-match-menu.cjs`)**:
+  - 4 testes validando estrutura HTML, estilização CSS, sincronização dos botões de pílula de velocidade e comutação das abas com integridade total.
+
 ## 22/10/2026 — Campo 2D Interativo em Tempo Real na Partida (Substituindo o Gráfico Simples)
 
 Solicitação: quero um campo 2d no lugar daquele grafico simples.
